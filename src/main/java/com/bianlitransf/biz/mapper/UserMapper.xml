@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bianlitransf.biz.dao.UserDao">
+
+	<select id="getByPhone" resultType="com.bianlitransf.biz.entity.User">
+		select <include refid="allFields" />
+		from user where phone = #{phone}
+	</select>
+
+	<sql id="allFields">
+		id,
+		phone,
+		password,
+		referee_id as refereeId,
+		level,
+		level_code as levelCode,
+		status,
+		name,
+		alipay_no as alipayNo,
+		created_time as createdTime
+	</sql>
+
+	<sql id="insertFields">
+		id,
+		phone,
+		password,
+		referee_id,
+		level,
+		level_code,
+		status,
+		name,
+		alipay_no,
+		created_time
+	</sql>
+
+	<select id="list" resultType="com.bianlitransf.biz.entity.User" >
+		select
+			<include refid="allFields" />
+		from user
+		<where>
+			<include refid="comnWhere" />
+		</where>
+		<if test="orderBy != null" >
+			order by ${orderBy}
+			<if test="orderByDesc != null">
+				desc
+			</if>
+		</if>
+	</select>
+
+	<sql id="comnWhere">
+		<if test="id != null">
+			id = #{id}
+		</if>
+		<if test="phone != null">
+			 and phone = #{phone}
+		</if>
+		<if test="password != null">
+			 and password = #{password}
+		</if>
+		<if test="refereeId != null">
+			 and referee_id = #{refereeId}
+		</if>
+		<if test="level != null">
+			 and level = #{level}
+		</if>
+		<if test="levelCode != null">
+			 and level_code = #{levelCode}
+		</if>
+		<if test="status != null">
+			 and status = #{status}
+		</if>
+		<if test="name != null">
+			 and name = #{name}
+		</if>
+		<if test="alipayNo != null">
+			 and alipay_no = #{alipayNo}
+		</if>
+		<if test="createdTime != null">
+			 and created_time = #{createdTime}
+		</if>
+	</sql>
+
+	<select id="getByIds" resultType="com.bianlitransf.biz.entity.User" >
+		select <include refid="allFields" /> from user where id in
+		<foreach collection="list" item="item" open="(" separator="," close=")" >
+			#{item}
+		</foreach>
+	</select>
+
+	<select id="get" resultType="com.bianlitransf.biz.entity.User" >
+		select <include refid="allFields" /> from user where id = #{id}
+	</select>
+
+	<delete id="deleteById" parameterType="Long" >
+		delete from user where id = #{id}
+	</delete>
+
+	<insert id="insert" parameterType="com.bianlitransf.biz.entity.User">
+		insert into user(<include refid="insertFields" />)
+		values(
+			#{id},
+			#{phone},
+			#{password},
+			#{refereeId},
+			#{level},
+			#{levelCode},
+			#{status},
+			#{name},
+			#{alipayNo},
+			#{createdTime}
+		)
+	</insert>
+
+	<insert id="insertBatch" parameterType="java.util.List" >
+		insert into user(<include refid="insertFields" />)
+		values
+		<foreach collection="list" item="item" separator="," >
+			(
+				#{item.id},
+				#{item.phone},
+				#{item.password},
+				#{item.refereeId},
+				#{item.level},
+				#{item.levelCode},
+				#{item.status},
+				#{item.name},
+				#{item.alipayNo},
+				#{item.createdTime}
+			)
+		</foreach>
+	</insert>
+
+	<update id="update" parameterType="com.bianlitransf.biz.entity.User" >
+		update user set <include refid="setComn" /> where id = #{id}
+	</update>
+
+	<sql id="setComn" >
+		<if test="phone != null" >
+			phone = #{phone},
+		</if>
+		<if test="password != null" >
+			password = #{password},
+		</if>
+		<if test="refereeId != null" >
+			referee_id = #{refereeId},
+		</if>
+		<if test="level != null" >
+			level = #{level},
+		</if>
+		<if test="levelCode != null" >
+			level_code = #{levelCode},
+		</if>
+		<if test="status != null" >
+			status = #{status},
+		</if>
+		<if test="name != null" >
+			name = #{name},
+		</if>
+		<if test="alipayNo != null" >
+			alipay_no = #{alipayNo},
+		</if>
+		<if test="createdTime != null" >
+			created_time = #{createdTime}
+		</if>
+	</sql>
+</mapper>

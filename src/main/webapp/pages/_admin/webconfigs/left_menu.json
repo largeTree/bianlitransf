@@ -1,0 +1,40 @@
+[
+    {
+        "id": "1",
+        "text": "页面资源",
+        "children": [{
+            "id":11,
+            "text" : "积分兑换",
+            "attributes": {
+                "url":"./_pages/_res_banks.html"
+            }
+        },{
+            "id":12,
+            "text" : "信用卡推广",
+            "attributes": {
+                "url":"./_pages/_res_credit_card.html"
+            }
+        }]
+    },
+    {
+        "id": "2",
+        "text": "Node 2",
+        "attributes": {
+            "url":"./_pages/_page_reses.html"
+        }
+    },
+    {
+        "id": "3",
+        "text": "Node 3",
+        "attributes": {
+            "url":"./_pages/_page_reses.html"
+        }
+    },
+    {
+        "id": "4",
+        "text": "Node 4",
+        "attributes": {
+            "url":"./_pages/_page_reses.html"
+        }
+    }
+]

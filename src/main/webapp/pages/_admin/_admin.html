@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>管理界面</title>
+<link rel="stylesheet" type="text/css" href="./jqeasyui/themes/icon.css" />
+<link rel="stylesheet" type="text/css" href="./jqeasyui/themes/color.css" />
+<link rel="stylesheet" type="text/css" href="./jqeasyui/themes/metro/easyui.css" />
+
+<link rel="stylesheet" type="text/css" href="./css/_common.css" />
+
+<script type="text/javascript" src="./jqeasyui/jquery.min.js"></script>
+<script type="text/javascript" src="./jqeasyui/jquery.easyui.min.js"></script>
+
+<script type="text/javascript" src="./javascripts/_common.js"></script>
+<script type="text/javascript" src="./javascripts/_admin.js"></script>
+<script type="text/javascript" src="./javascripts/_res_banks.js"></script>
+
+</head>
+<body class="easyui-layout">
+	<div data-options="region:'north'" style="height: 90px;padding-left: 30px;">
+		<h2>便利换后台管理</h2>
+	</div>
+	<div data-options="region:'west',split:false,collapsible:false" title="菜单" style="width: 200px;">
+		<ul id="leftMenu" class="easyui-tree" data-options="url:'./webconfigs/left_menu.json',method:'get',animate:true">
+		</ul>
+	</div>
+	<div id="mainTabs" data-options="region:'center',narrow:true" class="easyui-tabs">
+		<div title="我的桌面" style="padding: 10px"></div>
+	</div>
+</body>
+<script type="text/javascript">
+	$(()=>{
+		AdminPage.init();
+	});
+</script>
+</html>

@@ -1,0 +1,27 @@
+env:
+  app-name: blh
+  server-id: blh-web1
+  seq-type: db
+  test: true
+#  seq-db-idx: 0
+server:
+  port: 8082
+  servlet:
+    context-path: /blh
+spring: 
+  datasource:
+    url: jdbc:mysql://127.0.0.1:3306/bltransf?characterEncoding=utf8
+    username: root
+    password: "000000"
+    driver-class-name: com.mysql.jdbc.Driver
+    type: org.apache.commons.dbcp2.BasicDataSource
+    dbcp2:
+      initial-size: 5
+      max-total: 20
+      min-idle: 5
+      max-wait-millis: 10000
+      validation-query: SELECT 1
+mybatis:
+  auto-refresh: true
+  mapper-locations: 
+    - classpath*:com/bianlitransf/**/mapper/*Mapper.xml

@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>标题</title>
+<script src="../wangEdit/wangEditor.min.js"></script>
+</head>
+<body>
+	<div id="div1" class="toolbar"></div>
+	<div id="div2" class="text"
+		style="border: 1px #CCC solid; height: 300px;"></div>
+	<button id="getHtml">获取HTML内容</button>
+	<script type="text/javascript" src="/wangEditor.min.js"></script>
+	<script type="text/javascript">
+		var E = window.wangEditor;
+		var editor = new E('#div1', '#div2');
+		editor.customConfig.uploadImgShowBase64 = true;
+		editor.customConfig.debug = true;
+		editor.create();
+		document.getElementById('getHtml').addEventListener('click',
+				function() {
+					console.log(editor.txt.html());
+				}, false)
+	</script>
+</body>
+</html>

@@ -1,0 +1,12 @@
+.datagrid-cell a {
+	color: #000;
+	text-decoration: none;
+}
+.datagrid-cell a:hover {
+	color: red;
+}
+
+.datagrid-cell .split {
+	color: #CCC;
+	font-size: 9px;
+}
