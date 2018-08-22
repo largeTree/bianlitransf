@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bianlitransf.biz.dao.ExchangeBillDao">
+
+	<sql id="allFields">
+		id,
+		owner_id as ownerId,
+		status,
+		bank_id as bankId,
+		score,
+		money,
+		created_time as createdTime,
+		confirm_time as confirmTime,
+		confirmer_id as confirmerId,
+		desc
+	</sql>
+
+	<sql id="insertFields">
+		id,
+		owner_id,
+		status,
+		bank_id,
+		score,
+		money,
+		created_time,
+		confirm_time,
+		confirmer_id,
+		desc
+	</sql>
+
+	<select id="list" resultType="com.bianlitransf.biz.entity.ExchangeBill" >
+		select
+			<include refid="allFields" />
+		from exchange_bill
+		<where>
+			<include refid="comnWhere" />
+		</where>
+		<if test="orderBy != null" >
+			order by ${orderBy}
+			<if test="orderByDesc != null">
+				desc
+			</if>
+		</if>
+	</select>
+
+	<sql id="comnWhere">
+		<if test="id != null">
+			id = #{id}
+		</if>
+		<if test="ownerId != null">
+			 and owner_id = #{ownerId}
+		</if>
+		<if test="status != null">
+			 and status = #{status}
+		</if>
+		<if test="bankId != null">
+			 and bank_id = #{bankId}
+		</if>
+		<if test="score != null">
+			 and score = #{score}
+		</if>
+		<if test="money != null">
+			 and money = #{money}
+		</if>
+		<if test="createdTime != null">
+			 and created_time = #{createdTime}
+		</if>
+		<if test="confirmTime != null">
+			 and confirm_time = #{confirmTime}
+		</if>
+		<if test="confirmerId != null">
+			 and confirmer_id = #{confirmerId}
+		</if>
+		<if test="desc != null">
+			 and desc = #{desc}
+		</if>
+	</sql>
+
+	<select id="getByIds" resultType="com.bianlitransf.biz.entity.ExchangeBill" >
+		select <include refid="allFields" /> from exchange_bill where id in
+		<foreach collection="list" item="item" open="(" separator="," close=")" >
+			#{item}
+		</foreach>
+	</select>
+
+	<select id="get" resultType="com.bianlitransf.biz.entity.ExchangeBill" >
+		select <include refid="allFields" /> from exchange_bill where id = #{id}
+	</select>
+
+	<delete id="deleteById" parameterType="Long" >
+		delete from exchange_bill where id = #{id}
+	</delete>
+
+	<insert id="insert" parameterType="com.bianlitransf.biz.entity.ExchangeBill">
+		insert into exchange_bill(<include refid="insertFields" />)
+		values(
+			#{id},
+			#{ownerId},
+			#{status},
+			#{bankId},
+			#{score},
+			#{money},
+			#{createdTime},
+			#{confirmTime},
+			#{confirmerId},
+			#{desc}
+		)
+	</insert>
+
+	<insert id="insertBatch" parameterType="java.util.List" >
+		insert into exchange_bill(<include refid="insertFields" />)
+		values
+		<foreach collection="list" item="item" separator="," >
+			(
+				#{item.id},
+				#{item.ownerId},
+				#{item.status},
+				#{item.bankId},
+				#{item.score},
+				#{item.money},
+				#{item.createdTime},
+				#{item.confirmTime},
+				#{item.confirmerId},
+				#{item.desc}
+			)
+		</foreach>
+	</insert>
+
+	<update id="update" parameterType="com.bianlitransf.biz.entity.ExchangeBill" >
+		update exchange_bill set <include refid="setComn" /> where id = #{id}
+	</update>
+
+	<sql id="setComn" >
+		<if test="ownerId != null" >
+			owner_id = #{ownerId},
+		</if>
+		<if test="status != null" >
+			status = #{status},
+		</if>
+		<if test="bankId != null" >
+			bank_id = #{bankId},
+		</if>
+		<if test="score != null" >
+			score = #{score},
+		</if>
+		<if test="money != null" >
+			money = #{money},
+		</if>
+		<if test="createdTime != null" >
+			created_time = #{createdTime},
+		</if>
+		<if test="confirmTime != null" >
+			confirm_time = #{confirmTime},
+		</if>
+		<if test="confirmerId != null" >
+			confirmer_id = #{confirmerId},
+		</if>
+		<if test="desc != null" >
+			desc = #{desc}
+		</if>
+	</sql>
+</mapper>

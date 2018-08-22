@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bianlitransf.biz.dao.CapitalFlowDao">
+
+	<sql id="allFields">
+		id,
+		src_bill as srcBill,
+		owner_id as ownerId,
+		status,
+		biz_type as bizType,
+		in_out_type as inOutType,
+		money,
+		created_time as createdTime,
+		confirm_time as confirmTime,
+		confirmer_id as confirmerId,
+		desc
+	</sql>
+
+	<sql id="insertFields">
+		id,
+		src_bill,
+		owner_id,
+		status,
+		biz_type,
+		in_out_type,
+		money,
+		created_time,
+		confirm_time,
+		confirmer_id,
+		desc
+	</sql>
+
+	<select id="list" resultType="com.bianlitransf.biz.entity.CapitalFlow" >
+		select
+			<include refid="allFields" />
+		from capital_flow
+		<where>
+			<include refid="comnWhere" />
+		</where>
+		<if test="orderBy != null" >
+			order by ${orderBy}
+			<if test="orderByDesc != null">
+				desc
+			</if>
+		</if>
+	</select>
+
+	<sql id="comnWhere">
+		<if test="id != null">
+			id = #{id}
+		</if>
+		<if test="srcBill != null">
+			 and src_bill = #{srcBill}
+		</if>
+		<if test="ownerId != null">
+			 and owner_id = #{ownerId}
+		</if>
+		<if test="status != null">
+			 and status = #{status}
+		</if>
+		<if test="bizType != null">
+			 and biz_type = #{bizType}
+		</if>
+		<if test="inOutType != null">
+			 and in_out_type = #{inOutType}
+		</if>
+		<if test="money != null">
+			 and money = #{money}
+		</if>
+		<if test="createdTime != null">
+			 and created_time = #{createdTime}
+		</if>
+		<if test="confirmTime != null">
+			 and confirm_time = #{confirmTime}
+		</if>
+		<if test="confirmerId != null">
+			 and confirmer_id = #{confirmerId}
+		</if>
+		<if test="desc != null">
+			 and desc = #{desc}
+		</if>
+	</sql>
+
+	<select id="getByIds" resultType="com.bianlitransf.biz.entity.CapitalFlow" >
+		select <include refid="allFields" /> from capital_flow where id in
+		<foreach collection="list" item="item" open="(" separator="," close=")" >
+			#{item}
+		</foreach>
+	</select>
+
+	<select id="get" resultType="com.bianlitransf.biz.entity.CapitalFlow" >
+		select <include refid="allFields" /> from capital_flow where id = #{id}
+	</select>
+
+	<delete id="deleteById" parameterType="Long" >
+		delete from capital_flow where id = #{id}
+	</delete>
+
+	<insert id="insert" parameterType="com.bianlitransf.biz.entity.CapitalFlow">
+		insert into capital_flow(<include refid="insertFields" />)
+		values(
+			#{id},
+			#{srcBill},
+			#{ownerId},
+			#{status},
+			#{bizType},
+			#{inOutType},
+			#{money},
+			#{createdTime},
+			#{confirmTime},
+			#{confirmerId},
+			#{desc}
+		)
+	</insert>
+
+	<insert id="insertBatch" parameterType="java.util.List" >
+		insert into capital_flow(<include refid="insertFields" />)
+		values
+		<foreach collection="list" item="item" separator="," >
+			(
+				#{item.id},
+				#{item.srcBill},
+				#{item.ownerId},
+				#{item.status},
+				#{item.bizType},
+				#{item.inOutType},
+				#{item.money},
+				#{item.createdTime},
+				#{item.confirmTime},
+				#{item.confirmerId},
+				#{item.desc}
+			)
+		</foreach>
+	</insert>
+
+	<update id="update" parameterType="com.bianlitransf.biz.entity.CapitalFlow" >
+		update capital_flow set <include refid="setComn" /> where id = #{id}
+	</update>
+
+	<sql id="setComn" >
+		<if test="srcBill != null" >
+			src_bill = #{srcBill},
+		</if>
+		<if test="ownerId != null" >
+			owner_id = #{ownerId},
+		</if>
+		<if test="status != null" >
+			status = #{status},
+		</if>
+		<if test="bizType != null" >
+			biz_type = #{bizType},
+		</if>
+		<if test="inOutType != null" >
+			in_out_type = #{inOutType},
+		</if>
+		<if test="money != null" >
+			money = #{money},
+		</if>
+		<if test="createdTime != null" >
+			created_time = #{createdTime},
+		</if>
+		<if test="confirmTime != null" >
+			confirm_time = #{confirmTime},
+		</if>
+		<if test="confirmerId != null" >
+			confirmer_id = #{confirmerId},
+		</if>
+		<if test="desc != null" >
+			desc = #{desc}
+		</if>
+	</sql>
+</mapper>

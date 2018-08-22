@@ -25,6 +25,9 @@ public class ScoreExchange extends AbstractEntity<Long> {
 	/** 排序 */
 	private Integer disorder;
 
+	/** mark1 */
+	private String mark1;
+
 
 	/**
 	 * get the 积分兑换类型
@@ -88,6 +91,22 @@ public class ScoreExchange extends AbstractEntity<Long> {
 	 */
 	public void setDisorder(Integer disorder) {
 		this.disorder = disorder;
+	}
+
+	/**
+	 * get the mark1
+	 * @return mark1
+	 */
+	public String getMark1() {
+		return this.mark1;
+	}
+
+	/**
+	 * set the mark1
+	 * @param mark1
+	 */
+	public void setMark1(String mark1) {
+		this.mark1 = mark1;
 	}
 
 }

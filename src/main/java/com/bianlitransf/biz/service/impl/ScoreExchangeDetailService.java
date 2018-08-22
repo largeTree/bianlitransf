@@ -3,6 +3,7 @@ package com.bianlitransf.biz.service.impl;
 import java.util.List;
 import javax.annotation.Resource;
 import java.util.Date;
+import java.math.BigDecimal;
 
 import org.springframework.stereotype.Service;
 
@@ -11,9 +12,9 @@ import com.qiuxs.cuteframework.core.persistent.database.modal.BaseField;
 import com.qiuxs.cuteframework.core.persistent.database.service.AbstractDataPropertyService;
 import com.qiuxs.cuteframework.core.persistent.database.service.filter.IServiceFilter;
 import com.qiuxs.cuteframework.core.persistent.database.service.filter.impl.IdGenerateFilter;
-import com.bianlitransf.biz.dao.ScoreExchangeDao;
-import com.bianlitransf.biz.entity.ScoreExchange;
-import com.bianlitransf.biz.service.IScoreExchangeService;
+import com.bianlitransf.biz.dao.ScoreExchangeDetailDao;
+import com.bianlitransf.biz.entity.ScoreExchangeDetail;
+import com.bianlitransf.biz.service.IScoreExchangeDetailService;
 /**
  * 服务类
  *
@@ -21,24 +22,24 @@ import com.bianlitransf.biz.service.IScoreExchangeService;
  *
  */
 @Service
-public class ScoreExchangeService extends AbstractDataPropertyService<Long, ScoreExchange, ScoreExchangeDao> implements IScoreExchangeService {
+public class ScoreExchangeDetailService extends AbstractDataPropertyService<Long, ScoreExchangeDetail, ScoreExchangeDetailDao> implements IScoreExchangeDetailService {
 
-	private static final String TABLE_NAME = "score_exchange";
+	private static final String TABLE_NAME = "score_exchange_detail";
 
-	public ScoreExchangeService() {
-		super(Long.class, ScoreExchange.class, TABLE_NAME);
+	public ScoreExchangeDetailService() {
+		super(Long.class, ScoreExchangeDetail.class, TABLE_NAME);
 	}
 
 	@Resource
-	private ScoreExchangeDao scoreExchangeDao;
+	private ScoreExchangeDetailDao scoreExchangeDetailDao;
 
 	@Override
-	protected ScoreExchangeDao getDao() {
-		return this.scoreExchangeDao;
+	protected ScoreExchangeDetailDao getDao() {
+		return this.scoreExchangeDetailDao;
 	}
 
 	@Override
-	protected void initServiceFilters(List<IServiceFilter<Long, ScoreExchange>> serviceFilters) {
+	protected void initServiceFilters(List<IServiceFilter<Long, ScoreExchangeDetail>> serviceFilters) {
 		serviceFilters.add(new IdGenerateFilter<>(TABLE_NAME));
 	}
 
@@ -49,16 +50,19 @@ public class ScoreExchangeService extends AbstractDataPropertyService<Long, Scor
 		prop = new PropertyWrapper<Long>(new BaseField("id", "id", Long.class), null);
 		props.add(prop);
 
-		prop = new PropertyWrapper<Integer>(new BaseField("type", "积分兑换类型", Integer.class), null);
+		prop = new PropertyWrapper<Long>(new BaseField("classId", "积分兑换类目ID", Long.class), null);
 		props.add(prop);
 
-		prop = new PropertyWrapper<String>(new BaseField("iconUrl", "图标地址", String.class), null);
+		prop = new PropertyWrapper<Integer>(new BaseField("score", "所需积分数量", Integer.class), null);
 		props.add(prop);
 
-		prop = new PropertyWrapper<String>(new BaseField("name", "名称", String.class), null);
+		prop = new PropertyWrapper<String>(new BaseField("name", "兑换券名称", String.class), null);
 		props.add(prop);
 
-		prop = new PropertyWrapper<Integer>(new BaseField("disorder", "排序", Integer.class), null);
+		prop = new PropertyWrapper<BigDecimal>(new BaseField("price1", "普通会员价格", BigDecimal.class), null);
+		props.add(prop);
+
+		prop = new PropertyWrapper<BigDecimal>(new BaseField("price2", "贵宾会员价格", BigDecimal.class), null);
 		props.add(prop);
 
 		prop = new PropertyWrapper<Long>(new BaseField("createdBy", "创建人", Long.class), null);
@@ -71,9 +75,6 @@ public class ScoreExchangeService extends AbstractDataPropertyService<Long, Scor
 		props.add(prop);
 
 		prop = new PropertyWrapper<Date>(new BaseField("updatedTime", "更新时间", Date.class), null);
-		props.add(prop);
-
-		prop = new PropertyWrapper<String>(new BaseField("mark1", "mark1", String.class), null);
 		props.add(prop);
 
 	}

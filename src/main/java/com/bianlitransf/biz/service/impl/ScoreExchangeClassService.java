@@ -11,9 +11,9 @@ import com.qiuxs.cuteframework.core.persistent.database.modal.BaseField;
 import com.qiuxs.cuteframework.core.persistent.database.service.AbstractDataPropertyService;
 import com.qiuxs.cuteframework.core.persistent.database.service.filter.IServiceFilter;
 import com.qiuxs.cuteframework.core.persistent.database.service.filter.impl.IdGenerateFilter;
-import com.bianlitransf.biz.dao.ScoreExchangeDao;
-import com.bianlitransf.biz.entity.ScoreExchange;
-import com.bianlitransf.biz.service.IScoreExchangeService;
+import com.bianlitransf.biz.dao.ScoreExchangeClassDao;
+import com.bianlitransf.biz.entity.ScoreExchangeClass;
+import com.bianlitransf.biz.service.IScoreExchangeClassService;
 /**
  * 服务类
  *
@@ -21,24 +21,24 @@ import com.bianlitransf.biz.service.IScoreExchangeService;
  *
  */
 @Service
-public class ScoreExchangeService extends AbstractDataPropertyService<Long, ScoreExchange, ScoreExchangeDao> implements IScoreExchangeService {
+public class ScoreExchangeClassService extends AbstractDataPropertyService<Long, ScoreExchangeClass, ScoreExchangeClassDao> implements IScoreExchangeClassService {
 
-	private static final String TABLE_NAME = "score_exchange";
+	private static final String TABLE_NAME = "score_exchange_class";
 
-	public ScoreExchangeService() {
-		super(Long.class, ScoreExchange.class, TABLE_NAME);
+	public ScoreExchangeClassService() {
+		super(Long.class, ScoreExchangeClass.class, TABLE_NAME);
 	}
 
 	@Resource
-	private ScoreExchangeDao scoreExchangeDao;
+	private ScoreExchangeClassDao scoreExchangeClassDao;
 
 	@Override
-	protected ScoreExchangeDao getDao() {
-		return this.scoreExchangeDao;
+	protected ScoreExchangeClassDao getDao() {
+		return this.scoreExchangeClassDao;
 	}
 
 	@Override
-	protected void initServiceFilters(List<IServiceFilter<Long, ScoreExchange>> serviceFilters) {
+	protected void initServiceFilters(List<IServiceFilter<Long, ScoreExchangeClass>> serviceFilters) {
 		serviceFilters.add(new IdGenerateFilter<>(TABLE_NAME));
 	}
 
@@ -49,16 +49,19 @@ public class ScoreExchangeService extends AbstractDataPropertyService<Long, Scor
 		prop = new PropertyWrapper<Long>(new BaseField("id", "id", Long.class), null);
 		props.add(prop);
 
-		prop = new PropertyWrapper<Integer>(new BaseField("type", "积分兑换类型", Integer.class), null);
-		props.add(prop);
-
-		prop = new PropertyWrapper<String>(new BaseField("iconUrl", "图标地址", String.class), null);
+		prop = new PropertyWrapper<Long>(new BaseField("scoreExid", "积分兑换ID", Long.class), null);
 		props.add(prop);
 
 		prop = new PropertyWrapper<String>(new BaseField("name", "名称", String.class), null);
 		props.add(prop);
 
-		prop = new PropertyWrapper<Integer>(new BaseField("disorder", "排序", Integer.class), null);
+		prop = new PropertyWrapper<String>(new BaseField("iconUrl", "图标地址", String.class), null);
+		props.add(prop);
+
+		prop = new PropertyWrapper<Integer>(new BaseField("resType", "资源类型，链接或html内容", Integer.class), null);
+		props.add(prop);
+
+		prop = new PropertyWrapper<String>(new BaseField("target", "具体内容，链接或具体html内容", String.class), null);
 		props.add(prop);
 
 		prop = new PropertyWrapper<Long>(new BaseField("createdBy", "创建人", Long.class), null);
@@ -71,9 +74,6 @@ public class ScoreExchangeService extends AbstractDataPropertyService<Long, Scor
 		props.add(prop);
 
 		prop = new PropertyWrapper<Date>(new BaseField("updatedTime", "更新时间", Date.class), null);
-		props.add(prop);
-
-		prop = new PropertyWrapper<String>(new BaseField("mark1", "mark1", String.class), null);
 		props.add(prop);
 
 	}

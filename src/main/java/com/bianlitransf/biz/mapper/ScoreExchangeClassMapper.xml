@@ -1,37 +1,37 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.bianlitransf.biz.dao.ScoreExchangeDao">
+<mapper namespace="com.bianlitransf.biz.dao.ScoreExchangeClassDao">
 
 	<sql id="allFields">
 		id,
-		type,
-		icon_url as iconUrl,
+		score_exid as scoreExid,
 		name,
-		disorder,
+		icon_url as iconUrl,
+		res_type as resType,
+		target,
 		created_by as createdBy,
 		created_time as createdTime,
 		updated_by as updatedBy,
-		updated_time as updatedTime,
-		mark1
+		updated_time as updatedTime
 	</sql>
 
 	<sql id="insertFields">
 		id,
-		type,
-		icon_url,
+		score_exid,
 		name,
-		disorder,
+		icon_url,
+		res_type,
+		target,
 		created_by,
 		created_time,
 		updated_by,
-		updated_time,
-		mark1
+		updated_time
 	</sql>
 
-	<select id="list" resultType="com.bianlitransf.biz.entity.ScoreExchange" >
+	<select id="list" resultType="com.bianlitransf.biz.entity.ScoreExchangeClass" >
 		select
 			<include refid="allFields" />
-		from score_exchange
+		from score_exchange_class
 		<where>
 			<include refid="comnWhere" />
 		</where>
@@ -47,17 +47,20 @@
 		<if test="id != null">
 			id = #{id}
 		</if>
-		<if test="type != null">
-			 and type = #{type}
-		</if>
-		<if test="iconUrl != null">
-			 and icon_url = #{iconUrl}
+		<if test="scoreExid != null">
+			 and score_exid = #{scoreExid}
 		</if>
 		<if test="name != null">
 			 and name = #{name}
 		</if>
-		<if test="disorder != null">
-			 and disorder = #{disorder}
+		<if test="iconUrl != null">
+			 and icon_url = #{iconUrl}
+		</if>
+		<if test="resType != null">
+			 and res_type = #{resType}
+		</if>
+		<if test="target != null">
+			 and target = #{target}
 		</if>
 		<if test="createdBy != null">
 			 and created_by = #{createdBy}
@@ -71,77 +74,77 @@
 		<if test="updatedTime != null">
 			 and updated_time = #{updatedTime}
 		</if>
-		<if test="mark1 != null">
-			 and mark1 = #{mark1}
-		</if>
 	</sql>
 
-	<select id="getByIds" resultType="com.bianlitransf.biz.entity.ScoreExchange" >
-		select <include refid="allFields" /> from score_exchange where id in
+	<select id="getByIds" resultType="com.bianlitransf.biz.entity.ScoreExchangeClass" >
+		select <include refid="allFields" /> from score_exchange_class where id in
 		<foreach collection="list" item="item" open="(" separator="," close=")" >
 			#{item}
 		</foreach>
 	</select>
 
-	<select id="get" resultType="com.bianlitransf.biz.entity.ScoreExchange" >
-		select <include refid="allFields" /> from score_exchange where id = #{id}
+	<select id="get" resultType="com.bianlitransf.biz.entity.ScoreExchangeClass" >
+		select <include refid="allFields" /> from score_exchange_class where id = #{id}
 	</select>
 
 	<delete id="deleteById" parameterType="Long" >
-		delete from score_exchange where id = #{id}
+		delete from score_exchange_class where id = #{id}
 	</delete>
 
-	<insert id="insert" parameterType="com.bianlitransf.biz.entity.ScoreExchange">
-		insert into score_exchange(<include refid="insertFields" />)
+	<insert id="insert" parameterType="com.bianlitransf.biz.entity.ScoreExchangeClass">
+		insert into score_exchange_class(<include refid="insertFields" />)
 		values(
 			#{id},
-			#{type},
-			#{iconUrl},
+			#{scoreExid},
 			#{name},
-			#{disorder},
+			#{iconUrl},
+			#{resType},
+			#{target},
 			#{createdBy},
 			#{createdTime},
 			#{updatedBy},
-			#{updatedTime},
-			#{mark1}
+			#{updatedTime}
 		)
 	</insert>
 
 	<insert id="insertBatch" parameterType="java.util.List" >
-		insert into score_exchange(<include refid="insertFields" />)
+		insert into score_exchange_class(<include refid="insertFields" />)
 		values
 		<foreach collection="list" item="item" separator="," >
 			(
 				#{item.id},
-				#{item.type},
-				#{item.iconUrl},
+				#{item.scoreExid},
 				#{item.name},
-				#{item.disorder},
+				#{item.iconUrl},
+				#{item.resType},
+				#{item.target},
 				#{item.createdBy},
 				#{item.createdTime},
 				#{item.updatedBy},
-				#{item.updatedTime},
-				#{item.mark1}
+				#{item.updatedTime}
 			)
 		</foreach>
 	</insert>
 
-	<update id="update" parameterType="com.bianlitransf.biz.entity.ScoreExchange" >
-		update score_exchange set <include refid="setComn" /> where id = #{id}
+	<update id="update" parameterType="com.bianlitransf.biz.entity.ScoreExchangeClass" >
+		update score_exchange_class set <include refid="setComn" /> where id = #{id}
 	</update>
 
 	<sql id="setComn" >
-		<if test="type != null" >
-			type = #{type},
-		</if>
-		<if test="iconUrl != null" >
-			icon_url = #{iconUrl},
+		<if test="scoreExid != null" >
+			score_exid = #{scoreExid},
 		</if>
 		<if test="name != null" >
 			name = #{name},
 		</if>
-		<if test="disorder != null" >
-			disorder = #{disorder},
+		<if test="iconUrl != null" >
+			icon_url = #{iconUrl},
+		</if>
+		<if test="resType != null" >
+			res_type = #{resType},
+		</if>
+		<if test="target != null" >
+			target = #{target},
 		</if>
 		<if test="createdBy != null" >
 			created_by = #{createdBy},
@@ -153,10 +156,7 @@
 			updated_by = #{updatedBy},
 		</if>
 		<if test="updatedTime != null" >
-			updated_time = #{updatedTime},
-		</if>
-		<if test="mark1 != null" >
-			mark1 = #{mark1}
+			updated_time = #{updatedTime}
 		</if>
 	</sql>
 </mapper>
