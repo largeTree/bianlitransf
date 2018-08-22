@@ -44,29 +44,41 @@ CREATE TABLE `capital_flow`(
 );
 CREATE INDEX `idx_capital_flow_owner_id_status` ON `capital_flow`(`owner_id`,`status`);
 
--- 资源
-CREATE TABLE `resources`(
+-- 积分兑换
+CREATE TABLE `score_exchange`(
 	`id` BIGINT(20) NOT NULL PRIMARY KEY COMMENT'',
-	`type_cat` TINYINT(3) NOT NULL COMMENT'资源大类',
-	`type` TINYINT(4) NOT NULL COMMENT'资源类型',
+	`type` TINYINT(4) NOT NULL COMMENT'积分兑换类型',
 	`icon_url` VARCHAR(1024) NOT NULL COMMENT'图标地址',
-	`name` VARCHAR(64) NOT NULL COMMENT'资源名',
+	`name` VARCHAR(64) NOT NULL COMMENT'名称',
 	`created_by` BIGINT(20) NOT NULL COMMENT'创建人',
 	`created_time` DATETIME NOT NULL COMMENT'创建时间',
 	`updated_by` BIGINT(20) NOT NULL COMMENT'更新人',
 	`updated_time` DATETIME NOT NULL COMMENT'更新时间'
 );
 
--- 资源明细
-CREATE TABLE `resources_details`(
+-- 积分兑换类目
+CREATE TABLE `score_exchange_class`(
 	`id` BIGINT(20) NOT NULL PRIMARY KEY,
-	`res_id` BIGINT(20) NOT NULL COMMENT'资源ID',
-	`rel_url` VARCHAR(128) NOT NULL COMMENT'相对路径',
-	`res_type` TINYINT(3) NOT NULL COMMENT'资源类型',
-	`target` TEXT NOT NULL COMMENT'资源目标',
+	`score_exid` BIGINT(20) NOT NULL COMMENT'积分兑换ID',
+	`res_type` TINYINT(3) NOT NULL COMMENT'资源类型，链接或html内容',
+	`target` TEXT NOT NULL COMMENT'具体内容，链接或具体html内容',
 	`created_by` BIGINT(20) NOT NULL COMMENT'创建人',
 	`created_time` DATETIME NOT NULL COMMENT'创建时间',
 	`updated_by` BIGINT(20) NOT NULL COMMENT'更新人',
 	`updated_time` DATETIME NOT NULL COMMENT'更新时间'
 );
 CREATE INDEX `idx_resources_details_rel_url` ON `resources_details`(`rel_url`);
+
+-- 积分兑换类目明细
+CREATE TABLE `score_exchange_detail`(
+	`id` BIGINT(20) NOT NULL PRIMARY KEY,
+	`class_id` BIGINT(20) NOT NULL COMMENT'积分兑换类目ID',
+	`score` INT(11) NOT NULL COMMENT'所需积分数量',
+	`name` VARCHAR(64) NOT NULL COMMENT'兑换券名称',
+	`price` JSON NOT NULL COMMENT'价格明细，多个等级多个价格',
+	`created_by` BIGINT(20) NOT NULL COMMENT'创建人',
+	`created_time` DATETIME NOT NULL COMMENT'创建时间',
+	`updated_by` BIGINT(20) NOT NULL COMMENT'更新人',
+	`updated_time` DATETIME NOT NULL COMMENT'更新时间'
+);
+CREATE INDEX `idx_score_exchange_detail_class_id` ON score_exchange_detail(`class_id`);
