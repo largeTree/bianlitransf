@@ -1,14 +1,92 @@
 <!DOCTYPE html>
 <html>
-<head>
-<meta charset="UTF-8">
-<title>member</title>
-<script type="text/javascript" src="../javascripts/common.js"></script>
 
+<head>
+    <meta charset="UTF-8">
+    <meta content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no" name="viewport">
+    <meta content="yes" name="apple-mobile-web-app-capable">
+    <meta content="black" name="apple-mobile-web-app-status-bar-style">
+    <meta content="telephone=no" name="format-detection">
+    <meta content="email=no" name="format-detection">
+    <title>会员</title>
+    <link href="https://cdn.bootcss.com/amazeui/2.7.2/css/amazeui.min.css" rel="stylesheet">
+    <script src="http://libs.baidu.com/jquery/1.9.1/jquery.min.js"></script>
+    <!-- <script src="https://cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script>
+    <script src="https://cdn.bootcss.com/amazeui/2.7.2/js/amazeui.min.js"></script> -->
+    <link href="../css/common.css" rel="stylesheet">
+    <script type="text/javascript" src="../javascripts/common.js"></script>
+    <style type="text/css">
+    body {
+        font-family: \\5FAE\8F6F\96C5\9ED1, Helvetica Neue, Helvetica, STHeiTi, sans-serif;
+        background-color: #FAFAFA;
+        text-align: center;
+        padding: 0px;
+        overflow-x: hidden;
+    }
+
+    .member-type-container {
+        height: 20rem;
+        background-color: #FFFFFF;
+        padding: 0px;
+    }
+
+    .member-type-container .member-type-sub-container {
+    	position: absolute;
+        width: 300%;
+        height: 100%;
+    }
+
+    .member-type-container .member-type-sub-container .member-type-item {
+        height: 20rem;
+        display: inline;
+        margin: 0px;
+        float: left;
+    }
+    </style>
 </head>
-<body>会员 会员 会员
+
+<body>
+    <div class="member-type-container">
+        <div class="member-type-sub-container">
+            <div class="member-type-item" style="background-color: red;">
+                内容1
+            </div>
+            <div class="member-type-item" style="background-color: green;">
+                内容1
+            </div>
+            <div class="member-type-item" style="background-color: black;">
+                内容1
+            </div>
+        </div>
+    </div>
 </body>
 <script type="text/javascript">
-	document.body.append(JSON.stringify(getQueryParmas()));
+$(() => {
+    $('.member-type-item').width(window.innerWidth);
+
+    var winWidth = window.innerWidth;
+
+    var startX;
+    $('.member-type-item').on('touchstart', function(event) {
+        startX = event.originalEvent.changedTouches[0].pageX;
+        console.log('startX' + startX);
+    });
+
+    $('.member-type-item').on('touchmove', function(event) {
+    	var movedX = event.originalEvent.targetTouches[0].pageX;
+        console.log('movedX = ' + movedX);
+        var x = movedX - startX;
+        $('.member-type-sub-container').css('left', x);
+    });
+
+    $('.member-type-item').on('touchend', function(event) {
+        var moveEndX = event.originalEvent.changedTouches[0].pageX;
+        var x = moveEndX - startX;
+        console.log('moveEndX = ' + moveEndX);
+        console.log('x = ' + x);
+        console.log('百分比：' + (Math.abs(x) / winWidth));
+    });
+});
 </script>
+
 </html>

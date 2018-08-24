@@ -1,14 +1,99 @@
 <!DOCTYPE html>
 <html>
-<head>
-<meta charset="UTF-8">
-<title>credit card</title>
-<script type="text/javascript" src="../javascripts/common.js"></script>
 
+<head>
+    <meta charset="UTF-8">
+    <meta content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no" name="viewport">
+    <meta content="yes" name="apple-mobile-web-app-capable">
+    <meta content="black" name="apple-mobile-web-app-status-bar-style">
+    <meta content="telephone=no" name="format-detection">
+    <meta content="email=no" name="format-detection">
+    <title>信用卡推广</title>
+    <link href="https://cdn.bootcss.com/amazeui/2.7.2/css/amazeui.min.css" rel="stylesheet">
+    <script src="http://libs.baidu.com/jquery/1.9.1/jquery.min.js"></script>
+    <!-- <script src="https://cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script>
+    <script src="https://cdn.bootcss.com/amazeui/2.7.2/js/amazeui.min.js"></script> -->
+    <link href="../css/common.css" rel="stylesheet">
+    <script type="text/javascript" src="../javascripts/common.js"></script>
+    <style type="text/css">
+    body {
+        font-family: \\5FAE\8F6F\96C5\9ED1, Helvetica Neue, Helvetica, STHeiTi, sans-serif;
+        background-color: #F8F8FF;
+    }
+
+    .title {
+        background-color: #F8F8FF;
+        line-height: 6rem;
+        padding-left: 2rem;
+        letter-spacing: 1rem;
+        font-weight: 600;
+    }
+
+    .title h2 {
+    	margin:0px;
+    }
+
+    .bank_container {
+        overflow-y: scroll;
+    }
+
+    .bank_container hr {
+        margin: 3px;
+    }
+
+    .bank_container .bank_item {
+        background-color: #FFFFFF;
+        border-bottom: 1px solid #CCCCCC;
+        padding: 1rem;
+    }
+
+    .bank_container .bank_item img {
+        margin: 0px 1rem 0px 0px;
+        width: 5rem;
+        height: 5rem;
+        border: 0px;
+    }
+
+    .bank_container .bank_item span {
+    }
+    </style>
 </head>
-<body>信用卡推广 信用卡推广 信用卡推广
+
+<body>
+    <div class="title">
+        <h2>信用卡推广</h2>
+    </div>
+    <div class="bank_container">
+    </div>
 </body>
 <script type="text/javascript">
-	document.body.append(JSON.stringify(getQueryParmas()));
+$(() => {
+    var containerHeigth = window.innerHeight - $('.title').height();
+    $('.bank_container').height(containerHeigth);
+
+    var datas = [];
+    for (var i = 0; i < 10; i++) {
+        datas[i] = {
+            iconUrl: '../imgs/chain_bank.png',
+            name: '中国银行' + i
+        };
+    }
+
+    var $container = $('.bank_container');
+    for (var i = 0; i < datas.length; i++) {
+    	var data = datas[i];
+        $container.append('<div class="bank_item" ><img src="' + data.iconUrl + '" /><span>' + data.name + '</span></div>');
+    }
+
+    $('.bank_item').on('touchstart', function(event) {
+    	$(this).css('background-color','#F7F7F7');
+    });
+
+    $('.bank_item').on('touchend', function(event) {
+    	$(this).css('background-color','');
+    });
+
+});
 </script>
+
 </html>

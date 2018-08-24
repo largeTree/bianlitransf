@@ -1,14 +1,196 @@
 <!DOCTYPE html>
 <html>
-<head>
-<meta charset="UTF-8">
-<title>score</title>
-<script type="text/javascript" src="../javascripts/common.js"></script>
 
+<head>
+    <meta charset="UTF-8">
+    <meta content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no" name="viewport">
+    <meta content="yes" name="apple-mobile-web-app-capable">
+    <meta content="black" name="apple-mobile-web-app-status-bar-style">
+    <meta content="telephone=no" name="format-detection">
+    <meta content="email=no" name="format-detection">
+    <title>积分</title>
+    <link href="https://cdn.bootcss.com/amazeui/2.7.2/css/amazeui.min.css" rel="stylesheet">
+    <script src="http://libs.baidu.com/jquery/1.9.1/jquery.min.js"></script>
+    <script src="https://cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script>
+    <script src="https://cdn.bootcss.com/amazeui/2.7.2/js/amazeui.min.js"></script>
+    <link href="../css/common.css" rel="stylesheet">
+    <script type="text/javascript" src="../javascripts/common.js"></script>
+    <style type="text/css">
+    body {
+        font-family: \\5FAE\8F6F\96C5\9ED1, Helvetica Neue, Helvetica, STHeiTi, sans-serif;
+        background-color: #F7F7F7;
+    }
+
+    header {
+        position: fixed;
+        left: 0;
+        top: 0;
+        height: 4rem;
+        z-index: 1;
+        background-color: #FF99CC;
+    }
+
+    .am-slider .am-slides img {
+        height: 20rem;
+    }
+
+    .am-slider-default {
+        margin: initial;
+    }
+
+    .am-slider-default .am-control-nav {
+        bottom: 15px;
+    }
+
+    .am-slider-default .am-control-nav li a.am-active {
+        background-color: #FF99CC;
+        box-shadow: inset 0 0 3px rgba(255, 153, 204, 0.3);
+    }
+
+    .split-line {
+        height: 1rem;
+    }
+    /*
+        中间银行网格
+    */
+
+    .bank-page {
+        position: relative;
+        height: 23rem;
+        width: 90%;
+        background-color: #FFFFFF;
+        border-radius: 1rem;
+        top: 1rem;
+        margin: 0px auto;
+        overflow-y: hidden;
+        overflow-x: scroll;
+        background: -webkit-linear-gradient(#FFFFFF, #FFFFFF, #FFF0F5);
+        /* Safari 5.1 - 6.0 */
+        background: -o-linear-gradient(#FFFFFF, #FFFFFF, #FFF0F5);
+        /* Opera 11.1 - 12.0 */
+        background: -moz-linear-gradient(#FFFFFF, #FFFFFF, #FFF0F5);
+        /* Firefox 3.6 - 15 */
+        background: linear-gradient(#FFFFFF, #FFFFFF, #FFF0F5);
+        /* 标准的语法 */
+    }
+
+    .bank-page .row {
+        z-index: 3;
+    }
+
+    .bank-page .item {
+        margin: 5px;
+        border: 1px solid #CCCCCC;
+        float: left;
+        text-align: center;
+        border-radius: 1rem;
+    }
+
+    .bank-page .item img {
+        display: block;
+        margin: 0px auto;
+        width: 5rem;
+        height: 5rem;
+    }
+
+    .bank_title {
+        position: absolute;
+        left: 4rem;
+        z-index: 2;
+        background-color: #F8F8FF;
+        padding: 0.3rem 1rem;
+        border-radius: 1rem;
+        letter-spacing: 0.3rem;
+        background: -webkit-linear-gradient(#FFFFFF, #FFF0F5, #FFFFFF);
+        /* Safari 5.1 - 6.0 */
+        background: -o-linear-gradient(#FFFFFF, #FFF0F5, #FFFFFF);
+        /* Opera 11.1 - 12.0 */
+        background: -moz-linear-gradient(#FFFFFF, #FFF0F5, #FFFFFF);
+        /* Firefox 3.6 - 15 */
+        background: linear-gradient(#FFFFFF, #FFF0F5, #FFFFFF);
+        /* 标准的语法 */
+    }
+    </style>
 </head>
+
 <body>
-	<div>
-		
-	</div>
+    <div data-am-widget="slider" class="am-slider am-slider-a1" data-am-slider='{"directionNav":false}'>
+        <ul class="am-slides">
+            <li>
+                <img src="http://s.amazeui.org/media/i/demos/bing-1.jpg">
+            </li>
+            <li>
+                <img src="http://s.amazeui.org/media/i/demos/bing-2.jpg">
+            </li>
+            <li>
+                <img src="http://s.amazeui.org/media/i/demos/bing-3.jpg">
+            </li>
+            <li>
+                <img src="http://s.amazeui.org/media/i/demos/bing-4.jpg">
+            </li>
+        </ul>
+    </div>
+    <article>
+        <div class="split-line">
+        </div>
+        <div class="bank_title">银行兑换专区</div>
+        <div class="bank-page">
+            <div class="row" style="position: absolute;top:2rem;">
+                <div class="item">
+                    <img src="../imgs/chain_bank.png" />
+                    <span>中国银行</span>
+                </div>
+                <div class="item">
+                    <img src="../imgs/chain_bank.png" />
+                    <span>中国银行</span>
+                </div>
+                <div class="item">
+                    <img src="../imgs/chain_bank.png" />
+                    <span>中国银行</span>
+                </div>
+                <div class="item">
+                    <img src="../imgs/chain_bank.png" />
+                    <span>中国银行</span>
+                </div>
+                <div class="item">
+                    <img src="../imgs/chain_bank.png" />
+                    <span>中国银行</span>
+                </div>
+            </div>
+            <div class="row" style="position: absolute;top: 11rem">
+                <div class="item">
+                    <img src="../imgs/chain_bank.png" />
+                    <span>中国银行</span>
+                </div>
+                <div class="item">
+                    <img src="../imgs/chain_bank.png" />
+                    <span>中国银行</span>
+                </div>
+                <div class="item">
+                    <img src="../imgs/chain_bank.png" />
+                    <span>中国银行</span>
+                </div>
+                <div class="item">
+                    <img src="../imgs/chain_bank.png" />
+                    <span>中国银行</span>
+                </div>
+            </div>
+        </div>
+    </article>
 </body>
+<script type="text/javascript">
+$(() => {
+
+    var itemCount = 9;
+    var rowCount = Math.ceil(9 / 2);
+
+    var itemWidth = ($(".bank-page")[0].scrollWidth / 4);
+
+    $(".row").width(rowCount * (itemWidth + (5 * 2) + (1 * 2)));
+
+    $(".bank-page .item").width(itemWidth);
+
+});
+</script>
+
 </html>
