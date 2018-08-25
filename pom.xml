@@ -54,7 +54,7 @@
 	</dependencies>
 
 	<build>
-		<finalName>bialitransf</finalName>
+		<finalName>bianlitransf</finalName>
 		<plugins>
 			<plugin>
 				<artifactId>maven-war-plugin</artifactId>
