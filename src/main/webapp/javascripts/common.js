@@ -9,3 +9,12 @@ function getQueryParmas() {
     }
     return params;
 }
+
+// 页面初始化事件
+$(function() {
+    var $title = $('.title');
+    var titleHeight = $title.length > 0 ? $title.height() : 0;
+    var containerHeigth = window.innerHeight - titleHeight;
+    $('.content-container').height(containerHeigth);
+    console.log('init success...');
+});

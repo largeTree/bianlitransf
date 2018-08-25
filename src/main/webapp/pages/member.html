@@ -9,83 +9,405 @@
     <meta content="telephone=no" name="format-detection">
     <meta content="email=no" name="format-detection">
     <title>会员</title>
-    <link href="https://cdn.bootcss.com/amazeui/2.7.2/css/amazeui.min.css" rel="stylesheet">
-    <script src="http://libs.baidu.com/jquery/1.9.1/jquery.min.js"></script>
+    <link href="https://cdn.bootcss.com/amazeui/2.7.2/css/amazeui.css" rel="stylesheet">
+    <script src="https://cdn.bootcss.com/jquery/2.0.0/jquery.min.js"></script>
     <!-- <script src="https://cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script>
     <script src="https://cdn.bootcss.com/amazeui/2.7.2/js/amazeui.min.js"></script> -->
     <link href="../css/common.css" rel="stylesheet">
+    <link href="../javascripts/plugins/pages-plugin.css" rel="stylesheet">
+    <script type="text/javascript" src="../javascripts/plugins/pages-plugin.js"></script>
     <script type="text/javascript" src="../javascripts/common.js"></script>
+    <script type="text/javascript">
+    var datas = [{
+        title: '用户',
+        qas: [{
+            q: '如何成为用户?',
+            a: '注册即成为用户'
+        }, {
+            q: '用户有什么权益?',
+            a: '1.积分收益:自己可按照用户价兑换积分<br />2.同级分润:直接邀请的好友兑换收益的1%'
+        }]
+    }, {
+        title: '会员',
+        qas: [{
+            q: '如何成为会员?',
+            a: '兑换积分达到3000000,即可申请成为会员'
+        }, {
+            q: '会员有什么权益?',
+            a: '1.积分收益:自己可按照会员价兑换积分<br />2.同级分润:直接邀请的好友兑换收益的1%'
+        }]
+    }, {
+        title: '代理商',
+        qas: [{
+            q: '如何成为代理商?',
+            a: '兑换积分达到10000000,即可申请成为代理商'
+        }, {
+            q: '会员有什么权益?',
+            a: '1.积分收益:自己可按照会员价兑换积分<br />2.同级分润:直接邀请的好友兑换收益的1%'
+        }]
+    }];
+    </script>
     <style type="text/css">
     body {
         font-family: \\5FAE\8F6F\96C5\9ED1, Helvetica Neue, Helvetica, STHeiTi, sans-serif;
-        background-color: #FAFAFA;
-        text-align: center;
+        background-color: #F5F5F5;
         padding: 0px;
         overflow-x: hidden;
     }
 
     .member-type-container {
         height: 20rem;
-        background-color: #FFFFFF;
+        background-color: #CCCCCC;
         padding: 0px;
+        overflow: hidden;
     }
 
-    .member-type-container .member-type-sub-container {
-    	position: absolute;
-        width: 300%;
-        height: 100%;
+    .member-type-container .item {
+        background-color: #FFFFFF;
     }
 
-    .member-type-container .member-type-sub-container .member-type-item {
-        height: 20rem;
+    .member-type-desc {
+        margin: 0px auto;
+        margin-top: 1rem;
+        background-color: #FFFFFF;
+        width: 90%;
+        border-radius: 1rem;
+    }
+
+    .member-type-desc .desc-title {
+        padding: 1rem;
+        line-height: 2rem;
+    }
+
+    .member-type-desc .desc-title .triangle {
         display: inline;
+        width: 0;
+        height: 0;
+        border: 0.8rem solid red;
+        border-top-color: #737373;
+        border-bottom: none;
+        border-left-color: transparent;
+        border-right-color: transparent;
+        float: right;
+        margin-top: 0.5rem;
+        margin-right: 1rem;
+    }
+
+    .transform-180 {
+        -ms-transform: rotate(180deg);
+        /* IE 9 */
+        -moz-transform: rotate(180deg);
+        /* Firefox */
+        -webkit-transform: rotate(180deg);
+        /* Safari and Chrome */
+        -o-transform: rotate(180deg);
+        /* Opera */
+        transform: rotate(180deg);
+    }
+
+    .member-type-desc .desc-detail {
+        background-color: #FAFAFA;
+        padding: 1rem;
+    }
+
+    .member-type-desc .desc-detail hr {
         margin: 0px;
-        float: left;
+    }
+
+    .member-type-desc .desc-detail .qa-container {
+        padding: 1rem;
+    }
+
+    .member-type-desc .desc-detail .qa-container .q {
+        font-weight: 600;
+    }
+
+    .member-type-desc .desc-detail .qa-container .a {
+        color: #CCCCCC;
+        padding-left: 1rem;
+    }
+
+    .transf {
+        margin: 0px auto;
+        width: 90%;
+        border-radius: 1rem;
+        text-align: center;
+        margin-top: 1rem;
+        background-color: #FAFAFA;
+    }
+
+    .transf .transf-title {
+        color: #7B68EE;
+        padding: 1rem;
+    }
+
+    .transf table {
+        width: 95%;
+        font-size: 12px;
+        margin: 0px auto;
+    }
+
+    .transf table thead {
+        border: 0px;
+        color: #7B68EE;
+    }
+
+    .transf table tbody {
+        border: 0.5px solid #CCCCCC;
+        color: #CCCCCC;
+    }
+
+    .transf table tbody td {
+        border: 0.5px solid #CCCCCC;
+        padding: 5px;
     }
     </style>
 </head>
 
 <body>
-    <div class="member-type-container">
-        <div class="member-type-sub-container">
-            <div class="member-type-item" style="background-color: red;">
-                内容1
+    <div class="title">
+        <h2>会员</h2>
+    </div>
+    <div class="content-container">
+        <div class="member-type-container pages-plugin">
+            <div class="item-container">
+                <div class="item page-item">
+                    <img width="100%" height="100%" src="https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=4087713034,4173182105&fm=27&gp=0.jpg">
+                </div>
+                <div class="item page-item">
+                    <img width="100%" height="100%" src="https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=1267202258,3173270056&fm=27&gp=0.jpg">
+                </div>
+                <div class="item page-item">
+                    <img width="100%" height="100%" src="https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=2418487131,1104097613&fm=27&gp=0.jpg">
+                </div>
             </div>
-            <div class="member-type-item" style="background-color: green;">
-                内容1
+        </div>
+        <div class="member-type-desc">
+            <div class="desc-title">
+                <span></span>
+                <div class="triangle transform-180">
+                </div>
             </div>
-            <div class="member-type-item" style="background-color: black;">
-                内容1
+            <div class="desc-detail">
             </div>
+        </div>
+        <div class="transf">
+            <div class="transf-title">
+                积分兑换价格(单位：元/万)
+            </div>
+            <table cellpadding="0" cellspacing="0">
+                <thead>
+                    <tr>
+                        <td>银行</td>
+                        <td>用户</td>
+                        <td>会员</td>
+                        <td>黄金会员</td>
+                        <td>审核周期</td>
+                        <td>起兑单位</td>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>建行车卡</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td>秒审</td>
+                        <td>25000</td>
+                    </tr>
+                    <tr>
+                        <td>建行车卡</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td>秒审</td>
+                        <td>25000</td>
+                    </tr>
+                    <tr>
+                        <td>建行车卡</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td>秒审</td>
+                        <td>25000</td>
+                    </tr>
+                    <tr>
+                        <td>建行车卡</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td>秒审</td>
+                        <td>25000</td>
+                    </tr>
+                    <tr>
+                        <td>建行车卡</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td>秒审</td>
+                        <td>25000</td>
+                    </tr>
+                    <tr>
+                        <td>建行车卡</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td>秒审</td>
+                        <td>25000</td>
+                    </tr>
+                    <tr>
+                        <td>建行车卡</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td>秒审</td>
+                        <td>25000</td>
+                    </tr>
+                    <tr>
+                        <td>建行车卡</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td>秒审</td>
+                        <td>25000</td>
+                    </tr>
+                    <tr>
+                        <td>建行车卡</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td>秒审</td>
+                        <td>25000</td>
+                    </tr>
+                    <tr>
+                        <td>建行车卡</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td>秒审</td>
+                        <td>25000</td>
+                    </tr>
+                    <tr>
+                        <td>建行车卡</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td>秒审</td>
+                        <td>25000</td>
+                    </tr>
+                    <tr>
+                        <td>建行车卡</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td>秒审</td>
+                        <td>25000</td>
+                    </tr>
+                    <tr>
+                        <td>建行车卡</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td>秒审</td>
+                        <td>25000</td>
+                    </tr>
+                    <tr>
+                        <td>建行车卡</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td>秒审</td>
+                        <td>25000</td>
+                    </tr>
+                    <tr>
+                        <td>建行车卡</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td>秒审</td>
+                        <td>25000</td>
+                    </tr>
+                    <tr>
+                        <td>建行车卡</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td>秒审</td>
+                        <td>25000</td>
+                    </tr>
+                    <tr>
+                        <td>建行车卡</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td>秒审</td>
+                        <td>25000</td>
+                    </tr>
+                    <tr>
+                        <td>建行车卡</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td>秒审</td>
+                        <td>25000</td>
+                    </tr>
+                    <tr>
+                        <td>建行车卡</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td>秒审</td>
+                        <td>25000</td>
+                    </tr>
+                    <tr>
+                        <td>建行车卡</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td>秒审</td>
+                        <td>25000</td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
     </div>
 </body>
 <script type="text/javascript">
 $(() => {
-    $('.member-type-item').width(window.innerWidth);
-
-    var winWidth = window.innerWidth;
-
-    var startX;
-    $('.member-type-item').on('touchstart', function(event) {
-        startX = event.originalEvent.changedTouches[0].pageX;
-        console.log('startX' + startX);
+    var pages = new Pages({
+        selector: '.member-type-container',
+        initIdx: 0
+    }, function(curIdx, lastIdx, item) {
+        var data = datas[curIdx];
+        $('.member-type-desc').children('.desc-title').children('span').html(data.title);
+        var $descDetail = $('.member-type-desc').children('.desc-detail');
+        $descDetail.empty();
+        var qas = data.qas;
+        for (var i = 0; i < qas.length; i++) {
+            var qa = qas[i];
+            var $qaContainer = $(document.createElement('div'));
+            $qaContainer.addClass('qa-container');
+            var $q = $(document.createElement('div'));
+            $q.addClass('q');
+            $q.html(qa.q);
+            $qaContainer.append($q);
+            var $a = $(document.createElement('div'));
+            $a.addClass('a');
+            $a.html(qa.a);
+            $qaContainer.append($a);
+            $descDetail.append($qaContainer);
+            if (i < qas.length - 1) {
+                $descDetail.append(document.createElement('hr'));
+            }
+        }
     });
 
-    $('.member-type-item').on('touchmove', function(event) {
-    	var movedX = event.originalEvent.targetTouches[0].pageX;
-        console.log('movedX = ' + movedX);
-        var x = movedX - startX;
-        $('.member-type-sub-container').css('left', x);
+    // 点击标题显示隐藏显示问答界面
+    $('.member-type-desc').children('.desc-title').on('click', function() {
+        $('.member-type-desc').children('.desc-detail').toggle(100);
+        $('.member-type-desc').children('.desc-title').children('.triangle').toggleClass('transform-180');
     });
 
-    $('.member-type-item').on('touchend', function(event) {
-        var moveEndX = event.originalEvent.changedTouches[0].pageX;
-        var x = moveEndX - startX;
-        console.log('moveEndX = ' + moveEndX);
-        console.log('x = ' + x);
-        console.log('百分比：' + (Math.abs(x) / winWidth));
-    });
 });
 </script>
 
