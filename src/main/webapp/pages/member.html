@@ -14,8 +14,8 @@
     <!-- <script src="https://cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script>
     <script src="https://cdn.bootcss.com/amazeui/2.7.2/js/amazeui.min.js"></script> -->
     <link href="../css/common.css" rel="stylesheet">
-    <link href="../javascripts/plugins/pages-plugin.css" rel="stylesheet">
-    <script type="text/javascript" src="../javascripts/plugins/pages-plugin.js"></script>
+    <link href="../javascripts/plugins/silder-plugin.css" rel="stylesheet">
+    <script type="text/javascript" src="../javascripts/plugins/silder-plugin.js"></script>
     <script type="text/javascript" src="../javascripts/common.js"></script>
     <script type="text/javascript">
     var datas = [{
@@ -137,7 +137,7 @@
     }
 
     .transf .transf-title {
-        color: #7B68EE;
+        color: #3A5FCD;
         padding: 1rem;
     }
 
@@ -149,7 +149,7 @@
 
     .transf table thead {
         border: 0px;
-        color: #7B68EE;
+        color: #3A5FCD;
     }
 
     .transf table tbody {
@@ -169,15 +169,15 @@
         <h2>会员</h2>
     </div>
     <div class="content-container">
-        <div class="member-type-container pages-plugin">
+        <div class="member-type-container silder-plugin">
             <div class="item-container">
-                <div class="item page-item">
+                <div class="item silder-item">
                     <img width="100%" height="100%" src="https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=4087713034,4173182105&fm=27&gp=0.jpg">
                 </div>
-                <div class="item page-item">
+                <div class="item silder-item">
                     <img width="100%" height="100%" src="https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=1267202258,3173270056&fm=27&gp=0.jpg">
                 </div>
-                <div class="item page-item">
+                <div class="item silder-item">
                     <img width="100%" height="100%" src="https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=2418487131,1104097613&fm=27&gp=0.jpg">
                 </div>
             </div>
@@ -376,7 +376,8 @@
 $(() => {
     var pages = new Pages({
         selector: '.member-type-container',
-        initIdx: 0
+        initIdx: 0,
+        showIdx: true
     }, function(curIdx, lastIdx, item) {
         var data = datas[curIdx];
         $('.member-type-desc').children('.desc-title').children('span').html(data.title);

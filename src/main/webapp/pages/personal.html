@@ -8,7 +8,7 @@
     <meta content="black" name="apple-mobile-web-app-status-bar-style">
     <meta content="telephone=no" name="format-detection">
     <meta content="email=no" name="format-detection">
-    <title>个人</title>
+    <title>个人中心</title>
     <link href="https://cdn.bootcss.com/amazeui/2.7.2/css/amazeui.css" rel="stylesheet">
     <script src="https://cdn.bootcss.com/jquery/2.0.0/jquery.min.js"></script>
     <!-- <script src="https://cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script>
@@ -16,14 +16,160 @@
     <link href="../css/common.css" rel="stylesheet">
     <script type="text/javascript" src="../javascripts/common.js"></script>
     <style type="text/css">
+    body {
+        font-family: \\5FAE\8F6F\96C5\9ED1, Helvetica Neue, Helvetica, STHeiTi, sans-serif;
+        background-color: #F8F8FF;
+    }
 
+    .top {
+        height: 10rem;
+        padding: 2rem;
+        background-image: url('https://ss3.baidu.com/-rVXeDTa2gU2pMbgoY3K/it/u=1361458793,2616941158&fm=202&src=780&mola=new&crop=v1');
+        background-repeat: no-repeat;
+        background-size: 100% 100%;
+        -moz-background-size: 100% 100%;
+    }
+
+    .top img {
+        width: 5rem;
+        height: 5rem;
+        border-radius: 1rem;
+    }
+
+    .top span {
+        margin-left: 1rem;
+        font-size: 2rem;
+        font-weight: 600;
+        letter-spacing: 1rem;
+    }
+
+    .capital-container {
+        background-color: #FFFFFF;
+        height: 7rem;
+    }
+
+    .item {
+        float: left;
+        height: 100%;
+        text-align: center;
+        padding: 1rem;
+    }
+
+    .capital-container .item {
+        width: 50%;
+    }
+
+    .capital-container .i-title {
+        background-color: #C6E2FF;
+        border-radius: 1rem;
+        font-size: 12px;
+        padding: 5px 2rem;
+        letter-spacing: 0.3rem;
+        color: #3A5FCD;
+    }
+
+    .item h2 {
+        margin: 5px;
+        color: #3A5FCD;
+    }
+
+    .exchange-flow-container {
+        background-color: #FFFFFF;
+        height: 6rem;
+        margin-top: 0.5rem;
+    }
+
+    .exchange-flow-container .item {
+        width: 33.3333%;
+        padding: 3px;
+    }
+
+    .exchange-flow-container .item h2 {
+        margin: 0.5rem;
+        margin-bottom: 0px;
+        color: #696969;
+    }
+
+    .exchange-flow-container .item span {
+        font-size: 12px;
+        color: #CCCCCC;
+        margin-top: -1rem;
+    }
+
+    .menu-list {
+        margin-top: 0.5rem;
+    }
+
+    .list-item {
+        background-color: #FFFFFF;
+        padding: 1rem 2rem;
+        letter-spacing: 0.3rem;
+        margin-bottom: 1px;
+        color: #6E6E6E;
+    }
+
+    .list-item-split {
+        margin-bottom: 5px;
+        border-bottom: 0px;
+    }
     </style>
 </head>
 
 <body>
-	
+    <div class="content-container">
+        <div class="top">
+            <img src="../imgs/icon.png"><span>便利换</span>
+        </div>
+        <div class="capital-container">
+            <div class="item">
+                <span class="i-title">累计盈利</span>
+                <h2>2866.00</h2>
+            </div>
+            <div class="item border-left">
+                <span class="i-title">可提现余额</span>
+                <h2>0.00</h2>
+            </div>
+        </div>
+        <div class="exchange-flow-container">
+            <div class="item">
+                <h2>1</h2>
+                <span class="i-title">审核中单数</span>
+            </div>
+            <div class="item border-left">
+                <h2>20</h2>
+                <span class="i-title">成功单数</span>
+            </div>
+            <div class="item border-left">
+                <h2>0</h2>
+                <span class="i-title">失败单数</span>
+            </div>
+        </div>
+        <div class="menu-list">
+            <div class="list-item list-item-split">
+                我的成就
+            </div>
+            <div class="list-item">
+                我的团队
+            </div>
+            <div class="list-item list-item-split">
+                我的邀请人
+            </div>
+            <div class="list-item list-item-split">
+                关于我们
+            </div>
+        </div>
+    </div>
 </body>
 <script type="text/javascript">
+$(()=>{
+    $('.list-item').on('touchstart', function(event) {
+        $(this).css('background-color','#F7F7F7');
+    });
+
+    $('.list-item').on('touchend', function(event) {
+        $(this).css('background-color','');
+    });
+});
 </script>
 
 </html>

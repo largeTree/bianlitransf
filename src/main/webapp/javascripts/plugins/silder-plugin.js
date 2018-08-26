@@ -1,8 +1,7 @@
 function Pages(params, changeEvent) {
 
-    params.ratio = params.ratio || 0.25;
+    params.ratio = params.ratio || 0.1;
     params.initIdx = params.initIdx || 0;
-
     // 分页插件实体
     var $this = {};
 
@@ -16,12 +15,17 @@ function Pages(params, changeEvent) {
     $this.$pages = $pages;
 
     var $itemContainer = $pages.children('.item-container');
-    $itemContainer.children('.page-item').width(width);
-    var $items = $itemContainer.children('.page-item');
+    $itemContainer.children('.silder-item').width(width);
+    var $items = $itemContainer.children('.silder-item');
 
     $this.$items = $items;
     var itemCount = $items.length;
     $this.itemCount = itemCount;
+
+    // 添加索引显示
+    if (params.showIdx && params.showIdx == true) {
+        addIdxContainer();
+    }
 
     $this.onchange = changeEvent;
 
@@ -43,6 +47,10 @@ function Pages(params, changeEvent) {
         // console.log('x = ' + x);
         x = curLeft + x;
         // console.log('left = ' + x);
+        // 不可划出边缘百分之十五
+        if (x > width * 0.15 || x < -((itemCount - 1) * width + (width * 0.15))) {
+            return;
+        }
         $itemContainer.css('left', x);
     });
 
@@ -54,7 +62,7 @@ function Pages(params, changeEvent) {
         var ratio = (Math.abs(x) / width);
         // console.log('百分比：' + ratio);
         var nextIdx = 0;
-        if (ratio > 0.25) {
+        if (ratio > params.ratio) {
             if (x < 0) {
                 // 下一个
                 nextIdx = curIdx + 1;
@@ -71,9 +79,12 @@ function Pages(params, changeEvent) {
     // 构造成功即触发一次变更事件
     try {
         $this.onchange.call($this, curIdx, curIdx, $items[curIdx]);
+        // moveTo(curIdx);
     } catch (e) {
         console.error(e);
     }
+
+    changeIdxItem(curIdx);
 
     function moveTo(idx) {
         if (idx > maxIdx) {
@@ -88,6 +99,8 @@ function Pages(params, changeEvent) {
             left: curLeft
         }, 200, function() {
             if (idx != curIdx) {
+                // 改变索引图标
+                changeIdxItem(idx);
                 // 页面发生变化，触发变化事件
                 try {
                     $this.onchange.call($this, idx, curIdx, $items[idx]);
@@ -98,17 +111,42 @@ function Pages(params, changeEvent) {
             curIdx = idx;
         });
     }
-    // setDisplay(curIdx);
 
-    // function setDisplay(idx) {
-    //     for (var i = 0; i < $items.length; i++) {
-    //         if (idx == i) {
-    //             $($items[i]).show();
-    //         } else {
-    //             $($items[i]).hide();
-    //         }
-    //     }
-    // }
+    /**
+    <div class="item-idx-container">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+    */
+
+    var $itemIdxs;
+
+    function addIdxContainer() {
+        $itemIdxs = new Array();
+        var $idxContainer = $(document.createElement('div'));
+        $idxContainer.addClass('item-idx-container');
+        for (var i = 0; i < itemCount; i++) {
+            var $itemIdx = $(document.createElement('span'));
+            $itemIdxs[i] = $itemIdx;
+            $idxContainer.append($itemIdx);
+        }
+        $pages.append($idxContainer)
+    }
+
+    function changeIdxItem(idx) {
+        for (var i = 0; i < $itemIdxs.length; i++) {
+            if (idx == i) {
+                $itemIdxs[i].addClass('active');
+            } else {
+                $itemIdxs[i].removeClass('active');
+            }
+        }
+    }
+
+    $this.select = function(idx) {
+        moveTo(idx);
+    };
 
     return $this;
 }

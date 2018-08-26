@@ -59,3 +59,11 @@ html {
 .content-container {
     overflow-y: scroll;
 }
+
+.border-left {
+    border-left: 1px #F2F2F2 solid;
+}
+
+.touched {
+    background-color:#F7F7F7;
+}
