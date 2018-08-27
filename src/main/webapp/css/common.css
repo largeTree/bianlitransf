@@ -47,7 +47,6 @@ html {
 .title {
     background-color: #F8F8FF;
     line-height: 6rem;
-    padding-left: 2rem;
     letter-spacing: 1rem;
     font-weight: 600;
 }
@@ -56,14 +55,21 @@ html {
     margin: 0px;
 }
 
+.title .title-center {
+    text-align: center;
+}
+
+.title .tback-btn {
+    float: left;
+    letter-spacing: 1px;
+    font-weight: 300;
+    padding-left: 2rem;
+}
+
 .content-container {
     overflow-y: scroll;
 }
 
 .border-left {
     border-left: 1px #F2F2F2 solid;
-}
-
-.touched {
-    background-color:#F7F7F7;
 }

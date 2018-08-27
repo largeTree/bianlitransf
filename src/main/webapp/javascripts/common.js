@@ -16,5 +16,8 @@ $(function() {
     var titleHeight = $title.length > 0 ? $title.height() : 0;
     var containerHeigth = window.innerHeight - titleHeight;
     $('.content-container').height(containerHeigth);
+    $('.title .tback-btn').on('click', function() {
+        window.history.go(-1);
+    });
     console.log('init success...');
 });

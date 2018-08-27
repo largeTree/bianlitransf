@@ -17,7 +17,7 @@
     <style type="text/css">
     body {
         font-family: \\5FAE\8F6F\96C5\9ED1, Helvetica Neue, Helvetica, STHeiTi, sans-serif;
-        background-color: #F7F7F7;
+        background-color: #F2F2F2;
     }
 
     header {
@@ -136,61 +136,50 @@
         <div class="bank_title">银行兑换专区</div>
         <div class="bank-page">
             <div class="row" style="position: absolute;top:2rem;">
-                <div class="item">
-                    <img src="../imgs/yinhang/zhongguo.png" />
-                    <span>中国银行</span>
-                </div>
-                <div class="item">
-                    <img src="../imgs/yinhang/zhongguo.png" />
-                    <span>中国银行</span>
-                </div>
-                <div class="item">
-                    <img src="../imgs/yinhang/zhongguo.png" />
-                    <span>中国银行</span>
-                </div>
-                <div class="item">
-                    <img src="../imgs/yinhang/zhongguo.png" />
-                    <span>中国银行</span>
-                </div>
-                <div class="item">
-                    <img src="../imgs/yinhang/zhongguo.png" />
-                    <span>中国银行</span>
-                </div>
+                
             </div>
             <div class="row" style="position: absolute;top: 11rem">
-                <div class="item">
-                    <img src="../imgs/yinhang/zhongguo.png" />
-                    <span>中国银行</span>
-                </div>
-                <div class="item">
-                    <img src="../imgs/yinhang/zhongguo.png" />
-                    <span>中国银行</span>
-                </div>
-                <div class="item">
-                    <img src="../imgs/yinhang/zhongguo.png" />
-                    <span>中国银行</span>
-                </div>
-                <div class="item">
-                    <img src="../imgs/yinhang/zhongguo.png" />
-                    <span>中国银行</span>
-                </div>
+                
             </div>
         </div>
     </article>
 </body>
 <script type="text/javascript">
 $(() => {
+    var datas = [];
 
-    var itemCount = 9;
-    var rowCount = Math.ceil(9 / 2);
+    for (var i = 0; i < 20; i++) {
+        datas[i] = {
+            id: i + 1,
+            title: '中国银行',
+            icon: '../imgs/yinhang/zhongguo.png'
+        };
+    }
+
+    var itemCount = datas.length;
+    var rowCount = Math.ceil(itemCount / 2);
 
     var itemWidth = ($(".bank-page")[0].scrollWidth / 4);
 
     $(".row").width(rowCount * (itemWidth + (5 * 2) + (1 * 2)));
 
-    $(".bank-page .item").width(itemWidth);
+    for (var i = 0; i < rowCount; i++) {
+        $($(".row")[0]).append(makeItem(datas[i]));
+    }
+    for (var i = rowCount; i < datas.length; i++) {
+        $($(".row")[1]).append(makeItem(datas[i]));
+    }
 
+    $(".bank-page .item").width(itemWidth);
 });
+
+function makeItem(data) {
+    return '<div class="item" onclick="clickItem(\'' + data.id + '\')"><img src="' + data.icon + '" /><span>' + data.title + '</span></div>';
+}
+
+function clickItem(id) {
+    location.href = './subpages/transf_det.html?_=' + new Date().getTime() + '&exgid=' + id;
+}
 </script>
 
 </html>

@@ -50,7 +50,7 @@
     <style type="text/css">
     body {
         font-family: \\5FAE\8F6F\96C5\9ED1, Helvetica Neue, Helvetica, STHeiTi, sans-serif;
-        background-color: #F5F5F5;
+        background-color: #F2F2F2;
         padding: 0px;
         overflow-x: hidden;
     }
@@ -125,6 +125,7 @@
     .member-type-desc .desc-detail .qa-container .a {
         color: #CCCCCC;
         padding-left: 1rem;
+        font-size: 1.3rem;
     }
 
     .transf {
@@ -143,7 +144,7 @@
 
     .transf table {
         width: 95%;
-        font-size: 12px;
+        font-size: 1.2rem;
         margin: 0px auto;
     }
 
@@ -405,8 +406,8 @@ $(() => {
 
     // 点击标题显示隐藏显示问答界面
     $('.member-type-desc').children('.desc-title').on('click', function() {
-        $('.member-type-desc').children('.desc-detail').toggle(100);
-        $('.member-type-desc').children('.desc-title').children('.triangle').toggleClass('transform-180');
+        $('.member-type-desc .desc-detail').toggle(100);
+        $('.member-type-desc .desc-title .triangle').toggleClass('transform-180');
     });
 
 });
