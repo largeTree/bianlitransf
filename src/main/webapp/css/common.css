@@ -53,10 +53,12 @@ html {
 
 .title h2 {
     margin: 0px;
+    padding-left: 2rem;
 }
 
 .title .title-center {
     text-align: center;
+    padding-left: 0px;
 }
 
 .title .tback-btn {
