@@ -8,6 +8,7 @@
     <meta content="black" name="apple-mobile-web-app-status-bar-style">
     <meta content="telephone=no" name="format-detection">
     <meta content="email=no" name="format-detection">
+    <meta http-equiv="Cache-Control" content="no-cache, must-revalidate" />
     <title>兑换详情</title>
     <link href="https://cdn.bootcss.com/amazeui/2.7.2/css/amazeui.css" rel="stylesheet">
     <script src="https://cdn.bootcss.com/jquery/2.0.0/jquery.min.js"></script>
@@ -18,96 +19,47 @@
     <style type="text/css">
     body {
         font-family: \\5FAE\8F6F\96C5\9ED1, Helvetica Neue, Helvetica, STHeiTi, sans-serif;
-        background-color: #F2F2F2;
+        background-color: #FFFFFF;
         padding: 0px;
         overflow-x: hidden;
     }
 
-    .content-container {
-        color: #696969;
+    .transf-price-details {
+        width: 100%;
+        text-align: center;
+        font-size: 1rem;
     }
 
-    .sub-container {
-        background-color: #FFFFFF;
-        width: 95%;
-        margin: 1rem auto;
-        border-radius: 0.7rem;
+    .transf-price-details thead {
+        color: #7D9EC0;
+    }
+
+    .transf-price-details td {
+        border: 0.5px #CCCCCC solid;
+        padding: 0.5rem;
+    }
+
+    .price-ps {
+        font-size: 0.8rem;
+        text-align: center;
+        padding: 0.2rem;
+        color: #EE7621;
+    }
+
+    .transf-step-container {
         padding: 1rem 2rem;
     }
 
-    .sub-container .i-title {
-        padding-bottom: 1rem;
+    .transf-step-container .step-ps span {
+        background-color: yellow;
     }
 
-    .sub-container .i-title span {
-        color: #CCCCCC;
-        padding: 0 1rem;
-        font-size: 1.2rem;
-    }
-
-    .exg-class-details {
-        width: 90%;
-        margin: 0 auto 1rem auto;
-    }
-
-    .exg-class-details img {
-        width: 100%;
-        height: 8rem;
-        border-radius: 0.7rem;
-    }
-
-    .test-cal-form .score-input {
-        
-    }
-
-    .test-cal-form .form-item {
-        height: 3rem;
-        margin-bottom:1rem;
-    }
-
-    .test-cal-form .input-holder {
-        border-radius: 0.3rem;
-        border: 1px solid #CCCCCC;
-        display: inline-block;
-        width: 100%;
-    }
-
-    .test-cal-form .score-input .score-input-holder {
-        width: 70%;
-    }
-
-    .test-cal-form .score-input button {
-        border: 1px solid #FFFFFF;
-        letter-spacing: 0.1rem;
-        border-radius: 2rem;
-        font-size: 1rem;
-        color: #FFFFFF;
-        background-color: #6495ED;
-        width: 25%;
-        height: 3rem;
-    }
-
-    .test-cal-form .score-input button:focus {
-        outline: none !important;
-    }
-
-    .test-cal-form .input-holder input {
-        width: calc(100% - 4rem);
-        height: 3rem;
-        background-color: #F2F2F2;
-        border: 0px;
-        padding-left: 1rem;
-        float: right;
-    }
-
-    .test-cal-form .input-holder input:focus {
-        outline: none !important;
-    }
-
-    .test-cal-form .input-icon {
-        width: 3rem;
-        height: 2.5rem;
-        margin: 0.25rem 0.5rem;
+    .report-btn {
+        line-height: 5rem;
+        text-align: center;
+        background-color: #EE9A00;
+        color: #F5F5F5;
+        letter-spacing: 0.5rem;
     }
     </style>
 </head>
@@ -115,60 +67,90 @@
 <body>
     <div class="title">
         <span class="tback-btn">返回</span>
-        <h2 class="title-center">兑换详情</h2>
+        <h2 class="title-center">详情</h2>
     </div>
     <div class="content-container">
-        <div class="exg-class sub-container">
-            <div class="i-title">
-                去兑换<span>选择方法，兑换现金及时拿</span>
+        <table class="transf-price-details">
+            <thead>
+                <tr>
+                    <td>积分数</td>
+                    <td>兑换商品</td>
+                    <td>兑换次数</td>
+                    <td>回购价</td>
+                </tr>
+            </thead>
+            <tbody class="price-list">
+        </table>
+        <div class="price-ps">等级越高回购价格越高,详见"会员"模块</div>
+        <div class="transf-step-container">
+            <div class="step-title">
+                兑换步骤详情
+            </div>
+            <div class="step-details">
+                详情<br />
+                详情<br />
+                详情<br />
+                详情<br />
+                详情<br />
+                详情<br />
+                详情<br />
+                详情<br />
+                详情<br />
+                详情<br />
+                详情<br />
+                详情<br />
+                详情<br />
+                详情<br />
+                详情<br />
+                详情<br />
+                详情<br />
+                详情<br />
+                详情
             </div>
         </div>
-        <div class="sub-container">
-            <div class="i-title">
-                算一算<span>积分价值早知道，升级会员价更高</span>
-            </div>
-            <div class="test-cal-form">
-                <div class="score-input form-item">
-                    <div class="input-holder score-input-holder">
-                        <img class="input-icon" src="../../imgs/card_icon.svg" />
-                        <input name="score" type="number" placeholder="请输入你的积分" />
-                    </div>
-                    <button>算一算</button>
-                </div>
-                <div class="money-show form-item">
-                    <div class="input-holder">
-                        <img class="input-icon" src="../../imgs/wallet_icon.svg" />
-                        <input name="score" type="number" placeholder="请输入你的积分" />
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="sub-container">
-            <div class="i-title">
-                查一查<span>积分手机查询更方便</span>
-            </div>
-            <div class="inquiry-desc">
-                使用银行预留的手机号码,编辑短信"cc积分#卡号后四位"发送至95559
-            </div>
+    </div>
+    <div class="footer">
+        <div class="report-btn">
+            报单
         </div>
     </div>
 </body>
 <script type="text/javascript">
+var sessionId = getQueryParmas().sessionId;
+console.log('sessionId = ' + sessionId);
 $(() => {
-    var exgClasses = [{
-        icon: 'https://ss3.baidu.com/-rVXeDTa2gU2pMbgoY3K/it/u=1361458793,2616941158&fm=202&src=780&mola=new&crop=v1'
-    }, {
-        icon: 'https://ss3.baidu.com/-rVXeDTa2gU2pMbgoY3K/it/u=1361458793,2616941158&fm=202&src=780&mola=new&crop=v1'
-    }];
+    var priceDetails = [];
+    for (var i = 0; i < 5; i++) {
+        priceDetails[i] = {
+            id: i + 1,
+            score: (i + 1) * 10000,
+            name: (i + 1) + '万',
+            count: '不限次数',
+            price: (i + 1) * 10
+        };
+    }
 
-    var $exgClasses = $('.exg-class');
-    for (var i = 0; i < exgClasses.length; i++) {
-        var $exgClz = $(document.createElement('div'));
-        $exgClz.addClass('exg-class-details');
-        var $exgImg = $(document.createElement('img'));
-        $exgImg.attr('src', exgClasses[i].icon);
-        $exgClz.append($exgImg);
-        $exgClasses.append($exgClz);
+    var $priceList = $('.price-list');
+
+    for (var i = 0; i < priceDetails.length; i++) {
+        var data = priceDetails[i];
+        var $row = $(document.createElement('tr'));
+        var $cell = $(document.createElement('td'));
+        $cell.html(data.score);
+        $row.append($cell);
+        $cell = $(document.createElement('td'));
+        $cell.html(data.name);
+        $row.append($cell);
+        $cell = $(document.createElement('td'));
+        $cell.html(data.count);
+        $row.append($cell);
+        $cell = $(document.createElement('td'));
+        $cell.html(data.price);
+        $row.append($cell);
+        $row.on('click', { id: data.id }, function(e) {
+            alert(e.data.id);
+        });
+        $row.appendTo($priceList);
     }
 });
 </script>

@@ -73,3 +73,11 @@ html {
 .border-left {
     border-left: 1px #F2F2F2 solid;
 }
+
+.footer {
+    position: fixed;
+    width: 100%;
+    bottom: 0px;
+    height: 5rem;
+    background-color: #F8F8FF;
+}

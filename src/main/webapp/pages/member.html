@@ -8,6 +8,7 @@
     <meta content="black" name="apple-mobile-web-app-status-bar-style">
     <meta content="telephone=no" name="format-detection">
     <meta content="email=no" name="format-detection">
+    <meta http-equiv="Cache-Control" content="no-cache, must-revalidate" />
     <title>会员</title>
     <link href="https://cdn.bootcss.com/amazeui/2.7.2/css/amazeui.css" rel="stylesheet">
     <script src="https://cdn.bootcss.com/jquery/2.0.0/jquery.min.js"></script>
@@ -374,6 +375,8 @@
     </div>
 </body>
 <script type="text/javascript">
+var sessionId = getQueryParmas().sessionId;
+console.log('sessionId = ' + sessionId);
 $(() => {
     var pages = new Pages({
         selector: '.member-type-container',
