@@ -5,12 +5,11 @@ import javax.annotation.Resource;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.qiuxs.cuteframework.web.WebConstants;
-import com.qiuxs.cuteframework.web.controller.AbstractDataController;
-
 import com.bianlitransf.biz.dao.ScoreExchangeDao;
 import com.bianlitransf.biz.entity.ScoreExchange;
 import com.bianlitransf.biz.service.IScoreExchangeService;
+import com.qiuxs.cuteframework.web.WebConstants;
+import com.qiuxs.cuteframework.web.controller.AbstractDataController;
 
 /**
  * 控制器

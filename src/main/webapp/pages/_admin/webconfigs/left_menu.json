@@ -6,28 +6,28 @@
             "id":11,
             "text" : "积分兑换",
             "attributes": {
-                "url":"./_pages/_res_banks.html"
+                "url":"./_pages/_score_exg.html"
             }
         },{
             "id":12,
             "text" : "信用卡推广",
             "attributes": {
-                "url":"./_pages/_res_credit_card.html"
+                "url":"./_pages/_credit_card.html"
             }
         }]
     },
     {
         "id": "2",
-        "text": "Node 2",
+        "text": "用户管理",
         "attributes": {
-            "url":"./_pages/_page_reses.html"
+            "url":"./_pages/_users.html"
         }
     },
     {
         "id": "3",
-        "text": "Node 3",
+        "text": "报单管理",
         "attributes": {
-            "url":"./_pages/_page_reses.html"
+            "url":"./_pages/_exg_bill_list.html"
         }
     },
     {

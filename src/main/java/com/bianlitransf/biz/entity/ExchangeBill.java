@@ -8,20 +8,29 @@ import com.qiuxs.cuteframework.core.persistent.database.entity.impl.AbstractEnti
 /**
  * 实体类
  *	for table exchange_bill
- * @author fankaidi
+ * @author qiuxs
  *
  */
 
 public class ExchangeBill extends AbstractEntity<Long> {
 
+	private static final long serialVersionUID = 1L;
+	
+	public static final int FLAG_REFUSE = -1;
+	public static final int FLAG_CREATED = 0;
+	public static final int FLAG_PASS = 1;
+	
 	/** 所有者 */
 	private Long ownerId;
 
 	/** 状态 */
 	private Integer status;
 
-	/** 银行ID */
-	private Integer bankId;
+	/** 兑换券ID */
+	private Long exgDetId;
+
+	/** 兑换券名称 */
+	private String exgDetName;
 
 	/** 兑换积分 */
 	private Integer score;
@@ -72,19 +81,35 @@ public class ExchangeBill extends AbstractEntity<Long> {
 	}
 
 	/**
-	 * get the 银行ID
-	 * @return bankId
+	 * get the 兑换券ID
+	 * @return exgDetId
 	 */
-	public Integer getBankId() {
-		return this.bankId;
+	public Long getExgDetId() {
+		return this.exgDetId;
 	}
 
 	/**
-	 * set the 银行ID
-	 * @param bankId
+	 * set the 兑换券ID
+	 * @param exgDetId
 	 */
-	public void setBankId(Integer bankId) {
-		this.bankId = bankId;
+	public void setExgDetId(Long exgDetId) {
+		this.exgDetId = exgDetId;
+	}
+
+	/**
+	 * get the 兑换券名称
+	 * @return exgDetName
+	 */
+	public String getExgDetName() {
+		return this.exgDetName;
+	}
+
+	/**
+	 * set the 兑换券名称
+	 * @param exgDetName
+	 */
+	public void setExgDetName(String exgDetName) {
+		this.exgDetName = exgDetName;
 	}
 
 	/**

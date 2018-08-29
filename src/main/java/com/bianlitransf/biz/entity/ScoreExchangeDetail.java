@@ -1,6 +1,5 @@
 package com.bianlitransf.biz.entity;
 
-import java.util.Date;
 import java.math.BigDecimal;
 
 import com.qiuxs.cuteframework.core.persistent.database.entity.impl.AbstractEntity;
@@ -13,6 +12,8 @@ import com.qiuxs.cuteframework.core.persistent.database.entity.impl.AbstractEnti
  */
 
 public class ScoreExchangeDetail extends AbstractEntity<Long> {
+
+	private static final long serialVersionUID = -7713887828201148475L;
 
 	/** 积分兑换类目ID */
 	private Long classId;

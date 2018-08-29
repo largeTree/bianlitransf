@@ -8,7 +8,7 @@ import com.bianlitransf.biz.entity.ExchangeBill;
 /**
  * Dao接口
  *
- * @author fankaidi
+ * @author qiuxs
  *
  */
 @Repository

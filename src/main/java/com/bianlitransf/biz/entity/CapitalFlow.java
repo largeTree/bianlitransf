@@ -14,6 +14,8 @@ import com.qiuxs.cuteframework.core.persistent.database.entity.impl.AbstractEnti
 
 public class CapitalFlow extends AbstractEntity<Long> {
 
+	private static final long serialVersionUID = 1L;
+
 	/** 来源单据 */
 	private Long srcBill;
 

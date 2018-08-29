@@ -6,7 +6,8 @@
 		id,
 		owner_id as ownerId,
 		status,
-		bank_id as bankId,
+		exg_det_id as exgDetId,
+		exg_det_name as exgDetName,
 		score,
 		money,
 		created_time as createdTime,
@@ -19,7 +20,8 @@
 		id,
 		owner_id,
 		status,
-		bank_id,
+		exg_det_id,
+		exg_det_name,
 		score,
 		money,
 		created_time,
@@ -53,8 +55,11 @@
 		<if test="status != null">
 			 and status = #{status}
 		</if>
-		<if test="bankId != null">
-			 and bank_id = #{bankId}
+		<if test="exgDetId != null">
+			 and exg_det_id = #{exgDetId}
+		</if>
+		<if test="exgDetName != null">
+			 and exg_det_name = #{exgDetName}
 		</if>
 		<if test="score != null">
 			 and score = #{score}
@@ -97,7 +102,8 @@
 			#{id},
 			#{ownerId},
 			#{status},
-			#{bankId},
+			#{exgDetId},
+			#{exgDetName},
 			#{score},
 			#{money},
 			#{createdTime},
@@ -115,7 +121,8 @@
 				#{item.id},
 				#{item.ownerId},
 				#{item.status},
-				#{item.bankId},
+				#{item.exgDetId},
+				#{item.exgDetName},
 				#{item.score},
 				#{item.money},
 				#{item.createdTime},
@@ -137,8 +144,11 @@
 		<if test="status != null" >
 			status = #{status},
 		</if>
-		<if test="bankId != null" >
-			bank_id = #{bankId},
+		<if test="exgDetId != null" >
+			exg_det_id = #{exgDetId},
+		</if>
+		<if test="exgDetName != null" >
+			exg_det_name = #{exgDetName},
 		</if>
 		<if test="score != null" >
 			score = #{score},
