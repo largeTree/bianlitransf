@@ -83,3 +83,14 @@ html {
     height: 5rem;
     background-color: #F8F8FF;
 }
+
+/* 头部固定，内容固定，底部固定样式  */
+.my-fixed-top {position: fixed;height: 6rem;width:100%;background: #F8F8FF;}
+.my-fixed-top .am-u-sm-2:nth-of-type(1) img {height:2.6rem; margin: 1.7rem 0}
+.my-fixed-top .am-u-sm-8 {text-align: center;font-size: 2rem;line-height: 6rem;}
+.my-fixed-content {position: fixed;top: 0;bottom: 0;width:100%;background-color: #F2F2F2;padding-bottom: 3rem;overflow: scroll;-webkit-overflow-scrolling: touch;}
+.my-fixed-bottom {position: fixed;bottom: 0;height: 5rem;width:100%;}
+.my-content-exist-top {top: 6rem;}
+.my-content-exist-bottom {bottom: 5rem;}
+.my-gray{color: #777}
+.my-panel{background-color: #fff;padding: 1rem 0;margin-top: 1rem;}
