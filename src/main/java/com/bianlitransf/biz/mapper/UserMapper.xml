@@ -132,7 +132,11 @@
 	</insert>
 
 	<update id="update" parameterType="com.bianlitransf.biz.entity.User" >
-		update user <set><include refid="setComn" /></set> where id = #{id}
+		update user 
+			<set>
+				<include refid="setComn" />
+			</set> 
+		where id = #{id}
 	</update>
 
 	<sql id="setComn" >

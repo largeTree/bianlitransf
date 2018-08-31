@@ -79,6 +79,7 @@ CREATE TABLE `score_exchange_detail`(
 	`class_id` BIGINT(20) NOT NULL COMMENT'积分兑换类目ID',
 	`score` INT(11) NOT NULL COMMENT'所需积分数量',
 	`name` VARCHAR(64) NOT NULL COMMENT'兑换券名称',
+	`count` VARCHAR(32) NOT NULL COMMENT'兑换次数',
 	`price1` DECIMAL(16,3) NOT NULL COMMENT'普通会员价格',
 	`price2` DECIMAL(16,3) NOT NULL  COMMENT'贵宾会员价格',
 	`created_by` BIGINT( 0) NOT NULL COMMENT'创建人',

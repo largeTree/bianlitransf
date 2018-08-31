@@ -24,12 +24,17 @@ public class ScoreExchangeDetail extends AbstractEntity<Long> {
 	/** 兑换券名称 */
 	private String name;
 
+	/** 兑换次数说明 */
+	private String count;
+
 	/** 普通会员价格 */
 	private BigDecimal price1;
 
 	/** 贵宾会员价格 */
 	private BigDecimal price2;
 
+	/** 当前价格 */
+	private BigDecimal price;
 
 	/**
 	 * get the 积分兑换类目ID
@@ -80,6 +85,22 @@ public class ScoreExchangeDetail extends AbstractEntity<Long> {
 	}
 
 	/**
+	 * get the 兑换次数说明
+	 * @return count
+	 */
+	public String getCount() {
+		return count;
+	}
+
+	/**
+	 * set the 兑换次数说明
+	 * @param count
+	 */
+	public void setCount(String count) {
+		this.count = count;
+	}
+
+	/**
 	 * get the 普通会员价格
 	 * @return price1
 	 */
@@ -109,6 +130,22 @@ public class ScoreExchangeDetail extends AbstractEntity<Long> {
 	 */
 	public void setPrice2(BigDecimal price2) {
 		this.price2 = price2;
+	}
+
+	/**
+	 * get the 当前价格
+	 * @return price
+	 */
+	public BigDecimal getPrice() {
+		return price;
+	}
+
+	/**
+	 * set the 当前价格
+	 * @param price
+	 */
+	public void setPrice(BigDecimal price) {
+		this.price = price;
 	}
 
 }

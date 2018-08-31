@@ -19,7 +19,6 @@
     <style type="text/css">
     body {
         font-family: \\5FAE\8F6F\96C5\9ED1, Helvetica Neue, Helvetica, STHeiTi, sans-serif;
-        background-color: #FFFFFF;
         padding: 0px;
         overflow-x: hidden;
     }
@@ -65,11 +64,17 @@
 </head>
 
 <body>
-    <div class="title">
-        <span class="tback-btn">返回</span>
-        <h2 class="title-center">详情</h2>
-    </div>
-    <div class="content-container">
+    <header class="am-g  my-fixed-top title">
+        <div class="am-u-sm-2 tback-btn">
+            <img src="../../imgs/fanhuianniu.png">
+        </div>
+        <div class="am-u-sm-8">
+            详情
+        </div>
+        <div class="am-u-sm-2">
+        </div>
+    </header>
+    <div class="my-fixed-content my-content-exist-top my-content-exist-bottom" style="background-color: #FFFFFF;">
         <table class="transf-price-details">
             <thead>
                 <tr>
@@ -87,72 +92,78 @@
                 兑换步骤详情
             </div>
             <div class="step-details">
-                详情<br />
-                详情<br />
-                详情<br />
-                详情<br />
-                详情<br />
-                详情<br />
-                详情<br />
-                详情<br />
-                详情<br />
-                详情<br />
-                详情<br />
-                详情<br />
-                详情<br />
-                详情<br />
-                详情<br />
-                详情<br />
-                详情<br />
-                详情<br />
                 详情
+                <br /> 详情
+                <br /> 详情
+                <br /> 详情
+                <br /> 详情
+                <br /> 详情
+                <br /> 详情
+                <br /> 详情
+                <br /> 详情
+                <br /> 详情
+                <br /> 详情
+                <br /> 详情
+                <br /> 详情
+                <br /> 详情
+                <br /> 详情
+                <br /> 详情
+                <br /> 详情
+                <br /> 详情
+                <br /> 详情
             </div>
         </div>
     </div>
-    <div class="footer">
-        <div class="report-btn">
+    <div class="my-fixed-bottom">
+        <div class="report-btn" onclick="goReport()">
             报单
         </div>
     </div>
 </body>
 <script type="text/javascript">
-var sessionId = getQueryParmas().sessionId;
+var params = getQueryParmas();
+var sessionId = params.sessionId;
 console.log('sessionId = ' + sessionId);
 $(() => {
-    var priceDetails = [];
-    for (var i = 0; i < 5; i++) {
-        priceDetails[i] = {
-            id: i + 1,
-            score: (i + 1) * 10000,
-            name: (i + 1) + '万',
-            count: '不限次数',
-            price: (i + 1) * 10
-        };
-    }
 
-    var $priceList = $('.price-list');
+    HttpService.post('/blh/api/scoreexchangedetail/findByClassId', {
+        clzId: params.clzId,
+        sessionId: sessionId
+    }, function(data, status) {
+        if (data.code == 0) {
+            var priceDetails = data.data.rows;
 
-    for (var i = 0; i < priceDetails.length; i++) {
-        var data = priceDetails[i];
-        var $row = $(document.createElement('tr'));
-        var $cell = $(document.createElement('td'));
-        $cell.html(data.score);
-        $row.append($cell);
-        $cell = $(document.createElement('td'));
-        $cell.html(data.name);
-        $row.append($cell);
-        $cell = $(document.createElement('td'));
-        $cell.html(data.count);
-        $row.append($cell);
-        $cell = $(document.createElement('td'));
-        $cell.html(data.price);
-        $row.append($cell);
-        $row.on('click', { id: data.id }, function(e) {
-            alert(e.data.id);
-        });
-        $row.appendTo($priceList);
-    }
+            var $priceList = $('.price-list');
+
+            for (var i = 0; i < priceDetails.length; i++) {
+                var data = priceDetails[i];
+                var $row = $(document.createElement('tr'));
+                var $cell = $(document.createElement('td'));
+                $cell.html(data.score);
+                $row.append($cell);
+                $cell = $(document.createElement('td'));
+                $cell.html(data.name);
+                $row.append($cell);
+                $cell = $(document.createElement('td'));
+                $cell.html(data.count);
+                $row.append($cell);
+                $cell = $(document.createElement('td'));
+                $cell.html(data.price);
+                $row.append($cell);
+                $row.appendTo($priceList);
+            }
+        } else if (data.code == -4001) {
+            window.sendSessionInvalidEvent();
+        }
+    });
 });
+
+function goReport() {
+    jumpPage('./edit_report.html', {
+        sessionId: sessionId,
+        exgClzId: params.clzId
+    });
+}
 </script>
 
 </html>

@@ -48,13 +48,15 @@
 
     .exg-class-details {
         width: 90%;
-        margin: 0 auto 1rem auto;
-    }
-
-    .exg-class-details img {
-        width: 100%;
-        height: 8rem;
+        height: 7rem;
+        line-height: 7rem;
+        text-align: center;
         border-radius: 0.7rem;
+        margin: 0 auto 1rem auto;
+        background-image: url("https://ss3.baidu.com/-rVXeDTa2gU2pMbgoY3K/it/u=1361458793,2616941158&fm=202&src=780&mola=new&crop=v1");
+        background-repeat: no-repeat;
+        background-size: 100% 100%;
+        -moz-background-size: 100% 100%;
     }
 
     .test-cal-form .score-input {}
@@ -112,11 +114,17 @@
 </head>
 
 <body>
-    <div class="title">
-        <span class="tback-btn">返回</span>
-        <h2 class="title-center">积分兑换</h2>
-    </div>
-    <div class="content-container">
+    <header class="am-g  my-fixed-top title">
+        <div class="am-u-sm-2 tback-btn">
+            <img src="../../imgs/fanhuianniu.png">
+        </div>
+        <div class="am-u-sm-8">
+            积分兑换
+        </div>
+        <div class="am-u-sm-2">
+        </div>
+    </header>
+    <div class="my-fixed-content my-content-exist-top">
         <div class="exg-class sub-container">
             <div class="i-title">
                 去兑换<span>选择方法，兑换现金及时拿</span>
@@ -157,30 +165,28 @@ var parmas = getQueryParmas();
 var sessionId = parmas.sessionId;
 console.log('sessionId = ' + sessionId);
 $(() => {
-    var exgClasses = [{
-        id: 1,
-        icon: 'https://ss3.baidu.com/-rVXeDTa2gU2pMbgoY3K/it/u=1361458793,2616941158&fm=202&src=780&mola=new&crop=v1'
-    }, {
-        id: 2,
-        icon: 'https://ss3.baidu.com/-rVXeDTa2gU2pMbgoY3K/it/u=1361458793,2616941158&fm=202&src=780&mola=new&crop=v1'
-    }];
-
-    var $exgClasses = $('.exg-class');
-    for (var i = 0; i < exgClasses.length; i++) {
-        var exgClass = exgClasses[i];
-        var $exgClz = $(document.createElement('div'));
-        $exgClz.addClass('exg-class-details');
-        var $exgImg = $(document.createElement('img'));
-        $exgImg.attr('src', exgClass.icon);
-        $exgClz.append($exgImg);
-        $exgClz.on('click', { id: exgClass.id }, goDetail);
-        $exgClasses.append($exgClz);
-    }
+    HttpService.post('/blh/api/scoreexchangeclass/findByExgId', { exgId: parmas.exgid }, function(data, status) {
+        if (data.code == 0) {
+            var exgClasses = data.data.rows;
+            var $exgClasses = $('.exg-class');
+            for (var i = 0; i < exgClasses.length; i++) {
+                var exgClass = exgClasses[i];
+                var $exgClz = $(document.createElement('div'));
+                $exgClz.addClass('exg-class-details');
+                $exgClz.html(exgClass.name);
+                // var $exgImg = $(document.createElement('img'));
+                // $exgImg.attr('src', exgClass.icon);
+                // $exgClz.append($exgImg);
+                $exgClz.on('click', { id: exgClass.id }, goDetail);
+                $exgClasses.append($exgClz);
+            }
+        }
+    });
 });
 
 function goDetail(event) {
     jumpPage('./transf_det.html', {
-        id: event.data.id,
+        clzId: event.data.id,
         sessionId: sessionId
     });
 }

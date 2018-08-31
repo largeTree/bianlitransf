@@ -147,35 +147,31 @@
 var sessionId = getQueryParmas().sessionId;
 console.log('sessionId = ' + sessionId);
 $(() => {
-    var datas = [];
+    HttpService.post('/blh/api/scoreexchange/list', { type: 1 , orderBy : 'disorder', sessionId: sessionId}, function(data, status) {
+        if (data.code == 0) {
+            var datas = data.data.rows;
 
-    for (var i = 0; i < 20; i++) {
-        datas[i] = {
-            id: i + 1,
-            title: '中国银行',
-            icon: '../imgs/yinhang/zhongguo.png'
-        };
-    }
+            var itemCount = datas.length;
+            var rowCount = Math.ceil(itemCount / 2);
 
-    var itemCount = datas.length;
-    var rowCount = Math.ceil(itemCount / 2);
+            var itemWidth = ($(".bank-page")[0].scrollWidth / 4);
 
-    var itemWidth = ($(".bank-page")[0].scrollWidth / 4);
+            $(".row").width(rowCount * (itemWidth + (5 * 2) + (1 * 2)));
 
-    $(".row").width(rowCount * (itemWidth + (5 * 2) + (1 * 2)));
+            for (var i = 0; i < rowCount; i++) {
+                $($(".row")[0]).append(makeItem(datas[i]));
+            }
+            for (var i = rowCount; i < datas.length; i++) {
+                $($(".row")[1]).append(makeItem(datas[i]));
+            }
 
-    for (var i = 0; i < rowCount; i++) {
-        $($(".row")[0]).append(makeItem(datas[i]));
-    }
-    for (var i = rowCount; i < datas.length; i++) {
-        $($(".row")[1]).append(makeItem(datas[i]));
-    }
-
-    $(".bank-page .item").width(itemWidth);
+            $(".bank-page .item").width(itemWidth);
+        }
+    });
 });
 
 function makeItem(data) {
-    return '<div class="item" onclick="clickItem(\'' + data.id + '\')"><img src="' + data.icon + '" /><span>' + data.title + '</span></div>';
+    return '<div class="item" onclick="clickItem(\'' + data.id + '\')"><img src="' + data.iconUrl + '" /><span>' + data.name + '</span></div>';
 }
 
 function clickItem(id) {

@@ -134,7 +134,11 @@
 	</insert>
 
 	<update id="update" parameterType="com.bianlitransf.biz.entity.ExchangeBill" >
-		update exchange_bill set <include refid="setComn" /> where id = #{id}
+		update exchange_bill 
+			<set>
+				<include refid="setComn" />
+			</set>  
+		where id = #{id}
 	</update>
 
 	<sql id="setComn" >

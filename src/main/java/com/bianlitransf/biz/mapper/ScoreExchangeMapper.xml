@@ -127,7 +127,11 @@
 	</insert>
 
 	<update id="update" parameterType="com.bianlitransf.biz.entity.ScoreExchange" >
-		update score_exchange set <include refid="setComn" /> where id = #{id}
+		update score_exchange 
+			<set>
+				<include refid="setComn" />
+			</set>
+		where id = #{id}
 	</update>
 
 	<sql id="setComn" >

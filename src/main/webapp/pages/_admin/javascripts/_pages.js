@@ -42,6 +42,9 @@ window.UsersPage = {
                         console.error(e);
                     });
                 }
+            },
+            onBeforeClose:function() {
+                $('#user_edit_table .form-field').val('');
             }
         });
     },
@@ -97,18 +100,6 @@ window.ScoreExchange = {
         });
     },
     save: function() {
-        // var jsonParam = PageUtils.getFormData('#exg_edit_table');
-        // HttpService.post('/blh/api/scoreexchange/save', {
-        //     jsonParam: JSON.stringify(jsonParam)
-        // }, function(data, staus) {
-        //     if (data.code == 0) {
-        //         alert('保存成功');
-        //         $curEditWindow.window('close');
-        //         $('#_score_exg_dg').datagrid('load', { _: new Date().getTime(), orderBy: 'disorder' });
-        //     } else {
-        //         alert(data.msg);
-        //     }
-        // });
         PageUtils.saveForm('/blh/api/scoreexchange/save', '#exg_edit_table', '#_score_exg_dg', $curEditWindow,{ _: new Date().getTime(), orderBy: 'disorder' });
     }
 }
@@ -120,8 +111,8 @@ window.PageUtils = {
             jsonParam: JSON.stringify(jsonParam)
         }, function(data, staus) {
             if (data.code == 0) {
-                alert('保存成功');
                 $window.window('close');
+                $window.remove();
                 $(dgSelector).datagrid('load', dgLoadParam);
             } else {
                 alert(data.msg);
@@ -141,7 +132,8 @@ window.PageUtils = {
             title: options.title,
             iconCls: options.icon || 'icon-save',
             href: options.href,
-            onLoad: options.onLoad
+            onLoad: options.onLoad,
+            onBeforeClose:options.onBeforeClose
         });
         return $editWindow;
     },

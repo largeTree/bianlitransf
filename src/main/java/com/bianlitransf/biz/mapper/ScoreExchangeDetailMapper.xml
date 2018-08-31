@@ -7,6 +7,7 @@
 		class_id as classId,
 		score,
 		name,
+		`count`,
 		price1,
 		price2,
 		created_by as createdBy,
@@ -20,6 +21,7 @@
 		class_id,
 		score,
 		name,
+		`count`,
 		price1,
 		price2,
 		created_by,
@@ -55,6 +57,9 @@
 		</if>
 		<if test="name != null">
 			 and name = #{name}
+		</if>
+		<if test="count != null">
+			and `count` = #{count}
 		</if>
 		<if test="price1 != null">
 			 and price1 = #{price1}
@@ -98,6 +103,7 @@
 			#{classId},
 			#{score},
 			#{name},
+			#{count},
 			#{price1},
 			#{price2},
 			#{createdBy},
@@ -116,6 +122,7 @@
 				#{item.classId},
 				#{item.score},
 				#{item.name},
+				#{item.count},
 				#{item.price1},
 				#{item.price2},
 				#{item.createdBy},
@@ -127,7 +134,11 @@
 	</insert>
 
 	<update id="update" parameterType="com.bianlitransf.biz.entity.ScoreExchangeDetail" >
-		update score_exchange_detail set <include refid="setComn" /> where id = #{id}
+		update score_exchange_detail 
+			<set>
+				<include refid="setComn" />
+			</set>
+		where id = #{id}
 	</update>
 
 	<sql id="setComn" >
@@ -139,6 +150,9 @@
 		</if>
 		<if test="name != null" >
 			name = #{name},
+		</if>
+		<if test="count != null">
+			`count` = #{count},
 		</if>
 		<if test="price1 != null" >
 			price1 = #{price1},

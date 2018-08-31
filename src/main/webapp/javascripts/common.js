@@ -1,3 +1,21 @@
+window.HttpService = {
+    post: function(url, params, success, error) {
+        params = params || {};
+        $.ajax({
+            url: url,
+            async: true,
+            data: params,
+            method: 'post',
+            success: function(data, textStatus) {
+                success.call(this, data, textStatus);
+            },
+            error: function(xhr, textStatus, e) {
+                error.call(this, xhr, textStatus, e);
+            }
+        });
+    }
+}
+
 function getQueryParmas() {
     var queryString = document.location.search.substring(1);
     var pairs = queryString.split('&');
@@ -22,15 +40,20 @@ function toQueryString(params) {
     return queryString;
 }
 
+/**
+  发出一个会话过期事件，通知app端提示会话过期并跳转到登陆页面
+*/
+function sendSessionInvalidEvent() {
+    if (window.parent != window) {
+        window.parent.postMessage({
+            act: 'sessionInvalid'
+        }, '*');
+    }
+}
+
 // 页面初始化事件
 $(function() {
-    var $title = $('.title');
-    var $footer = $('.footer');
-    var titleHeight = $title.length > 0 ? $title.height() : 0;
-    var footerHeight = $footer.length > 0 ? $footer.height() : 0;
-    var containerHeigth = window.innerHeight - titleHeight - footerHeight;
-    $('.content-container').height(containerHeigth);
-    $('.title .tback-btn').on('click', function() {
+    $('.tback-btn').on('click', function() {
         window.history.go(-1);
     });
     console.log('init success...');
