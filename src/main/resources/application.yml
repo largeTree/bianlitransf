@@ -10,7 +10,7 @@ server:
     context-path: /blh
 spring: 
   datasource:
-    url: jdbc:mysql://116.62.221.123:3306/bianlitransf?characterEncoding=utf8
+    url: jdbc:mysql://hd123:3306/bianlitransf?characterEncoding=utf8
     username: root
     password: "Mysql.20180822"
     driver-class-name: com.mysql.jdbc.Driver
