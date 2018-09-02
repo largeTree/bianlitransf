@@ -1,24 +1,36 @@
 window.AdminPage = {
     init: function() {
+        var storage = window.localStorage;
+        var userLite = storage.userLite;
+        if (!userLite) {
+            window.location.href = './_login.html';
+        }
+        SessionManager.userLite = JSON.parse(userLite);
+        $('body').removeClass('hide');
         $('#leftMenu').tree({
             onClick: function(node) {
-            	AdminPage.addTab(node);
+                AdminPage.addTab(node);
             }
         });
     },
-    addTab:function(node) {
-    	var tabs = $('#mainTabs');
-    	if (tabs.tabs('exists',node.text)) {
-    		tabs.tabs('select',node.text);
-    	} else if(node.children) {
-    		$('#leftMenu').tree('toggle',node.target);
-    	} else if (node.attributes) {
-    		tabs.tabs('add',{
-    			title:node.text,
-    			href:node.attributes.url,
-    			method:'get',
-    			closable:true
-    		});
-    	} 
+    logout: function() {
+        HttpService.post('/blh/auth/logout', {});
+        delete window.localStorage.userLite;
+        window.location.href = './_login.html';
+    },
+    addTab: function(node) {
+        var tabs = $('#mainTabs');
+        if (tabs.tabs('exists', node.text)) {
+            tabs.tabs('select', node.text);
+        } else if (node.children) {
+            $('#leftMenu').tree('toggle', node.target);
+        } else if (node.attributes) {
+            tabs.tabs('add', {
+                title: node.text,
+                href: node.attributes.url,
+                method: 'get',
+                closable: true
+            });
+        }
     }
 }

@@ -1,3 +1,11 @@
+function dataLoader(param, success, error) {
+    HttpService.post($(this).datagrid('options').url, param, function(data, status) {
+        success(data);
+    }, function() {
+        error();
+    });
+}
+
 function dataLoadFilter(data, parentId) {
     if (data.code != 0) {
         alert(data.msg);
@@ -19,7 +27,9 @@ window.HttpService = {
     post: function(url, params, success, error) {
         CommonUtil.loading();
         params = params || {};
-        params.sessionId = params.sessionId || SessionManager.sessionId;
+        if (!params.ns) {
+            params.sessionId = params.sessionId || SessionManager.getSessionId();
+        }
         $.ajax({
             url: url,
             async: true,
@@ -27,16 +37,27 @@ window.HttpService = {
             method: 'post',
             success: function(data, textStatus) {
                 CommonUtil.finishLoading();
-                success.call(this, data, textStatus);
+                if (success) {
+                    success.call(this, data, textStatus);
+                }
             },
             error: function(xhr, textStatus, e) {
                 CommonUtil.finishLoading();
-                error.call(this, xhr, textStatus, e);
+                if (error) {
+                    error.call(this, xhr, textStatus, e);
+                }
             }
         });
     }
 }
 
 window.SessionManager = {
-    sessionId: 'xxxx'
+    userLite: null,
+    getSessionId: function() {
+        if (SessionManager.userLite && SessionManager.userLite != null) {
+            return SessionManager.userLite.sessionId;
+        } else {
+            window.location.href = './_login.html';
+        }
+    }
 }

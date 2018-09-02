@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>登陆页面</title>
+    <link rel="stylesheet" type="text/css" href="./jqeasyui/themes/icon.css" />
+    <link rel="stylesheet" type="text/css" href="./jqeasyui/themes/color.css" />
+    <link rel="stylesheet" type="text/css" href="./jqeasyui/themes/metro/easyui.css" />
+    <link rel="stylesheet" type="text/css" href="./css/_common.css" />
+    <script type="text/javascript" src="./jqeasyui/jquery.min.js"></script>
+    <script type="text/javascript" src="./jqeasyui/jquery.easyui.min.js"></script>
+    <script type="text/javascript" src="./javascripts/_common.js"></script>
+    <style type="text/css">
+    body {
+    	background-image: url('https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1535909518738&di=1fa942d1bb0e2b5dea5ee8747afa9843&imgtype=0&src=http%3A%2F%2Fpic.qiantucdn.com%2F58pic%2F17%2F91%2F48%2F16x58PICzki_1024.jpg');
+    	background-repeat: no-repeat;
+    	background-size: 100%;
+    	-moz-background-size: 100%;
+    }
+
+    #loginWin table {
+        margin: 0px auto;
+        width: 80%;
+    }
+
+    #loginWin table thead tr td {
+        text-align: center;
+    }
+    .login-body {
+    	background-color: #FAFAFA;
+    }
+    </style>
+</head>
+
+<body>
+    <div id="loginWin" style="display: none;">
+        <table>
+            <thead>
+                <tr>
+                    <td colspan="2">
+                        <h4>欢迎登陆便利兑后台管理界面</h4></td>
+                </tr>
+            </thead>
+            <tr>
+                <td>账号：</td>
+                <td>
+                    <input type="text" id="phone" class="easyui-textbox" data-options="iconCls:'icon-man',prompt:'请输入账号',missingMessage:'请输入账号'" style="width: 100%;" name="logId">
+                </td>
+            </tr>
+            <tr>
+                <td>密码：</td>
+                <td>
+                    <input type="password" id="pwd" class="easyui-textbox" data-options="iconCls:'icon-lock',prompt:'请输入密码',missingMessage:'请输入密码'" style="width: 100%;" name="password">
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2" style="text-align: center;padding-top:10px;"><a id="btn" href="javascript:void(0)" class="easyui-linkbutton" onclick="login()" data-options="iconCls:'icon-ok'">登陆</a></td>
+            </tr>
+        </table>
+    </div>
+</body>
+<script type="text/javascript">
+$(() => {
+	$('#loginWin').dialog({
+		noheader:true,
+        width: 300,
+        height: 180,
+        closable: false,
+        closed: false,
+        cache: false,
+        modal: true,
+        border: false,
+        draggable: false,
+        bodyCls:'login-body'
+    });
+    $('.panel-htop').css('border-radius','20px');
+});
+
+function login() {
+    var $phone = $('#phone');
+    var phone = $phone.val();
+    if (!phone || phone == null || phone.length == 0) {
+        $phone.focus();
+        return;
+    }
+    var $pwd = $('#pwd');
+    var pwd = $pwd.val();
+    if (!pwd || pwd == null || pwd.length == 0) {
+        $pwd.focus();
+        return;
+    }
+
+    HttpService.post('/blh/auth/login1', {
+        phone: phone,
+        pass: pwd,
+        ns: 1
+    }, function(data, status) {
+        if (data && data.code == 0) {
+            window.localStorage.userLite = JSON.stringify(data.data);
+            window.location.href = './_admin.html';
+        } else if (data) {
+            alert(data.msg);
+        }
+    });
+}
+</script>
+
+</html>

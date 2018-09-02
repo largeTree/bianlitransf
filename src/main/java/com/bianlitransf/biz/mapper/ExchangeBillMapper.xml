@@ -2,10 +2,18 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.bianlitransf.biz.dao.ExchangeBillDao">
 
+	<select id="isExistsBizKeys" resultType="Long">
+		select 
+			count(1) 
+		from exchange_bill 
+		where exg_det_id = #{exgDetId}
+		and voucher_code = #{voucherCode} 
+	</select>
+
 	<sql id="allFields">
 		id,
 		owner_id as ownerId,
-		status,
+		`status`,
 		exg_det_id as exgDetId,
 		exg_det_name as exgDetName,
 		score,
@@ -13,13 +21,14 @@
 		created_time as createdTime,
 		confirm_time as confirmTime,
 		confirmer_id as confirmerId,
-		desc
+		`desc`,
+		voucher_code as voucherCode
 	</sql>
 
 	<sql id="insertFields">
 		id,
 		owner_id,
-		status,
+		`status`,
 		exg_det_id,
 		exg_det_name,
 		score,
@@ -27,7 +36,8 @@
 		created_time,
 		confirm_time,
 		confirmer_id,
-		desc
+		`desc`,
+		voucher_code
 	</sql>
 
 	<select id="list" resultType="com.bianlitransf.biz.entity.ExchangeBill" >
@@ -53,7 +63,7 @@
 			 and owner_id = #{ownerId}
 		</if>
 		<if test="status != null">
-			 and status = #{status}
+			 and `status` = #{status}
 		</if>
 		<if test="exgDetId != null">
 			 and exg_det_id = #{exgDetId}
@@ -77,7 +87,10 @@
 			 and confirmer_id = #{confirmerId}
 		</if>
 		<if test="desc != null">
-			 and desc = #{desc}
+			 and `desc` = #{desc}
+		</if>
+		<if test="voucherCode != null">
+			and voucher_code = #{voucherCode}
 		</if>
 	</sql>
 
@@ -109,7 +122,8 @@
 			#{createdTime},
 			#{confirmTime},
 			#{confirmerId},
-			#{desc}
+			#{desc},
+			#{voucherCode}
 		)
 	</insert>
 
@@ -128,7 +142,8 @@
 				#{item.createdTime},
 				#{item.confirmTime},
 				#{item.confirmerId},
-				#{item.desc}
+				#{item.desc},
+				#{item.voucherCode}
 			)
 		</foreach>
 	</insert>
@@ -146,7 +161,7 @@
 			owner_id = #{ownerId},
 		</if>
 		<if test="status != null" >
-			status = #{status},
+			`status` = #{status},
 		</if>
 		<if test="exgDetId != null" >
 			exg_det_id = #{exgDetId},
@@ -170,7 +185,10 @@
 			confirmer_id = #{confirmerId},
 		</if>
 		<if test="desc != null" >
-			desc = #{desc}
+			`desc` = #{desc},
+		</if>
+		<if test="voucherCode != null">
+			voucher_code = #{voucherCode}
 		</if>
 	</sql>
 </mapper>

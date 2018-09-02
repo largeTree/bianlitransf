@@ -7,7 +7,12 @@ window.HttpService = {
             data: params,
             method: 'post',
             success: function(data, textStatus) {
-                success.call(this, data, textStatus);
+                if (data.code == -4001) {
+                    // 会话失效直接广播退出事件
+                    window.sendSessionInvalidEvent();
+                } else {
+                    success.call(this, data, textStatus);
+                }
             },
             error: function(xhr, textStatus, e) {
                 error.call(this, xhr, textStatus, e);

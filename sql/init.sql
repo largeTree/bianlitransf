@@ -13,6 +13,16 @@ CREATE TABLE `user`(
 );
 CREATE INDEX `idx_user_referee_id` ON `user`(`referee_id`);
 
+-- 会话持久化
+CREATE TABLE `session_rec`(
+	`id` BIGINT(20) NOT NULL PRIMARY KEY,
+	`session_id` VARCHAR(64) NOT NULL COMMENT'sessionId',
+	`user_id` BIGINT(20) NOT NULL COMMENT'用户ID',
+	`session_bean` TEXT NOT NULL COMMENT'会话对象json',
+	`login_time` DATETIME NOT NULL COMMENT'登陆时间'
+);
+CREATE INDEX `idx_session_red_sessionId` ON `session_rec`(`session_id`);
+
 -- 兑换单
 CREATE TABLE `exchange_bill`(
 	`id` BIGINT(20) NOT NULL PRIMARY KEY,
@@ -28,6 +38,9 @@ CREATE TABLE `exchange_bill`(
 	`desc` VARCHAR(512) NOT NULL COMMENT'描述'
 );
 CREATE INDEX `idx_exchange_bill_owner_id_status` ON `exchange_bill`(`owner_id`,`status`);
+-- 兑换码
+ALTER TABLE `exchange_bill` ADD COLUMN `voucher_code` VARCHAR(64) NOT NULL COMMENT'兑换码';
+CREATE UNIQUE INDEX `UK_exchange_bill_exgDetId_voucherCode` ON `exchange_bill`(`exg_det_id`,`voucher_code`);
 
 -- 资金流水
 CREATE TABLE `capital_flow`(
@@ -44,6 +57,27 @@ CREATE TABLE `capital_flow`(
 	`desc` VARCHAR(512) NOT NULL COMMENT'描述'
 );
 CREATE INDEX `idx_capital_flow_owner_id_status` ON `capital_flow`(`owner_id`,`status`);
+ALTER TABLE `capital_flow` ADD COLUMN `acct_id` BIGINT(20) NOT NULL COMMENT'账户ID';
+ALTER TABLE `capital_flow` ADD COLUMN `sub_acct` INT(11) NOT NULL COMMENT'子账户';
+ALTER TABLE `capital_flow` ADD COLUMN `bal_money` DECIMAL(16,3) NOT NULL COMMENT'余额',
+	ADD COLUMN `blk_money` DECIMAL(16,3) NOT NULL COMMENT'锁定余额',
+	ADD COLUMN `cashin_money` DECIMAL(16,3) NOT NULL COMMENT'已提现金额';
+ALTER TABLE `capital_flow` ADD COLUMN `type` TINYINT(3) NOT NULL COMMENT'流水类型';
+
+-- 资金账户
+CREATE TABLE `capital_acct`(
+	`id` BIGINT(20) NOT NULL PRIMARY KEY COMMENT'资金账户',
+	`owner_id` BIGINT(20) NOT NULL COMMENT'所有者',
+	`bal_money` DECIMAL(16,2) NOT NULL COMMENT'账户余额',
+	`blk_money` DECIMAL(16,3) NOT NULL COMMENT'已被锁定余额',
+	`cashin_money` DECIMAL(16,3) NOT NULL COMMENT'已提现金额',
+	`created_by` BIGINT(20) NOT NULL COMMENT'创建人',
+	`created_time` DATETIME NOT NULL COMMENT'创建时间',
+	`updated_by` BIGINT(20) NOT NULL COMMENT'更新人',
+	`updated_time` DATETIME NOT NULL COMMENT'更新时间'
+);
+CREATE UNIQUE INDEX `UK_capital_acct_ownerId` ON `capital_acct`(`owner_id`);
+
 
 -- 积分兑换
 CREATE TABLE `score_exchange`(

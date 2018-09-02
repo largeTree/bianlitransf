@@ -1,5 +1,54 @@
 window.ReportBill = {
-    
+    $curEditWindow: null,
+    refershData: function() {
+        $('#_exg_bill_dg').datagrid('load', { _: new Date().getTime(), orderBy: 'createdTime desc' });
+    },
+    optFormat: function(value, row, index) {
+        return '<a href="javascript:void(0)" onclick="ReportBill.detail(\'' + value + '\')" >详情</a>  <a href="javascript:void(0)" onclick="ReportBill.confirmBill(\'' + value + '\')" >通过</a>  <a href="javascript:void(0)" onclick="ReportBill.refuseBill(\'' + value + '\')" >拒绝</a>';;
+    },
+    detail: function(exgBillId) {
+        this.showDetailWindow(exgBillId);
+    },
+    confirmBill: function(exgBillId) {
+        HttpService.post('/blh/api/exchangebill/confirmExchangeBill', { exgBillId: exgBillId }, function(data, staus) {
+            if (data && data.code == 0) {
+                alert('操作成功');
+                ReportBill.refershData();
+            } else if (data) {
+                alert(data.msg);
+            }
+        }, function(xhr, status, e) {
+            console.error(e);
+        });
+    },
+    refuseBill: function(exgBillId) {
+        HttpService.post('/blh/api/exchangebill/refuseExgBill', { exgBillId: exgBillId }, function(data, staus) {
+            if (data && data.code == 0) {
+                alert('操作成功');
+                ReportBill.refershData();
+            } else if (data) {
+                alert(data.msg);
+            }
+        }, function(xhr, status, e) {
+            console.error(e);
+        });
+    },
+    showDetailWindow: function(exgBillId) {
+        $curEditWindow = PageUtils.openWin({
+            title: '详情',
+            iconCls: 'icon-search',
+            href: './_pages/_report_bill_det.html',
+            onLoad: function() {
+                HttpService.post('/blh/api/exchangebill/get', { id: exgBillId }, function(data, staus) {
+                    if (data && data.code == 0) {
+                        data = data.data;
+                    }
+                }, function(xhr, status, e) {
+                    console.error(e);
+                });
+            }
+        });
+    }
 }
 
 window.UsersPage = {
@@ -20,7 +69,7 @@ window.UsersPage = {
         HttpService.post('/blh/api/user/disable', { id: id }, function(data, staus) {
             if (data.code == 0) {
                 alert('停用成功');
-                $('#_user_dg').datagrid('load', { _: new Date().getTime(), orderBy: 'disorder' });
+                UsersPage.refershData();
             } else {
                 alert(data.msg);
             }
@@ -43,7 +92,7 @@ window.UsersPage = {
                     });
                 }
             },
-            onBeforeClose:function() {
+            onBeforeClose: function() {
                 $('#user_edit_table .form-field').val('');
             }
         });
@@ -74,7 +123,7 @@ window.ScoreExchange = {
         HttpService.post('/blh/api/scoreexchange/delete', { id: id }, function(data, staus) {
             if (data.code == 0) {
                 alert('删除成功');
-                $('#_score_exg_dg').datagrid('load', { _: new Date().getTime(), orderBy: 'disorder' });
+                ScoreExchange.refershData();
             } else {
                 alert(data.msg);
             }
@@ -100,7 +149,7 @@ window.ScoreExchange = {
         });
     },
     save: function() {
-        PageUtils.saveForm('/blh/api/scoreexchange/save', '#exg_edit_table', '#_score_exg_dg', $curEditWindow,{ _: new Date().getTime(), orderBy: 'disorder' });
+        PageUtils.saveForm('/blh/api/scoreexchange/save', '#exg_edit_table', '#_score_exg_dg', $curEditWindow, { _: new Date().getTime(), orderBy: 'disorder' });
     }
 }
 
@@ -133,7 +182,7 @@ window.PageUtils = {
             iconCls: options.icon || 'icon-save',
             href: options.href,
             onLoad: options.onLoad,
-            onBeforeClose:options.onBeforeClose
+            onBeforeClose: options.onBeforeClose
         });
         return $editWindow;
     },

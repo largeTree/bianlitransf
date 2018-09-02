@@ -29,12 +29,5 @@
         "attributes": {
             "url":"./_pages/_exg_bill_list.html"
         }
-    },
-    {
-        "id": "4",
-        "text": "Node 4",
-        "attributes": {
-            "url":"./_pages/_page_reses.html"
-        }
     }
 ]

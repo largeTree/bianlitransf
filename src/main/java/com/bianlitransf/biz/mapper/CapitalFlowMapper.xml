@@ -3,31 +3,39 @@
 <mapper namespace="com.bianlitransf.biz.dao.CapitalFlowDao">
 
 	<sql id="allFields">
-		id,
-		src_bill as srcBill,
-		owner_id as ownerId,
-		status,
-		biz_type as bizType,
-		in_out_type as inOutType,
-		money,
-		created_time as createdTime,
-		confirm_time as confirmTime,
-		confirmer_id as confirmerId,
-		desc
+		`id`,
+		`src_bil`l as srcBill,
+		`owner_id` as ownerId,
+		`status`,
+		`biz_type` as bizType,
+		`in_out_type` as inOutType,
+		`money`,
+		`created_time` as createdTime,
+		`desc`,
+		`acct_id` as acctId,
+		`sub_acct` as subAcct,
+		`bal_money` as balMoney,
+		`blk_money` as blkMoney,
+		`cashin_money` as cashinMoney,
+		`type`
 	</sql>
 
 	<sql id="insertFields">
-		id,
-		src_bill,
-		owner_id,
-		status,
-		biz_type,
-		in_out_type,
-		money,
-		created_time,
-		confirm_time,
-		confirmer_id,
-		desc
+		`id`,
+		`src_bill`,
+		`owner_id`,
+		`status`,
+		`biz_type`,
+		`in_out_type`,
+		`money`,
+		`created_time`,
+		`desc`,
+		`acct_id`,
+		`sub_acct`,
+		`bal_money`,
+		`blk_money`,
+		`cashin_money`,
+		`type`
 	</sql>
 
 	<select id="list" resultType="com.bianlitransf.biz.entity.CapitalFlow" >
@@ -47,37 +55,49 @@
 
 	<sql id="comnWhere">
 		<if test="id != null">
-			id = #{id}
+			`id` = #{id}
 		</if>
 		<if test="srcBill != null">
-			 and src_bill = #{srcBill}
+			 and `src_bill` = #{srcBill}
 		</if>
 		<if test="ownerId != null">
-			 and owner_id = #{ownerId}
+			 and `owner_id` = #{ownerId}
 		</if>
 		<if test="status != null">
-			 and status = #{status}
+			 and `status` = #{status}
 		</if>
 		<if test="bizType != null">
-			 and biz_type = #{bizType}
+			 and `biz_type` = #{bizType}
 		</if>
 		<if test="inOutType != null">
-			 and in_out_type = #{inOutType}
+			 and `in_out_type` = #{inOutType}
 		</if>
 		<if test="money != null">
-			 and money = #{money}
+			 and `money` = #{money}
 		</if>
 		<if test="createdTime != null">
-			 and created_time = #{createdTime}
-		</if>
-		<if test="confirmTime != null">
-			 and confirm_time = #{confirmTime}
-		</if>
-		<if test="confirmerId != null">
-			 and confirmer_id = #{confirmerId}
+			 and `created_time` = #{createdTime}
 		</if>
 		<if test="desc != null">
-			 and desc = #{desc}
+			 and `desc` = #{desc}
+		</if>
+		<if test="acctId != null">
+			and `acct_id` = #{acctId}
+		</if>
+		<if test="subAcct != null">
+			and `sub_acct` = #{subAcct}
+		</if>
+		<if test="balMoney != null">
+			and `bal_money` = #{balMoney}
+		</if>
+		<if test="blkMoney != null">
+			and `blk_money` = #{blkMoney}
+		</if>
+		<if test="cashinMoney != null">
+			and `cashinMoney` = #{cashinMoney}
+		</if>
+		<if test="type != null">
+			and `type` = #{type}
 		</if>
 	</sql>
 
@@ -107,9 +127,13 @@
 			#{inOutType},
 			#{money},
 			#{createdTime},
-			#{confirmTime},
-			#{confirmerId},
-			#{desc}
+			#{desc},
+			#{acctId},
+			#{subAcct},
+			#{balMoney},
+			#{blkMoney},
+			#{cashinMoney},
+			#{type}
 		)
 	</insert>
 
@@ -126,9 +150,13 @@
 				#{item.inOutType},
 				#{item.money},
 				#{item.createdTime},
-				#{item.confirmTime},
-				#{item.confirmerId},
-				#{item.desc}
+				#{item.desc},
+				#{item.acctId},
+				#{item.subAcct},
+				#{item.balMoney},
+				#{item.blkMoney},
+				#{item.cashinMoney},
+				#{item.type}
 			)
 		</foreach>
 	</insert>
@@ -143,34 +171,46 @@
 
 	<sql id="setComn" >
 		<if test="srcBill != null" >
-			src_bill = #{srcBill},
+			`src_bill` = #{srcBill},
 		</if>
 		<if test="ownerId != null" >
-			owner_id = #{ownerId},
+			`owner_id` = #{ownerId},
 		</if>
 		<if test="status != null" >
-			status = #{status},
+			`status` = #{status},
 		</if>
 		<if test="bizType != null" >
-			biz_type = #{bizType},
+			`biz_type` = #{bizType},
 		</if>
 		<if test="inOutType != null" >
-			in_out_type = #{inOutType},
+			`in_out_type` = #{inOutType},
 		</if>
 		<if test="money != null" >
-			money = #{money},
+			`money` = #{money},
 		</if>
 		<if test="createdTime != null" >
-			created_time = #{createdTime},
-		</if>
-		<if test="confirmTime != null" >
-			confirm_time = #{confirmTime},
-		</if>
-		<if test="confirmerId != null" >
-			confirmer_id = #{confirmerId},
+			`created_time` = #{createdTime},
 		</if>
 		<if test="desc != null" >
-			desc = #{desc}
+			`desc` = #{desc},
+		</if>
+		<if test="acctId != null">
+			`acct_id` = #{acctId}
+		</if>
+		<if test="subAcct != null">
+			`sub_acct` = #{subAcct}
+		</if>
+		<if test="balMoney != null">
+			`bal_money` = #{balMoney}
+		</if>
+		<if test="blkMoney != null">
+			`blk_money` = #{blkMoney}
+		</if>
+		<if test="cashinMoney != null">
+			`cashin_money` = #{cashinMoney}
+		</if>
+		<if test="type != null">
+			`type` = #{type}
 		</if>
 	</sql>
 </mapper>

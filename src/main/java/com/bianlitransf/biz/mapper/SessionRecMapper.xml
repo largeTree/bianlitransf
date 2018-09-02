@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bianlitransf.biz.dao.SessionRecDao">
+
+	<select id="getBySessionId" resultType="com.bianlitransf.biz.entity.SessionRec">
+		select 
+			<include refid="allFields" />
+		from session_rec 
+		where 
+			session_id = #{sessionId}
+	</select>
+	
+	<delete id="deleteBySessionId">
+		delete from session_rec where session_id = #{sessionId}
+	</delete>
+
+	<sql id="allFields">
+		`id`,
+		`session_id` as sessionId,
+		`user_id` as userId,
+		`session_bean` as sessionBean,
+		`login_time` as loginTime
+	</sql>
+
+	<sql id="insertFields">
+		`id`,
+		`session_id`,
+		`user_id`,
+		`session_bean`,
+		`login_time`
+	</sql>
+
+	<select id="list" resultType="com.bianlitransf.biz.entity.SessionRec" >
+		select
+			<include refid="allFields" />
+		from `session_rec`
+		<where>
+			<include refid="comnWhere" />
+		</where>
+		<if test="orderBy != null" >
+			order by ${orderBy}
+			<if test="orderByDesc != null">
+				desc
+			</if>
+		</if>
+	</select>
+
+	<sql id="comnWhere">
+		<if test="id != null">
+			`id` = #{id}
+		</if>
+		<if test="sessionId != null">
+			 and `session_id` = #{sessionId}
+		</if>
+		<if test="userId != null">
+			 and `user_id` = #{userId}
+		</if>
+		<if test="sessionBean != null">
+			 and `session_bean` = #{sessionBean}
+		</if>
+		<if test="loginTime != null">
+			 and `login_time` = #{loginTime}
+		</if>
+	</sql>
+
+	<select id="getByIds" resultType="com.bianlitransf.biz.entity.SessionRec" >
+		select <include refid="allFields" /> from `session_rec` where id in
+		<foreach collection="list" item="item" open="(" separator="," close=")" >
+			#{item}
+		</foreach>
+	</select>
+
+	<select id="get" resultType="com.bianlitransf.biz.entity.SessionRec" >
+		select <include refid="allFields" /> from `session_rec` where id = #{id}
+	</select>
+
+	<delete id="deleteById" parameterType="Long" >
+		delete from `session_rec` where id = #{id}
+	</delete>
+
+	<insert id="insert" parameterType="com.bianlitransf.biz.entity.SessionRec">
+		insert into `session_rec`(<include refid="insertFields" />)
+		values(
+			#{id},
+			#{sessionId},
+			#{userId},
+			#{sessionBean},
+			#{loginTime}
+		)
+	</insert>
+
+	<insert id="insertBatch" parameterType="java.util.List" >
+		insert into `session_rec`(<include refid="insertFields" />)
+		values
+		<foreach collection="list" item="item" separator="," >
+			(
+				#{item.id},
+				#{item.sessionId},
+				#{item.userId},
+				#{item.sessionBean},
+				#{item.loginTime}
+			)
+		</foreach>
+	</insert>
+
+	<update id="update" parameterType="com.bianlitransf.biz.entity.SessionRec" >
+		update `session_rec` 
+			<set>
+				<include refid="setComn" />
+			</set>
+		where id = #{id}
+	</update>
+
+	<sql id="setComn" >
+		<if test="sessionId != null" >
+			`session_id` = #{sessionId},
+		</if>
+		<if test="userId != null" >
+			`user_id` = #{userId},
+		</if>
+		<if test="sessionBean != null" >
+			`session_bean` = #{sessionBean},
+		</if>
+		<if test="loginTime != null" >
+			`login_time` = #{loginTime}
+		</if>
+	</sql>
+</mapper>

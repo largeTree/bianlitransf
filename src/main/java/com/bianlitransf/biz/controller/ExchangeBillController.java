@@ -13,6 +13,7 @@ import com.qiuxs.cuteframework.web.controller.AbstractDataController;
 import com.qiuxs.cuteframework.web.controller.api.Param;
 import com.bianlitransf.biz.dao.ExchangeBillDao;
 import com.bianlitransf.biz.entity.ExchangeBill;
+import com.bianlitransf.biz.service.IExchangeBillCombService;
 import com.bianlitransf.biz.service.IExchangeBillService;
 
 /**
@@ -29,6 +30,19 @@ public class ExchangeBillController
 
 	@Resource
 	private IExchangeBillService exchangebillService;
+
+	@Resource
+	private IExchangeBillCombService exchangeBillCombService;
+
+	@Api
+	public void confirmExchangeBill(@Param("exgBillId") Long exgBillId, @Param("desc") String desc) {
+		this.exchangeBillCombService.confrimExgBill(exgBillId, desc);
+	}
+
+	@Api
+	public void refuseExgBill(@Param("exgBillId") Long exgBillId, @Param("desc") String desc) {
+		this.exchangeBillCombService.refuseExgBill(exgBillId, desc);
+	}
 
 	@Api
 	public Long report(Map<String, String> params, @Param("jsonParam") String jsonParam) {

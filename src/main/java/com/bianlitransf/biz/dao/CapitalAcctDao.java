@@ -4,7 +4,7 @@ import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
 import com.qiuxs.cuteframework.core.persistent.database.dao.IBaseDao;
-import com.bianlitransf.biz.entity.ExchangeBill;
+import com.bianlitransf.biz.entity.CapitalAcct;
 
 /**
  * Dao接口
@@ -13,8 +13,8 @@ import com.bianlitransf.biz.entity.ExchangeBill;
  *
  */
 @Repository
-public interface ExchangeBillDao extends IBaseDao<Long, ExchangeBill> {
+public interface CapitalAcctDao extends IBaseDao<Long, CapitalAcct> {
 
-	public long isExistsBizKeys(@Param("exgDetId") Long exgDetId, @Param("voucherCode") String voucherCode);
+	CapitalAcct getByOwnerId(@Param("ownerId") Long ownerId);
 
 }

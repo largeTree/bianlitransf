@@ -16,9 +16,9 @@ public class ExchangeBill extends AbstractEntity<Long> {
 
 	private static final long serialVersionUID = 1L;
 	
-	public static final int FLAG_REFUSE = -1;
-	public static final int FLAG_CREATED = 0;
-	public static final int FLAG_PASS = 1;
+	public static final int STATUS_REFUSE = -1;
+	public static final int STATUS_CREATED = 0;
+	public static final int STATUS_PASS = 1;
 	
 	/** 所有者 */
 	private Long ownerId;
@@ -46,6 +46,9 @@ public class ExchangeBill extends AbstractEntity<Long> {
 
 	/** 描述 */
 	private String desc;
+	
+	/** 兑换码 */
+	private String voucherCode;
 
 
 	/**
@@ -190,6 +193,22 @@ public class ExchangeBill extends AbstractEntity<Long> {
 	 */
 	public void setDesc(String desc) {
 		this.desc = desc;
+	}
+
+	/**
+	 * get the 兑换码
+	 * @return voucherCode
+	 */
+	public String getVoucherCode() {
+		return voucherCode;
+	}
+
+	/**
+	 * set the 兑换码
+	 * @param voucherCode
+	 */
+	public void setVoucherCode(String voucherCode) {
+		this.voucherCode = voucherCode;
 	}
 
 }

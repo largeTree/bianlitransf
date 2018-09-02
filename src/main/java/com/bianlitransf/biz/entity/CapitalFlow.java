@@ -1,6 +1,5 @@
 package com.bianlitransf.biz.entity;
 
-import java.util.Date;
 import java.math.BigDecimal;
 
 import com.qiuxs.cuteframework.core.persistent.database.entity.impl.AbstractEntity;
@@ -15,6 +14,16 @@ import com.qiuxs.cuteframework.core.persistent.database.entity.impl.AbstractEnti
 public class CapitalFlow extends AbstractEntity<Long> {
 
 	private static final long serialVersionUID = 1L;
+
+	/** 收入 */
+	public static final int IN_OUT_TYPE_IN = 1;
+	/** 支出 */
+	public static final int IN_OUT_TYPE_OUT = 2;
+
+	/** 用户流水 */
+	public static final int TYPE_CUST = 1;
+	/** 系统流水 */
+	public static final int TYPE_SYS = 2;
 
 	/** 来源单据 */
 	private Long srcBill;
@@ -34,15 +43,26 @@ public class CapitalFlow extends AbstractEntity<Long> {
 	/** 金额 */
 	private BigDecimal money;
 
-	/** 确认时间 */
-	private Date confirmTime;
-
-	/** 确认操作人 */
-	private Long confirmerId;
-
 	/** 描述 */
 	private String desc;
 
+	/** 账户ID */
+	private Long acctId;
+
+	/** 子账户 */
+	private Integer subAcct;
+
+	/** 余额 */
+	private BigDecimal balMoney;
+
+	/** 已锁定金额 */
+	private BigDecimal blkMoney;
+
+	/** 已提现金额 */
+	private BigDecimal cashinMoney;
+
+	/** 流水类型 */
+	private Integer type;
 
 	/**
 	 * get the 来源单据
@@ -141,38 +161,6 @@ public class CapitalFlow extends AbstractEntity<Long> {
 	}
 
 	/**
-	 * get the 确认时间
-	 * @return confirmTime
-	 */
-	public Date getConfirmTime() {
-		return this.confirmTime;
-	}
-
-	/**
-	 * set the 确认时间
-	 * @param confirmTime
-	 */
-	public void setConfirmTime(Date confirmTime) {
-		this.confirmTime = confirmTime;
-	}
-
-	/**
-	 * get the 确认操作人
-	 * @return confirmerId
-	 */
-	public Long getConfirmerId() {
-		return this.confirmerId;
-	}
-
-	/**
-	 * set the 确认操作人
-	 * @param confirmerId
-	 */
-	public void setConfirmerId(Long confirmerId) {
-		this.confirmerId = confirmerId;
-	}
-
-	/**
 	 * get the 描述
 	 * @return desc
 	 */
@@ -186,6 +174,103 @@ public class CapitalFlow extends AbstractEntity<Long> {
 	 */
 	public void setDesc(String desc) {
 		this.desc = desc;
+	}
+
+	/**
+	 * get the 账户ID
+	 * @return acctId
+	 */
+	public Long getAcctId() {
+		return acctId;
+	}
+
+	/**
+	 * set the 账户ID
+	 * @param acctId
+	 */
+	public void setAcctId(Long acctId) {
+		this.acctId = acctId;
+	}
+
+	/**
+	 * get the 子账户
+	 * @return subAcct
+	 */
+	public Integer getSubAcct() {
+		return subAcct;
+	}
+
+	/**
+	 * set the 子账户
+	 * @param subAcct
+	 */
+	public void setSubAcct(Integer subAcct) {
+		this.subAcct = subAcct;
+	}
+
+	/**
+	 * get the 余额
+	 * @return balMoney
+	 */
+	public BigDecimal getBalMoney() {
+		return balMoney;
+	}
+
+	/**
+	 * set the 余额
+	 * @param balMoney
+	 */
+
+	public void setBalMoney(BigDecimal balMoney) {
+		this.balMoney = balMoney;
+	}
+
+	/**
+	 * get the 已锁定余额
+	 * @return blkMoney
+	 */
+	public BigDecimal getBlkMoney() {
+		return blkMoney;
+	}
+
+	/**
+	 * set the 已锁定余额
+	 * @param blkMoney
+	 */
+	public void setBlkMoney(BigDecimal blkMoney) {
+		this.blkMoney = blkMoney;
+	}
+
+	/**
+	 * get the 已提现金额
+	 * @return cashinMoney
+	 */
+	public BigDecimal getCashinMoney() {
+		return cashinMoney;
+	}
+
+	/**
+	 * set the 已提现金额
+	 * @param cashinMoney
+	 */
+	public void setCashinMoney(BigDecimal cashinMoney) {
+		this.cashinMoney = cashinMoney;
+	}
+
+	/**
+	 * get the 流水类型
+	 * @return type
+	 */
+	public Integer getType() {
+		return type;
+	}
+
+	/**
+	 * set the 流水类型
+	 * @param type
+	 */
+	public void setType(Integer type) {
+		this.type = type;
 	}
 
 }

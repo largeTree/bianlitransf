@@ -15,6 +15,7 @@ import com.qiuxs.cuteframework.core.persistent.database.service.filter.impl.IdGe
 import com.bianlitransf.biz.dao.CapitalFlowDao;
 import com.bianlitransf.biz.entity.CapitalFlow;
 import com.bianlitransf.biz.service.ICapitalFlowService;
+
 /**
  * 服务类
  *
@@ -22,7 +23,8 @@ import com.bianlitransf.biz.service.ICapitalFlowService;
  *
  */
 @Service
-public class CapitalFlowService extends AbstractDataPropertyService<Long, CapitalFlow, CapitalFlowDao> implements ICapitalFlowService {
+public class CapitalFlowService extends AbstractDataPropertyService<Long, CapitalFlow, CapitalFlowDao>
+		implements ICapitalFlowService {
 
 	private static final String TABLE_NAME = "capital_flow";
 
@@ -68,16 +70,31 @@ public class CapitalFlowService extends AbstractDataPropertyService<Long, Capita
 		prop = new PropertyWrapper<BigDecimal>(new BaseField("money", "金额", BigDecimal.class), null);
 		props.add(prop);
 
-		prop = new PropertyWrapper<Date>(new BaseField("createdTime", "创建人", Date.class), null);
+		prop = new PropertyWrapper<Date>(new BaseField("createdBy", "创建人", Long.class), null);
 		props.add(prop);
-
-		prop = new PropertyWrapper<Date>(new BaseField("confirmTime", "确认时间", Date.class), null);
-		props.add(prop);
-
-		prop = new PropertyWrapper<Long>(new BaseField("confirmerId", "确认操作人", Long.class), null);
+		
+		prop = new PropertyWrapper<Date>(new BaseField("createdTime", "创建时间", Date.class), null);
 		props.add(prop);
 
 		prop = new PropertyWrapper<String>(new BaseField("desc", "描述", String.class), null);
+		props.add(prop);
+
+		prop = new PropertyWrapper<String>(new BaseField("acctId", "账户ID", Long.class), null);
+		props.add(prop);
+		
+		prop = new PropertyWrapper<String>(new BaseField("subAcct", "子账户", Integer.class), null);
+		props.add(prop);
+		
+		prop = new PropertyWrapper<String>(new BaseField("balMoney", "余额", BigDecimal.class), null);
+		props.add(prop);
+		
+		prop = new PropertyWrapper<String>(new BaseField("blkMoney", "已锁定余额", BigDecimal.class), null);
+		props.add(prop);
+		
+		prop = new PropertyWrapper<String>(new BaseField("cashinMoney", "已提现金额", BigDecimal.class), null);
+		props.add(prop);
+		
+		prop = new PropertyWrapper<String>(new BaseField("type", "类型", Integer.class), null);
 		props.add(prop);
 
 	}

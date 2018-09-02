@@ -15,11 +15,24 @@
 <script type="text/javascript" src="./javascripts/_common.js"></script>
 <script type="text/javascript" src="./javascripts/_admin.js"></script>
 <script type="text/javascript" src="./javascripts/_pages.js"></script>
-
+<style type="text/css">
+	#top-title {
+		margin: 15px 0px;
+	}
+	#top-toolbar {
+		text-align: right;
+	}
+	.hide {
+		display: none;
+	}
+</style>
 </head>
-<body class="easyui-layout">
+<body class="easyui-layout" class="hide">
 	<div data-options="region:'north'" style="height: 90px;padding-left: 30px;">
-		<h2>便利换后台管理</h2>
+		<h2 id="top-title">便利换后台管理</h2>
+		<div id="top-toolbar">
+			<a id="btn" href="javascript:void(0)" class="easyui-linkbutton" onclick="AdminPage.logout()" data-options="iconCls:'icon-cancel'">退出登录</a>
+		</div>
 	</div>
 	<div data-options="region:'west',split:false,collapsible:false" title="菜单" style="width: 200px;">
 		<ul id="leftMenu" class="easyui-tree" data-options="url:'./webconfigs/left_menu.json',method:'get',animate:true">

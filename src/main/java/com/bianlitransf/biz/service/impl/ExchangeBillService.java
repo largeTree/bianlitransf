@@ -18,6 +18,7 @@ import com.bianlitransf.biz.service.IExchangeBillService;
 import com.bianlitransf.biz.service.IScoreExchangeDetailService;
 import com.bianlitransf.biz.service.IUserService;
 import com.qiuxs.cuteframework.core.basic.bean.UserLite;
+import com.qiuxs.cuteframework.core.basic.utils.ExceptionUtils;
 import com.qiuxs.cuteframework.core.context.UserContext;
 import com.qiuxs.cuteframework.core.persistent.database.modal.BaseField;
 import com.qiuxs.cuteframework.core.persistent.database.modal.PropertyWrapper;
@@ -61,8 +62,13 @@ public class ExchangeBillService extends AbstractDataPropertyService<Long, Excha
 		User user = this.userService.getById(userLite.getUserId());
 		// 兑换单所有者
 		exchangeBill.setOwnerId(user.getId());
-		exchangeBill.setStatus(ExchangeBill.FLAG_CREATED);
-		
+		exchangeBill.setStatus(ExchangeBill.STATUS_CREATED);
+
+		// 判断兑换码是否重复
+		if (this.isExistsBizKeys(exchangeBill.getExgDetId(), exchangeBill.getVoucherCode())) {
+			ExceptionUtils.throwLogicalException("voucher_code_repeat");
+		}
+
 		// 设置兑换券明细
 		ScoreExchangeDetail exgDet = exgDetService.getById(exchangeBill.getExgDetId());
 		exchangeBill.setExgDetName(exgDet.getName());
@@ -75,6 +81,20 @@ public class ExchangeBillService extends AbstractDataPropertyService<Long, Excha
 		exchangeBill.setMoney(price);
 		exchangeBill.setScore(exgDet.getScore());
 		this.save(exchangeBill);
+	}
+
+	/***
+	 * 是否存在相同记录
+	 * @author qiuxs
+	 *
+	 * @param exgDetId
+	 * @param voucherCode
+	 * @return
+	 *
+	 * 创建时间：2018年9月2日 下午4:04:28
+	 */
+	public boolean isExistsBizKeys(Long exgDetId, String voucherCode) {
+		return this.getDao().isExistsBizKeys(exgDetId, voucherCode) > 0;
 	}
 
 	@Override

@@ -8,29 +8,29 @@
 	</select>
 
 	<sql id="allFields">
-		id,
-		phone,
-		password,
-		referee_id as refereeId,
-		level,
-		level_code as levelCode,
-		status,
-		name,
-		alipay_no as alipayNo,
-		created_time as createdTime
+		`id`,
+		`phone`,
+		`password`,
+		`referee_id` as refereeId,
+		`level`,
+		`level_code` as levelCode,
+		`status`,
+		`name`,
+		`alipay_no` as alipayNo,
+		`created_time` as createdTime
 	</sql>
 
 	<sql id="insertFields">
-		id,
-		phone,
-		password,
-		referee_id,
-		level,
-		level_code,
-		status,
-		name,
-		alipay_no,
-		created_time
+		`id`,
+		`phone`,
+		`password`,
+		`referee_id`,
+		`level`,
+		`level_code`,
+		`status`,
+		`name`,
+		`alipay_no`,
+		`created_time`
 	</sql>
 
 	<select id="list" resultType="com.bianlitransf.biz.entity.User" >
@@ -50,34 +50,37 @@
 
 	<sql id="comnWhere">
 		<if test="id != null">
-			id = #{id}
+			`id` = #{id}
 		</if>
 		<if test="phone != null">
-			 and phone = #{phone}
+			 and `phone` = #{phone}
 		</if>
 		<if test="password != null">
-			 and password = #{password}
+			 and `password` = #{password}
 		</if>
 		<if test="refereeId != null">
-			 and referee_id = #{refereeId}
+			 and `referee_id` = #{refereeId}
 		</if>
 		<if test="level != null">
-			 and level = #{level}
+			 and `level` = #{level}
+		</if>
+		<if test="levelGte != null">
+			and `level` >= #{levelGte}
 		</if>
 		<if test="levelCode != null">
-			 and level_code = #{levelCode}
+			 and `level_code` = #{levelCode}
 		</if>
 		<if test="status != null">
-			 and status = #{status}
+			 and `status` = #{status}
 		</if>
 		<if test="name != null">
-			 and name = #{name}
+			 and `name` = #{name}
 		</if>
 		<if test="alipayNo != null">
-			 and alipay_no = #{alipayNo}
+			 and `alipay_no` = #{alipayNo}
 		</if>
 		<if test="createdTime != null">
-			 and created_time = #{createdTime}
+			 and `created_time` = #{createdTime}
 		</if>
 	</sql>
 
@@ -141,31 +144,31 @@
 
 	<sql id="setComn" >
 		<if test="phone != null" >
-			phone = #{phone},
+			`phone` = #{phone},
 		</if>
 		<if test="password != null" >
-			password = #{password},
+			`password` = #{password},
 		</if>
 		<if test="refereeId != null" >
-			referee_id = #{refereeId},
+			`referee_id` = #{refereeId},
 		</if>
 		<if test="level != null" >
-			level = #{level},
+			`level` = #{level},
 		</if>
 		<if test="levelCode != null" >
-			level_code = #{levelCode},
+			`level_code` = #{levelCode},
 		</if>
 		<if test="status != null" >
-			status = #{status},
+			`status` = #{status},
 		</if>
 		<if test="name != null" >
-			name = #{name},
+			`name` = #{name},
 		</if>
 		<if test="alipayNo != null" >
-			alipay_no = #{alipayNo},
+			`alipay_no` = #{alipayNo},
 		</if>
 		<if test="createdTime != null" >
-			created_time = #{createdTime}
+			`created_time` = #{createdTime}
 		</if>
 	</sql>
 </mapper>
