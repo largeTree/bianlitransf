@@ -4,7 +4,7 @@
 
 	<sql id="allFields">
 		`id`,
-		`src_bil`l as srcBill,
+		`src_bill` as srcBill,
 		`owner_id` as ownerId,
 		`status`,
 		`biz_type` as bizType,

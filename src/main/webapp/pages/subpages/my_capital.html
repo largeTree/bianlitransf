@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no" name="viewport">
+    <meta content="yes" name="apple-mobile-web-app-capable">
+    <meta content="black" name="apple-mobile-web-app-status-bar-style">
+    <meta content="telephone=no" name="format-detection">
+    <meta content="email=no" name="format-detection">
+    <meta http-equiv="Cache-Control" content="no-cache, must-revalidate" />
+    <link href="https://cdn.bootcss.com/amazeui/2.7.2/css/amazeui.css" rel="stylesheet">
+    <script src="https://cdn.bootcss.com/jquery/2.0.0/jquery.min.js"></script>
+    <!-- <script src="https://cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script>
+    <script src="https://cdn.bootcss.com/amazeui/2.7.2/js/amazeui.min.js"></script> -->
+    <link href="../../css/common.css?ver=1" rel="stylesheet">
+    <script type="text/javascript" src="../../javascripts/common.js?ver=1"></script>
+    <title>资金明细</title>
+    <style type="text/css">
+    .suspend-back-btn {
+        right: 2rem;
+        bottom: 2rem;
+        height: 2.6rem;
+        width: 2.6rem;
+        position: fixed;
+        z-index: 999;
+        margin: 1rem;
+    }
+
+    .tabs {
+        width: 100%;
+    }
+
+    .tabs thead {
+        background-color: #FAFAFA;
+    }
+
+    .tabs .tabs-item {
+        text-align: center;
+        padding: 0.5rem;
+        border-bottom: #FAFAFA 2px solid;
+    }
+
+    .tabs-item-selected {
+        border-bottom: #FF8C00 2px solid !important;
+    }
+
+    .capital-flow-list {
+        margin-top: 0.5rem;
+    }
+
+    .capital-flow-list .flow-item {
+        background-color: #FFFFFF;
+        overflow: hidden;
+        height: 6rem;
+        margin-bottom: 1px;
+    }
+
+    .capital-flow-list .flow-item img {
+        float: left;
+        width: 6rem;
+        height: 6rem;
+        margin-left: 1rem;
+    }
+
+    .capital-flow-list .flow-item .item-icon {
+        line-height: 6rem;
+    }
+
+    .capital-flow-list .flow-item .item-info {
+        float: left;
+        margin-left: 1rem;
+        height: 6rem;
+        width: 40%;
+        padding-left: 1rem;
+    }
+
+    .capital-flow-list .flow-item .item-info .biz-type {
+        height: 3.5rem;
+        line-height: 3.5rem;
+        letter-spacing: 2px;
+        font-size: 1.5rem;
+    }
+
+    .capital-flow-list .flow-item .item-info .created-time {
+        height: 2.5rem;
+        font-size: 1.2rem;
+        color: #969696;
+    }
+
+    .capital-flow-list .flow-item .item-money {
+        font-size: 2rem;
+        text-align: center;
+        line-height: 6rem;
+        float: left;
+        width: calc(60% - 6rem - 1rem - 1rem);
+    }
+
+    .item-money-in {
+        color: #FF8C00;
+    }
+
+    .item-money-out {
+        color: #1296db;
+    }
+    </style>
+</head>
+
+<body>
+    <img src="/blh/imgs/fanhuianniu.png" class="suspend-back-btn" onclick="window.history.go(-1)">
+    <article class="my-fixed-content">
+        <img src="/blh/imgs/cashin.png" style="width: 100%;">
+        <div>
+            <table class="tabs">
+                <thead>
+                    <tr>
+                        <td class="tabs-item">全部</td>
+                        <td class="tabs-item" data-inouttype="1">收入</td>
+                        <td class="tabs-item" data-inouttype="2">支出</td>
+                    </tr>
+                </thead>
+            </table>
+            <div class="capital-flow-list">
+            </div>
+        </div>
+    </article>
+</body>
+<script type="text/javascript">
+var params = getQueryParmas();
+var sessionId = params.sessionId;
+$(() => {
+    $('.tabs-item').on('click', function() {
+        $('.tabs-item').removeClass('tabs-item-selected');
+        var $this = $(this);
+        $this.addClass('tabs-item-selected');
+        loadFlows($this.data('inouttype'));
+    });
+
+    // 默认选中第一个
+    $($('.tabs-item')[0]).click();
+});
+
+function loadFlows(inOutType) {
+
+    HttpService.post('/blh/api/capitalflow/capitalFlow', { inOutType: inOutType }, function(data, status) {
+        if (data && data.code == 0) {
+
+        	var $flowList = $('.capital-flow-list');
+			$flowList.html('');
+
+            var rows = data.data.rows;
+            for (var i = 0; i < rows.length; i++) {
+                var row = rows[i];
+                var $flowItem = $(document.createElement('div'));
+                $flowItem.addClass('flow-item');
+
+                // 图标
+                var $itemIcon = $(document.createElement('div'));
+                $itemIcon.addClass('item-icon');
+                var $icon = $(document.createElement('img'));
+                var sign;
+                if (row.inOutType == 1) {
+                    $icon.attr('src', '/blh/imgs/flow_in.svg');
+                    sign = '+';
+                } else {
+                	$icon.attr('src', '/blh/imgs/flow_out.svg');
+                	sign = '-';
+                }
+                $icon.appendTo($itemIcon);
+                $itemIcon.appendTo($flowItem);
+
+                // 流水数据  业务类型、创建时间 
+                var $itemInfo = $(document.createElement('div'));
+                $itemInfo.addClass('item-info');
+                // 业务类型
+                var $bizType = $(document.createElement('div'));
+                $bizType.addClass('biz-type');
+                $bizType.html(row.bizType);
+                $bizType.appendTo($itemInfo);
+                var $createdTime = $(document.createElement('div'));
+                $createdTime.addClass('created-time');
+                $createdTime.html(row.createdTime);
+                $createdTime.appendTo($itemInfo);
+                $itemInfo.appendTo($flowItem);
+
+                // 流水金额
+                var $itemMoney = $(document.createElement('div'));
+                $itemMoney.addClass('item-money');
+                $itemMoney.html(sign + row.money);
+                $itemMoney.appendTo($flowItem);
+
+                if (sign == '-') {
+                	$itemMoney.addClass('item-money-out');
+                } else {                	
+                	$itemMoney.addClass('item-money-in');
+                }
+
+                $flowItem.appendTo($flowList);
+            }
+        }
+    });
+}
+</script>
+<!-- 
+	
+	<div class="flow-item">
+		<div class="item-icon">
+	        <img src="/blh/imgs/flow_in.svg" />
+	    </div>
+	    <div class="item-info">
+	        <div class="biz-type">级差分润</div>
+	        <div class="created-time">2018-09-03 22:14:01</div>
+	    </div>
+	    <div class="item-money item-money-in">+36.00</div>
+	</div>
+
+ -->
+
+</html>

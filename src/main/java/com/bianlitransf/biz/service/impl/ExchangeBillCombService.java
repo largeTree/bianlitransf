@@ -76,7 +76,7 @@ public class ExchangeBillCombService implements IExchangeBillCombService {
 		}
 
 		// 更新兑换单为已通过状态
-		exgBill.setStatus(ExchangeBill.STATUS_PASS);
+		exgBill.setStatus(ExchangeBill.STATUS_CONFRIMED);
 
 		// 填充审核人信息
 		UserLite userLite = UserContext.getUserLite();
@@ -99,7 +99,7 @@ public class ExchangeBillCombService implements IExchangeBillCombService {
 	@Override
 	public void refuseExgBill(Long exgBillId, String desc) {
 		ExchangeBill exgBill = exchangeBillService.getById(exgBillId);
-		exgBill.setStatus(ExchangeBill.STATUS_REFUSE);
+		exgBill.setStatus(ExchangeBill.STATUS_REFUSED);
 		exgBill.setDesc(StringUtils.isBlank(desc) ? "审核失败" : desc);
 		this.exchangeBillService.save(exgBill);
 	}

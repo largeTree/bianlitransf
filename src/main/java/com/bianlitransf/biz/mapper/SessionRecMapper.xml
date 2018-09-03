@@ -2,6 +2,10 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.bianlitransf.biz.dao.SessionRecDao">
 
+	<delete id="deleteByUserId">
+		delete from session_rec where user_id = #{userId}
+	</delete>
+
 	<select id="getBySessionId" resultType="com.bianlitransf.biz.entity.SessionRec">
 		select 
 			<include refid="allFields" />

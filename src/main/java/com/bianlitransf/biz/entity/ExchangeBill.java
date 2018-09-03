@@ -16,9 +16,9 @@ public class ExchangeBill extends AbstractEntity<Long> {
 
 	private static final long serialVersionUID = 1L;
 	
-	public static final int STATUS_REFUSE = -1;
+	public static final int STATUS_REFUSED = -1;
 	public static final int STATUS_CREATED = 0;
-	public static final int STATUS_PASS = 1;
+	public static final int STATUS_CONFRIMED = 1;
 	
 	/** 所有者 */
 	private Long ownerId;

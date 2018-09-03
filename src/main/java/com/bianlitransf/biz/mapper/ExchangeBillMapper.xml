@@ -2,6 +2,15 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.bianlitransf.biz.dao.ExchangeBillDao">
 
+	<select id="summaryExgBills" resultType="java.util.HashMap">
+		SELECT 
+			COUNT(1) AS `count`,
+			`status` AS `status`
+		FROM `exchange_bill` 
+		WHERE owner_id = #{ownerId}
+		GROUP BY `status`
+	</select>
+
 	<select id="isExistsBizKeys" resultType="Long">
 		select 
 			count(1) 

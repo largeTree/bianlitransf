@@ -87,6 +87,7 @@ public class CapitalFlowCombService implements ICapitalFlowCombService {
 		capitalFlow.setInOutType(inOutType);
 		capitalFlow.setOwnerId(ownerId);
 		capitalFlow.setStatus(BizConstants.STATUS_VALID);
+		capitalFlow.setType(type);
 
 		// 设置子账户类型
 		capitalFlow.setSubAcct(subAcct);
@@ -104,7 +105,7 @@ public class CapitalFlowCombService implements ICapitalFlowCombService {
 		capitalFlow.setBalMoney(acct.getBalMoney());
 		capitalFlow.setBlkMoney(acct.getBlkMoney());
 		capitalFlow.setCashinMoney(money);
-
+		
 		// 保存落库
 		this.capitalFlowService.save(capitalFlow);
 		this.capitalAcctService.save(acct);

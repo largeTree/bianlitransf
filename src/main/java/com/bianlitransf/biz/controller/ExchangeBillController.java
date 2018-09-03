@@ -7,14 +7,14 @@ import javax.annotation.Resource;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.qiuxs.cuteframework.web.WebConstants;
-import com.qiuxs.cuteframework.web.annotation.Api;
-import com.qiuxs.cuteframework.web.controller.AbstractDataController;
-import com.qiuxs.cuteframework.web.controller.api.Param;
 import com.bianlitransf.biz.dao.ExchangeBillDao;
 import com.bianlitransf.biz.entity.ExchangeBill;
 import com.bianlitransf.biz.service.IExchangeBillCombService;
 import com.bianlitransf.biz.service.IExchangeBillService;
+import com.qiuxs.cuteframework.web.WebConstants;
+import com.qiuxs.cuteframework.web.annotation.Api;
+import com.qiuxs.cuteframework.web.controller.AbstractDataController;
+import com.qiuxs.cuteframework.web.controller.api.Param;
 
 /**
  * 控制器
@@ -33,6 +33,11 @@ public class ExchangeBillController
 
 	@Resource
 	private IExchangeBillCombService exchangeBillCombService;
+
+	@Api
+	public Map<String, Object> summaryExgBills() {
+		return this.getService().summaryExgBills();
+	}
 
 	@Api
 	public void confirmExchangeBill(@Param("exgBillId") Long exgBillId, @Param("desc") String desc) {

@@ -19,4 +19,14 @@ public interface IExchangeBillService extends IDataPropertyService<Long, Exchang
 	 */
 	public void saveBill(Map<String, String> params, ExchangeBill exchangeBill);
 
+	/**
+	 * 汇总当前用户的兑换单
+	 * @author qiuxs
+	 *
+	 * @return
+	 *
+	 * 创建时间：2018年9月3日 下午8:50:49
+	 */
+	public Map<String, Object> summaryExgBills();
+
 }

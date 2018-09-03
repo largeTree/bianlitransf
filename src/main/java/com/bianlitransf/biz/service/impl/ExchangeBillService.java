@@ -2,6 +2,7 @@ package com.bianlitransf.biz.service.impl;
 
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -54,6 +55,28 @@ public class ExchangeBillService extends AbstractDataPropertyService<Long, Excha
 	@Override
 	protected ExchangeBillDao getDao() {
 		return this.exchangeBillDao;
+	}
+
+	@Override
+	public Map<String, Object> summaryExgBills() {
+		List<Map<String, Number>> summarys = this.getDao().summaryExgBills(UserContext.getUserId());
+		Map<String, Object> data = new HashMap<>();
+		Number refused = 0;
+		Number confrimed = 0;
+		Number created = 0;
+		for (Map<String, Number> row : summarys) {
+			if (((Number) row.get("status")).intValue() == ExchangeBill.STATUS_CREATED) {
+				created = row.get("count");
+			} else if (((Number) row.get("status")).intValue() == ExchangeBill.STATUS_CONFRIMED) {
+				confrimed = row.get("count");
+			} else if (((Number) row.get("status")).intValue() == ExchangeBill.STATUS_REFUSED) {
+				refused = row.get("count");
+			}
+		}
+		data.put("refused", refused);
+		data.put("confrimed", confrimed);
+		data.put("created", created);
+		return data;
 	}
 
 	@Override

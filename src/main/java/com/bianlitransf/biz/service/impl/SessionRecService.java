@@ -45,6 +45,13 @@ public class SessionRecService extends AbstractDataPropertyService<Long, Session
 	}
 	
 	@Override
+	protected boolean preCreate(SessionRec bean) {
+		// 每个用户仅允许一个会话，保存前先删除原来的
+		this.getDao().deleteByUserId(bean.getUserId());
+		return super.preCreate(bean);
+	}
+	
+	@Override
 	public UserLite loadSession(String sessionId) {
 		SessionRec sessionRec = this.getDao().getBySessionId(sessionId);
 		if (sessionRec != null) {

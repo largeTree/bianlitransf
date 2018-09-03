@@ -124,24 +124,24 @@
         <div class="capital-container">
             <div class="item">
                 <span class="i-title">累计盈利</span>
-                <h2>2866.00</h2>
+                <h2 id="totalMoney">0.00</h2>
             </div>
             <div class="item border-left">
                 <span class="i-title">可提现余额</span>
-                <h2>0.00</h2>
+                <h2 id="balMoney">0.00</h2>
             </div>
         </div>
         <div class="exchange-flow-container">
             <div class="item">
-                <h2>1</h2>
+                <h2 id="created">0</h2>
                 <span class="i-title">审核中单数</span>
             </div>
             <div class="item border-left">
-                <h2>20</h2>
+                <h2 id="confrimed">0</h2>
                 <span class="i-title">成功单数</span>
             </div>
             <div class="item border-left">
-                <h2>0</h2>
+                <h2 id="refused">0</h2>
                 <span class="i-title">失败单数</span>
             </div>
         </div>
@@ -166,6 +166,12 @@ var params = getQueryParmas();
 var sessionId = params.sessionId;
 console.log('sessionId = ' + sessionId);
 $(() => {
+    // 加载数据
+    loadData();
+    // 定时每分钟更新一下
+    setInterval(loadData, 60 * 1000);
+
+
     $('.list-item').on('touchstart', function(event) {
         $(this).css('background-color', '#F7F7F7');
     });
@@ -175,10 +181,28 @@ $(() => {
     });
 
     $('.capital-container').on('click', function() {
-        jumpPage('');
+        jumpPage('./subpages/my_capital.html', { sessionId: sessionId });
     });
 
 });
+
+function loadData() {
+    // 资产数据
+    HttpService.post('/blh/api/capitalacct/capitalInfo', { sessionId: sessionId }, function(data, status) {
+        if (data && data.code == 0) {
+            $('#totalMoney').html(data.data.totalMoney);
+            $('#balMoney').html(data.data.balMoney);
+        }
+    });
+    // 兑换单数据
+    HttpService.post('/blh/api/exchangebill/summaryExgBills', { sessionId: sessionId }, function(data, status) {
+        if (data && data.code == 0) {
+            $('#created').html(data.data.created);
+            $('#confrimed').html(data.data.confrimed);
+            $('#refused').html(data.data.refused);
+        }
+    });
+}
 
 /** 我的团队 */
 function myteam() {
