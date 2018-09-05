@@ -38,7 +38,7 @@ public class CapitalAcctController
 		CapitalAcct acct = this.getService().getAcctMustByOwner(UserContext.getUserId());
 		BigDecimal balMoney = acct.getBalMoney(); // 可用余额
 		BigDecimal blkMoney = acct.getBlkMoney(); // 锁定金额，一般是正在提现中的金额
-		BigDecimal totalMoney = balMoney.add(acct.getCashinMoney()); // 总金额
+		BigDecimal totalMoney = balMoney.add(acct.getCashinMoney()).add(blkMoney); // 总金额
 		
 		Map<String, Object> capitalInfo = MapUtils.genMap("totalMoney", totalMoney, 
 				"balMoney", balMoney, 

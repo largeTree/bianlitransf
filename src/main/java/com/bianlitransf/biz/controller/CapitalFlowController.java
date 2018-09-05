@@ -38,7 +38,8 @@ public class CapitalFlowController
 		List<CapitalFlow> list = this.getService()
 				.findByMap(MapUtils.genMap("inOutType", inOutType, 
 						"type", CapitalFlow.TYPE_CUST,
-						"status", BizConstants.STATUS_VALID), pageInfo);
+						"status", BizConstants.STATUS_VALID,
+						"orderBy", "createdTime desc"), pageInfo);
 		return list;
 	}
 

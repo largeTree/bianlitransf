@@ -63,6 +63,7 @@ ALTER TABLE `capital_flow` ADD COLUMN `bal_money` DECIMAL(16,3) NOT NULL COMMENT
 	ADD COLUMN `blk_money` DECIMAL(16,3) NOT NULL COMMENT'锁定余额',
 	ADD COLUMN `cashin_money` DECIMAL(16,3) NOT NULL COMMENT'已提现金额';
 ALTER TABLE `capital_flow` ADD COLUMN `type` TINYINT(3) NOT NULL COMMENT'流水类型';
+ALTER TABLE `capital_flow` ADD COLUMN `revoke_flag` TINYINT(3) NOT NULL COMMENT'撤销标记';
 
 -- 资金账户
 CREATE TABLE `capital_acct`(
@@ -122,3 +123,16 @@ CREATE TABLE `score_exchange_detail`(
 	`updated_time` DATETIME NOT NULL COMMENT'更新时间'
 );
 CREATE INDEX `idx_score_exchange_detail_class_id` ON score_exchange_detail(`class_id`);
+
+-- 提现申请单
+CREATE TABLE `cashin_bill`(
+	`id` BIGINT(20) NOT NULL PRIMARY KEY,
+	`owner_id` BIGINT(20) NOT NULL COMMENT'所有者',
+	`money` DECIMAL(16,3) NOT NULL COMMENT'金额',
+	`status` TINYINT(3) NOT NULL COMMENT'状态',
+	`desc` VARCHAR(512) NOT NULL COMMENT'备注',
+	`created_time` DATETIME NOT NULL COMMENT'创建时间',
+	`confirmer_id` BIGINT(20) NOT NULL COMMENT'审核人',
+	`confirm_time` DATETIME NOT NULL COMMENT'审核时间'
+);
+CREATE INDEX `idx_cashin_bill_ownerId` ON `cashin_bill`(`owner_id`);

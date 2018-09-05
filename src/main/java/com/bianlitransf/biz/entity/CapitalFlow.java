@@ -64,6 +64,9 @@ public class CapitalFlow extends AbstractEntity<Long> {
 	/** 流水类型 */
 	private Integer type;
 
+	/** 撤销标记 */
+	private Integer revokeFlag;
+
 	/**
 	 * get the 来源单据
 	 * @return srcBill
@@ -271,6 +274,22 @@ public class CapitalFlow extends AbstractEntity<Long> {
 	 */
 	public void setType(Integer type) {
 		this.type = type;
+	}
+
+	/**
+	 * get the 撤销标记
+	 * @return revokeFlag
+	 */
+	public Integer getRevokeFlag() {
+		return revokeFlag;
+	}
+
+	/**
+	 * set the 撤销标记
+	 * @param revokeFlag
+	 */
+	public void setRevokeFlag(Integer revokeFlag) {
+		this.revokeFlag = revokeFlag;
 	}
 
 }

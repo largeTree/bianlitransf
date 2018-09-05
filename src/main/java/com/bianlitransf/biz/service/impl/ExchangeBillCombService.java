@@ -51,7 +51,7 @@ public class ExchangeBillCombService implements IExchangeBillCombService {
 		ExchangeBill exgBill = exchangeBillService.getById(exgBillId);
 
 		// 仅能将状态为已创建的单子审核通过
-		if (exgBill.getStatus() != ExchangeBill.STATUS_CREATED) {
+		if (exgBill.getStatus() != BizConstants.BILL_STATUS_CREATED) {
 			ExceptionUtils.throwLogicalException("exg_bill_status_invalid");
 		}
 
@@ -60,23 +60,22 @@ public class ExchangeBillCombService implements IExchangeBillCombService {
 
 		// 产生资金流水
 		this.capitalFlowCombService.saveFlow(exgBillId, BizConstants.BIZ_TYPE_SCORE_TRANSF, exgBill.getMoney(),
-				owner.getId());
+				owner.getId(), false);
 
 		// 兑换人是普通会员且有推荐人时给推荐人分润
 		if (owner.getLevel() == BizConstants.LEVEL_USER && owner.getRefereeId() > 0) {
 			ScoreExchangeDetail scoreExgDet = scoreExchangeDetailService.getById(exgBill.getExgDetId());
 
-			// 分润金额
+			// 分润金额为高级会员价格减掉普通会员价格
 			BigDecimal money = scoreExgDet.getPrice2().subtract(scoreExgDet.getPrice1());
 
-			// 分润金额为高级会员价格减掉普通会员价格
 			this.capitalFlowCombService.saveFlow(exgBillId, BizConstants.BIZ_TYPE_SHARE_PROFIT,
-					money, owner.getRefereeId());
+					money, owner.getRefereeId(), false);
 
 		}
 
 		// 更新兑换单为已通过状态
-		exgBill.setStatus(ExchangeBill.STATUS_CONFRIMED);
+		exgBill.setStatus(BizConstants.BILL_STATUS_CONFRIMED);
 
 		// 填充审核人信息
 		UserLite userLite = UserContext.getUserLite();
@@ -99,7 +98,15 @@ public class ExchangeBillCombService implements IExchangeBillCombService {
 	@Override
 	public void refuseExgBill(Long exgBillId, String desc) {
 		ExchangeBill exgBill = exchangeBillService.getById(exgBillId);
-		exgBill.setStatus(ExchangeBill.STATUS_REFUSED);
+		
+		// 仅能拒绝为创建状态的单据
+		if (exgBill.getStatus() != BizConstants.BILL_STATUS_CREATED) {
+			ExceptionUtils.throwLogicalException("exg_bill_status_invalid");
+		}
+		
+		exgBill.setConfirmerId(UserContext.getUserId());
+		exgBill.setConfirmTime(new Date());
+		exgBill.setStatus(BizConstants.BILL_STATUS_REFUSED);
 		exgBill.setDesc(StringUtils.isBlank(desc) ? "审核失败" : desc);
 		this.exchangeBillService.save(exgBill);
 	}

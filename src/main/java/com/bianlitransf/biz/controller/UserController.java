@@ -8,13 +8,17 @@ import javax.annotation.Resource;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.qiuxs.cuteframework.core.basic.utils.MapUtils;
 import com.qiuxs.cuteframework.core.context.UserContext;
 import com.qiuxs.cuteframework.web.WebConstants;
+import com.qiuxs.cuteframework.web.annotation.Api;
 import com.qiuxs.cuteframework.web.bean.ListResult;
 import com.qiuxs.cuteframework.web.controller.AbstractDataController;
 import com.bianlitransf.biz.BizConstants;
 import com.bianlitransf.biz.dao.UserDao;
+import com.bianlitransf.biz.entity.CapitalAcct;
 import com.bianlitransf.biz.entity.User;
+import com.bianlitransf.biz.service.ICapitalAcctService;
 import com.bianlitransf.biz.service.IUserService;
 
 /**
@@ -30,6 +34,9 @@ public class UserController extends AbstractDataController<Long, User, UserDao, 
 	@Resource
 	private IUserService userService;
 
+	@Resource
+	private ICapitalAcctService capitalAcctService;
+
 	@Override
 	public ListResult list(Map<String, String> params) {
 		User curUser = this.userService.getById(UserContext.getUserId());
@@ -43,6 +50,13 @@ public class UserController extends AbstractDataController<Long, User, UserDao, 
 			((User) user).setPassword(null);
 		}
 		return list;
+	}
+
+	@Api
+	public Map<String, Object> getSelfInfo() {
+		User self = this.getService().getById(UserContext.getUserId());
+		CapitalAcct acct = this.capitalAcctService.getAcctMustByOwner(self.getId());
+		return MapUtils.genMap("name", self.getName(), "alipayNo", self.getAlipayNo(), "balMoney", acct.getBalMoney());
 	}
 
 	@Override

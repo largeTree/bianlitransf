@@ -65,11 +65,11 @@ public class ExchangeBillService extends AbstractDataPropertyService<Long, Excha
 		Number confrimed = 0;
 		Number created = 0;
 		for (Map<String, Number> row : summarys) {
-			if (((Number) row.get("status")).intValue() == ExchangeBill.STATUS_CREATED) {
+			if (((Number) row.get("status")).intValue() == BizConstants.BILL_STATUS_CREATED) {
 				created = row.get("count");
-			} else if (((Number) row.get("status")).intValue() == ExchangeBill.STATUS_CONFRIMED) {
+			} else if (((Number) row.get("status")).intValue() == BizConstants.BILL_STATUS_CONFRIMED) {
 				confrimed = row.get("count");
-			} else if (((Number) row.get("status")).intValue() == ExchangeBill.STATUS_REFUSED) {
+			} else if (((Number) row.get("status")).intValue() == BizConstants.BILL_STATUS_REFUSED) {
 				refused = row.get("count");
 			}
 		}
@@ -85,7 +85,7 @@ public class ExchangeBillService extends AbstractDataPropertyService<Long, Excha
 		User user = this.userService.getById(userLite.getUserId());
 		// 兑换单所有者
 		exchangeBill.setOwnerId(user.getId());
-		exchangeBill.setStatus(ExchangeBill.STATUS_CREATED);
+		exchangeBill.setStatus(BizConstants.BILL_STATUS_CREATED);
 
 		// 判断兑换码是否重复
 		if (this.isExistsBizKeys(exchangeBill.getExgDetId(), exchangeBill.getVoucherCode())) {

@@ -80,17 +80,20 @@ public class CapitalAcct extends AbstractEntity<Long> {
 		case SUB_ACCT_BAL:
 			this.setBalMoney(this.getBalMoney().subtract(money));
 			result = this.getBalMoney();
+			break;
 		case SUB_ACCT_BLK:
 			this.setBlkMoney(this.getBlkMoney().subtract(money));
 			result = this.getBlkMoney();
+			break;
 		case SUB_ACCT_CASHIN:
 			this.setCashinMoney(this.getCashinMoney().subtract(money));
 			result = this.getCashinMoney();
+			break;
 		default:
 			ExceptionUtils.throwLogicalException("sub_acct_error");
 		}
 		// 账户余额不允许为负数
-		if (NumberUtils.lessThanEqualZero(result)) {
+		if (NumberUtils.lessThanZero(result)) {
 			ExceptionUtils.throwLogicalException("acc_bal_not_enough");
 		}
 		return result;

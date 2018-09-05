@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bianlitransf.biz.dao.CashinBillDao">
+
+	<sql id="allFields">
+		`id`,
+		`owner_id` as ownerId,
+		`money`,
+		`status`,
+		`desc`,
+		`created_time` as createdTime,
+		`confirmer_id` as confirmerId,
+		`confirm_time` as confirmTime
+	</sql>
+
+	<sql id="insertFields">
+		`id`,
+		`owner_id`,
+		`money`,
+		`status`,
+		`desc`,
+		`created_time`,
+		`confirmer_id`,
+		`confirm_time`
+	</sql>
+
+	<select id="list" resultType="com.bianlitransf.biz.entity.CashinBill" >
+		select
+			<include refid="allFields" />
+		from `cashin_bill`
+		<where>
+			<include refid="comnWhere" />
+		</where>
+		<if test="orderBy != null" >
+			order by ${orderBy}
+			<if test="orderByDesc != null">
+				desc
+			</if>
+		</if>
+	</select>
+
+	<sql id="comnWhere">
+		<if test="id != null">
+			`id` = #{id}
+		</if>
+		<if test="ownerId != null">
+			 and `owner_id` = #{ownerId}
+		</if>
+		<if test="money != null">
+			 and `money` = #{money}
+		</if>
+		<if test="status != null">
+			 and `status` = #{status}
+		</if>
+		<if test="desc != null">
+			 and `desc` = #{desc}
+		</if>
+		<if test="createdTime != null">
+			 and `created_time` = #{createdTime}
+		</if>
+		<if test="confirmerId != null">
+			 and `confirmer_id` = #{confirmerId}
+		</if>
+		<if test="confirmTime != null">
+			 and `confirm_time` = #{confirmTime}
+		</if>
+	</sql>
+
+	<select id="getByIds" resultType="com.bianlitransf.biz.entity.CashinBill" >
+		select <include refid="allFields" /> from `cashin_bill` where id in
+		<foreach collection="list" item="item" open="(" separator="," close=")" >
+			#{item}
+		</foreach>
+	</select>
+
+	<select id="get" resultType="com.bianlitransf.biz.entity.CashinBill" >
+		select <include refid="allFields" /> from `cashin_bill` where id = #{id}
+	</select>
+
+	<delete id="deleteById" parameterType="Long" >
+		delete from `cashin_bill` where id = #{id}
+	</delete>
+
+	<insert id="insert" parameterType="com.bianlitransf.biz.entity.CashinBill">
+		insert into `cashin_bill`(<include refid="insertFields" />)
+		values(
+			#{id},
+			#{ownerId},
+			#{money},
+			#{status},
+			#{desc},
+			#{createdTime},
+			#{confirmerId},
+			#{confirmTime}
+		)
+	</insert>
+
+	<insert id="insertBatch" parameterType="java.util.List" >
+		insert into `cashin_bill`(<include refid="insertFields" />)
+		values
+		<foreach collection="list" item="item" separator="," >
+			(
+				#{item.id},
+				#{item.ownerId},
+				#{item.money},
+				#{item.status},
+				#{item.desc},
+				#{item.createdTime},
+				#{item.confirmerId},
+				#{item.confirmTime}
+			)
+		</foreach>
+	</insert>
+
+	<update id="update" parameterType="com.bianlitransf.biz.entity.CashinBill" >
+		update `cashin_bill` 
+			<set>
+				<include refid="setComn" />
+			</set>
+		where id = #{id}
+	</update>
+
+	<sql id="setComn" >
+		<if test="ownerId != null" >
+			`owner_id` = #{ownerId},
+		</if>
+		<if test="money != null" >
+			`money` = #{money},
+		</if>
+		<if test="status != null" >
+			`status` = #{status},
+		</if>
+		<if test="desc != null" >
+			`desc` = #{desc},
+		</if>
+		<if test="createdTime != null" >
+			`created_time` = #{createdTime},
+		</if>
+		<if test="confirmerId != null" >
+			`confirmer_id` = #{confirmerId},
+		</if>
+		<if test="confirmTime != null" >
+			`confirm_time` = #{confirmTime}
+		</if>
+	</sql>
+</mapper>

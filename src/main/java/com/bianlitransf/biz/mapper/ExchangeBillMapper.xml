@@ -17,6 +17,7 @@
 		from exchange_bill 
 		where exg_det_id = #{exgDetId}
 		and voucher_code = #{voucherCode} 
+		and status = 0
 	</select>
 
 	<sql id="allFields">

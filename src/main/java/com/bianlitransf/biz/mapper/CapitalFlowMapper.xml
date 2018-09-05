@@ -17,7 +17,8 @@
 		`bal_money` as balMoney,
 		`blk_money` as blkMoney,
 		`cashin_money` as cashinMoney,
-		`type`
+		`type`,
+		`revoke_flag` as revokeFlag
 	</sql>
 
 	<sql id="insertFields">
@@ -35,7 +36,8 @@
 		`bal_money`,
 		`blk_money`,
 		`cashin_money`,
-		`type`
+		`type`,
+		`revoke_flag`
 	</sql>
 
 	<select id="list" resultType="com.bianlitransf.biz.entity.CapitalFlow" >
@@ -99,6 +101,9 @@
 		<if test="type != null">
 			and `type` = #{type}
 		</if>
+		<if test="revokeFlag != null">
+			and `revoke_flag` = #{revokeFlag}
+		</if>
 	</sql>
 
 	<select id="getByIds" resultType="com.bianlitransf.biz.entity.CapitalFlow" >
@@ -133,7 +138,8 @@
 			#{balMoney},
 			#{blkMoney},
 			#{cashinMoney},
-			#{type}
+			#{type},
+			#{revokeFlag}
 		)
 	</insert>
 
@@ -156,7 +162,8 @@
 				#{item.balMoney},
 				#{item.blkMoney},
 				#{item.cashinMoney},
-				#{item.type}
+				#{item.type},
+				#{item.revokeFlag}
 			)
 		</foreach>
 	</insert>
@@ -195,22 +202,25 @@
 			`desc` = #{desc},
 		</if>
 		<if test="acctId != null">
-			`acct_id` = #{acctId}
+			`acct_id` = #{acctId},
 		</if>
 		<if test="subAcct != null">
-			`sub_acct` = #{subAcct}
+			`sub_acct` = #{subAcct},
 		</if>
 		<if test="balMoney != null">
-			`bal_money` = #{balMoney}
+			`bal_money` = #{balMoney},
 		</if>
 		<if test="blkMoney != null">
-			`blk_money` = #{blkMoney}
+			`blk_money` = #{blkMoney},
 		</if>
 		<if test="cashinMoney != null">
-			`cashin_money` = #{cashinMoney}
+			`cashin_money` = #{cashinMoney},
 		</if>
 		<if test="type != null">
-			`type` = #{type}
+			`type` = #{type},
+		</if>
+		<if test="revokeFlag != null">
+			`revoke_flag` = #{revokeFlag}
 		</if>
 	</sql>
 </mapper>

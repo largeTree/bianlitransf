@@ -109,7 +109,7 @@
 <body>
     <img src="/blh/imgs/fanhuianniu.png" class="suspend-back-btn" onclick="window.history.go(-1)">
     <article class="my-fixed-content">
-        <img src="/blh/imgs/cashin.png" style="width: 100%;">
+        <img src="/blh/imgs/cashin.png" style="width: 100%;height: 8rem;" onclick="cashin()">
         <div>
             <table class="tabs">
                 <thead>
@@ -139,6 +139,12 @@ $(() => {
     // 默认选中第一个
     $($('.tabs-item')[0]).click();
 });
+
+function cashin() {
+    jumpPage('./edit_cashin_bill.html',{
+        sessionId: sessionId
+    });
+}
 
 function loadFlows(inOutType) {
 

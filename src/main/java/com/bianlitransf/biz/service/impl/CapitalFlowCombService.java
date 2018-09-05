@@ -54,31 +54,33 @@ public class CapitalFlowCombService implements ICapitalFlowCombService {
 
 	@Transactional
 	@Override
-	public void saveFlow(Long billId, int bizType, BigDecimal money, Long ownerId) {
+	public void saveFlow(Long billId, int bizType, BigDecimal money, Long ownerId, boolean revokeFlag) {
 		if (NumberUtils.isEmpty(money)) {
 			log.warn("want save an emptyFlow [billId = " + billId + ",bizType=" + bizType + ",money=" + money
 					+ ",ownerId=" + ownerId + "]");
 			return;
 		}
 
-		// 保存用户流水
-		this.saveFlow(billId, bizType, money, ownerId, this.getSubAcct(bizType), CapitalFlow.TYPE_CUST);
-
-		// 特殊业务类型附加系统流水
-		if (bizType == BizConstants.BIZ_TYPE_CASHIN) {
-			// 提现操作，同时增加已锁定余额
-			this.saveFlow(billId, bizType, money.negate(), ownerId, CapitalAcct.SUB_ACCT_BLK, CapitalFlow.TYPE_SYS);
-		} else if (bizType == BizConstants.BIZ_TYPE_CASHIN_CONFIRM) {
-			// 提现被确认，同时减少已锁定余额
-			this.saveFlow(billId, bizType, money.negate(), ownerId, CapitalAcct.SUB_ACCT_BLK, CapitalFlow.TYPE_SYS);
+		// 流水类型
+		int type = CapitalFlow.TYPE_CUST;
+		if (bizType == BizConstants.BIZ_TYPE_CASHIN_CONFIRM) {
+			type = CapitalFlow.TYPE_SYS;
 		}
+
+		this.saveFlow(billId, bizType, money, ownerId, this.getSubAcct(bizType),
+				type, revokeFlag);
 	}
 
-	private void saveFlow(Long billId, int bizType, BigDecimal money, Long ownerId, int subAcct, int type) {
+	private void saveFlow(Long billId, int bizType, BigDecimal money, Long ownerId, int subAcct, int type, boolean revokeFlag) {
+		// 撤销时，金额和出入类型取反
+		if (revokeFlag) {
+			money = money.negate();
+		}
 		// 正值增加余额，负值减少余额
 		int inOutType = money.compareTo(BigDecimal.ZERO) == 1 ? CapitalFlow.IN_OUT_TYPE_IN
 				: CapitalFlow.IN_OUT_TYPE_OUT;
 
+		
 		// 产生自己的资金流水
 		CapitalFlow capitalFlow = new CapitalFlow();
 		capitalFlow.setSrcBill(billId);
@@ -88,7 +90,8 @@ public class CapitalFlowCombService implements ICapitalFlowCombService {
 		capitalFlow.setOwnerId(ownerId);
 		capitalFlow.setStatus(BizConstants.STATUS_VALID);
 		capitalFlow.setType(type);
-
+		capitalFlow.setRevokeFlag(revokeFlag ? BizConstants.TRUE : BizConstants.FALSE);
+		
 		// 设置子账户类型
 		capitalFlow.setSubAcct(subAcct);
 		CapitalAcct acct = this.capitalAcctService.getAcctMustByOwner(ownerId);
@@ -100,12 +103,24 @@ public class CapitalFlowCombService implements ICapitalFlowCombService {
 		} else {
 			acct.subtractMoney(capitalFlow.getMoney(), capitalFlow.getSubAcct());
 		}
-		
+
+		if (bizType == BizConstants.BIZ_TYPE_CASHIN) {
+			if (revokeFlag) {
+				// 提现撤销同时减少锁定余额
+				acct.subtractMoney(capitalFlow.getMoney(), CapitalAcct.SUB_ACCT_BLK);
+			} else {
+				// 提现同时增加已锁定余额
+				acct.addMoney(capitalFlow.getMoney(), CapitalAcct.SUB_ACCT_BLK);
+			}
+		} else if (bizType == BizConstants.BIZ_TYPE_CASHIN_CONFIRM) {
+			acct.subtractMoney(capitalFlow.getMoney(), CapitalAcct.SUB_ACCT_BLK);
+		}
+
 		// 记录到当前流水为止的账户余额
 		capitalFlow.setBalMoney(acct.getBalMoney());
 		capitalFlow.setBlkMoney(acct.getBlkMoney());
-		capitalFlow.setCashinMoney(money);
-		
+		capitalFlow.setCashinMoney(acct.getCashinMoney());
+
 		// 保存落库
 		this.capitalFlowService.save(capitalFlow);
 		this.capitalAcctService.save(acct);

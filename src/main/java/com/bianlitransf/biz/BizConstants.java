@@ -2,6 +2,16 @@ package com.bianlitransf.biz;
 
 public class BizConstants {
 
+	public static final int TRUE = 1;
+	public static final int FALSE = 0;
+	
+	/** 单据状态：拒绝 */
+	public static final int BILL_STATUS_REFUSED = -1;
+	/** 单据状态：已创建 */
+	public static final int BILL_STATUS_CREATED = 0;
+	/** 单据状态：已确认 */
+	public static final int BILL_STATUS_CONFRIMED = 1;
+	
 	/** 业务类型：积分兑换 */
 	public static final int BIZ_TYPE_SCORE_TRANSF = 1;
 	/** 业务类型：提现 */

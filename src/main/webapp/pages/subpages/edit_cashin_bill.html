@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no" name="viewport">
+    <meta content="yes" name="apple-mobile-web-app-capable">
+    <meta content="black" name="apple-mobile-web-app-status-bar-style">
+    <meta content="telephone=no" name="format-detection">
+    <meta content="email=no" name="format-detection">
+    <meta http-equiv="Cache-Control" content="no-cache, must-revalidate" />
+    <title>兑换详情</title>
+    <link href="https://cdn.bootcss.com/amazeui/2.7.2/css/amazeui.css" rel="stylesheet">
+    <script src="https://cdn.bootcss.com/jquery/2.0.0/jquery.min.js"></script>
+    <!-- <script src="https://cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script>
+    <script src="https://cdn.bootcss.com/amazeui/2.7.2/js/amazeui.min.js"></script> -->
+    <link href="../../css/common.css?ver=1" rel="stylesheet">
+    <script type="text/javascript" src="../../javascripts/common.js?ver=1"></script>
+    <style type="text/css">
+    body {
+        font-family: \\5FAE\8F6F\96C5\9ED1, Helvetica Neue, Helvetica, STHeiTi, sans-serif;
+        background-color: #FAFAFA;
+        padding: 0px;
+    }
+
+    .form-container {
+        padding: 1rem 2rem;
+    }
+
+    .form-container .field-item {
+        border: 1px #CDC9C9 solid;
+        border-radius: 5px;
+        margin-bottom: 1rem;
+        padding: 0px;
+        line-height: 4rem;
+    }
+
+    .form-container .field-item div {
+        width: 30%;
+        float: left;
+        text-align: right;
+        font-size: 1.3rem;
+        color: #CDC9C9;
+    }
+
+    .form-container .field-item input {
+        width: calc(100% - 30%);
+        height: 4rem;
+        background-color: #FAFAFA;
+        border: 0px;
+        color: #CDC9C9;
+    }
+
+    .form-container .field-item input:focus {
+        outline: none !important;
+    }
+
+    .suspend-back-btn {
+        right: 2rem;
+        bottom: 2rem;
+        height: 2.6rem;
+        width: 2.6rem;
+        position: fixed;
+        z-index: 999;
+        margin: 1rem;
+    }
+
+    .desc {
+        font-size: 1.2rem;
+        color: #FF6347;
+    }
+
+     ::-webkit-input-placeholder {
+        /* WebKit browsers */
+        color: #CDC9C9;
+    }
+
+     :-moz-placeholder {
+        /* Mozilla Firefox 4 to 18 */
+        color: #CDC9C9;
+    }
+
+     ::-moz-placeholder {
+        /* Mozilla Firefox 19+ */
+        color: #CDC9C9;
+    }
+
+     :-ms-input-placeholder {
+        /* Internet Explorer 10+ */
+        color: #CDC9C9;
+    }
+
+    .server_resp {
+        color: red;
+        font-size: 1.2rem;
+        text-align: center;
+        display: none;
+    }
+    </style>
+</head>
+
+<body>
+    <img src="/blh/imgs/fanhuianniu.png" class="suspend-back-btn" onclick="window.history.go(-1)">
+    <div class="form-container">
+        <div class="field-item">
+            <div>真实姓名：</div>
+            <input type="text" name="userName">
+        </div>
+        <div class="field-item">
+            <div>支付宝：</div>
+            <input type="text" name="alipayNo">
+        </div>
+        <div class="field-item">
+            <div>提现金额：</div>
+            <input type="number" name="money">
+        </div>
+        <div class="server_resp" style="">
+        <!-- 此处展示错误信息 -->
+        </div>
+        <div style="width: 80%;margin: 3rem auto 0px auto;height: 4rem;">
+            <button style="width: 100%;height: 100%;background-color: #F37B1D;border:0px;border-radius: 5px;color: #FFFFFF;letter-spacing: 0.5rem;box-shadow: 0px 2px 0px #CCCCCC;" onclick="doCashin()">提现</button>
+        </div>
+    </div>
+    <div class="desc">
+        <ol>
+            <li>每天仅限提现1笔，到本人支付宝账户;</li>
+            <li>提现1000元以内秒到，超过1000元当天18:00到账;</li>
+            <li>每天提现时间9:00-16:30</li>
+        </ol>
+    </div>
+</body>
+<script type="text/javascript">
+var params = getQueryParmas();
+var sessionId = params.sessionId;
+$(() => {
+    HttpService.post('/blh/api/user/getSelfInfo', {
+        sessionId: sessionId
+    }, function(data, status) {
+        if (data && data.code == 0) {
+            var userInfo = data.data;
+            if (userInfo.name && userInfo.name.length > 0) {
+                var $userName = $('input[name="userName"]');
+                $userName.val(userInfo.name);
+                $userName.attr('readonly', 'true');
+            }
+            if (userInfo.alipayNo && userInfo.alipayNo.length > 0) {
+                var $alipayNo = $('input[name="alipayNo"]');
+                $alipayNo.val(userInfo.alipayNo);
+                $alipayNo.attr('readonly', 'true');
+            }
+            if (userInfo.balMoney && userInfo.balMoney > 0) {
+                var $money = $('input[name="money"]');
+                $money.attr('placeholder', '可提现余额：' + userInfo.balMoney);
+                $money.attr('max', userInfo.balMoney);
+            }
+        }
+    });
+});
+
+function doCashin() {
+    var $formFields = $('input[name]');
+    var jsonParam = {};
+    for (var i = 0; i < $formFields.length; i++) {
+        var $field = $($formFields[i]);
+        var val = $field.val();
+        if (val == null || val.length == 0) {
+            return;
+        }
+        jsonParam[$field.attr('name')] = val;
+    }
+    var max = parseFloat($('input[name="money"]').attr('max'));
+    if (jsonParam.money > max) {
+        $('input[name="money"]').val('');
+        return;
+    }
+    jsonParam.sessionId = sessionId;
+    HttpService.post('/blh/api/cashinbill/saveCashinBill', jsonParam, function(data, status) {
+        if (data) {
+            var $resp = $('.server_resp');
+            if (data.code == 0) {
+                $resp.html('提现申请成功');
+            } else {
+                $resp.html(data.msg);
+            }
+            $resp.show();
+        }
+    });
+}
+</script>
+
+</html>
