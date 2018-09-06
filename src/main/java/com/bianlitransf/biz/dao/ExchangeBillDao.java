@@ -1,5 +1,6 @@
 package com.bianlitransf.biz.dao;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Map;
 
@@ -30,5 +31,16 @@ public interface ExchangeBillDao extends IBaseDao<Long, ExchangeBill> {
 	 * 创建时间：2018年9月3日 下午9:03:34
 	 */
 	public List<Map<String, Number>> summaryExgBills(@Param("ownerId") Long ownerId);
+	
+	/**
+	 * 合计积分总数
+	 * @author qiuxs
+	 *
+	 * @param ownerId
+	 * @return
+	 *
+	 * 创建时间：2018年9月6日 下午10:26:01
+	 */
+	public BigDecimal summaryScore(@Param("ownerId") Long ownerId);
 
 }

@@ -1,5 +1,6 @@
 package com.bianlitransf.biz.service;
 
+import java.math.BigDecimal;
 import java.util.Map;
 
 import com.bianlitransf.biz.dao.ExchangeBillDao;
@@ -28,5 +29,16 @@ public interface IExchangeBillService extends IDataPropertyService<Long, Exchang
 	 * 创建时间：2018年9月3日 下午8:50:49
 	 */
 	public Map<String, Object> summaryExgBills();
+	
+	/**
+	 * 合计已兑换积分
+	 * @author qiuxs
+	 *
+	 * @param ownerId
+	 * @return
+	 *
+	 * 创建时间：2018年9月6日 下午10:27:21
+	 */
+	public BigDecimal summaryScore(Long ownerId);
 
 }

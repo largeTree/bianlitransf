@@ -58,6 +58,11 @@ public class ExchangeBillService extends AbstractDataPropertyService<Long, Excha
 	}
 
 	@Override
+	public BigDecimal summaryScore(Long ownerId) {
+		return this.getDao().summaryScore(ownerId);
+	}
+	
+	@Override
 	public Map<String, Object> summaryExgBills() {
 		List<Map<String, Number>> summarys = this.getDao().summaryExgBills(UserContext.getUserId());
 		Map<String, Object> data = new HashMap<>();

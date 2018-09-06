@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html>
+
 <head>
-	<meta charset="UTF-8">
+    <meta charset="UTF-8">
     <meta content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no" name="viewport">
     <meta content="yes" name="apple-mobile-web-app-capable">
     <meta content="black" name="apple-mobile-web-app-status-bar-style">
@@ -14,43 +15,87 @@
     <script src="https://cdn.bootcss.com/amazeui/2.7.2/js/amazeui.min.js"></script> -->
     <link href="../../css/common.css?ver=1" rel="stylesheet">
     <script type="text/javascript" src="../../javascripts/common.js?ver=1"></script>
-	<title>我的团队</title>
+    <title>我的团队</title>
+    <style type="text/css">
+    .suspend-back-btn {
+        right: 2rem;
+        bottom: 2rem;
+        height: 2.6rem;
+        width: 2.6rem;
+        position: fixed;
+        z-index: 999;
+        margin: 1rem;
+    }
+
+    .title {
+        height: 10rem;
+        width: 100%;
+        background-image: url('https://ss3.baidu.com/-rVXeDTa2gU2pMbgoY3K/it/u=224707899,2050341434&fm=202&src=766&mola=new&crop=v1');
+        background-repeat: no-repeat;
+        background-size: 100% 100%;
+        -moz-background-size: 100% 100%;
+        text-align: center;
+        line-height: 10rem;
+        color: #FFFFFF;
+    }
+
+    .team-list {
+        margin-top: 1rem;
+        width: 100%;
+        font-size: 1.5rem;
+    }
+
+    .team-list .team-item {
+        background: #fff;
+        margin-bottom: 5px;
+        padding: 0.5rem 1rem;
+    }
+    </style>
 </head>
+
 <body>
-	<img src="../../imgs/fanhuianniu.png"
-		style="height: 2.6rem; width: 2.6rem; position: fixed; z-index: 999; margin: 1rem;" onclick="window.history.go(-1)">
-	
-	<article class = "my-fixed-content">
-		<img src="../../imgs/wodetuandui.png" style="width: 100%;padding: 1rem;border-radius: 2.4rem;">
-		<div class="am-g am-text-center" style="margin-top: -9.4rem;color: #fff;height: 9.4rem;">
-			<div class="am-u-sm-4">
-				<div class="am-text-xs">直属队员</div>
-				<div class="am-text-xxl">9</div>
-			</div>
-			<div class="am-u-sm-4">
-				<img src="../../imgs/fanhuianniu.png" style="height: 4.6rem;">
-			</div>
-			<div class="am-u-sm-4">
-				<div class="am-text-xs">直属队员</div>
-				<div class="am-text-xxl">9</div>
-			</div>
-		</div>
-		<div class="am-g "style="background: #fff;padding: 1rem 1rem 0 1rem;">
-			<div class="am-u-sm-12">
-				<div class="am-text-xs">
-					DJASLKD&nbsp;
-					<a class="am-badge am-badge-danger">已兑换 </a>
-					<span class="am-text-xs am-fr">2013-12-21</span>
-					&nbsp;&nbsp;&nbsp;20123123
-				</div>
-			</div>
-			<div class="am-u-sm-12">
-				<img src="../../imgs/touxaing.png" style="height: 4.6rem;margin: 1rem">
-				<span class="am-text-xxl am-fr" style="margin-right: 5rem">0</span> 
-			</div>
-			
-		</div>
-	</article>
-	
+    <img src="../../imgs/fanhuianniu.png" class="suspend-back-btn" onclick="window.history.go(-1)">
+    <article class="my-fixed-content">
+        <div class="title">
+            <h2>我的队员：<span class="team-count"></span></h2>
+        </div>
+        <div class="team-list">
+            
+        </div>
+    </article>
 </body>
+<script type="text/javascript">
+var params = getQueryParmas();
+var sessionId = params.sessionId;
+$(() => {
+    HttpService.post('/blh/api/user/myTeam', { sessionId: sessionId }, function(data, status) {
+        if (data) {
+            if (data.code == 0) {
+                var rows = data.data.rows;
+                $('.team-count').html(data.data.total);
+                var $list = $('.team-list');
+                for (var i = 0; i < rows.length; i++) {
+                	var row = rows[i];
+                	var $item = $(document.createElement('div'));
+                	$item.addClass('team-item');
+                	var $name = $(document.createElement('div'));
+                	$name.html('名称：' + row.name);
+                	var $date = $(document.createElement('span'));
+                	$date.css('float','right');
+                	$date.html('注册时间：' + row.createdTime);
+                	$date.appendTo($name);
+                	$name.appendTo($item);
+                	var $phone = $(document.createElement('div'));
+                	$phone.addClass('phone');
+                	$phone.html('手机：' + row.phone);
+                	$phone.appendTo($item);
+                	$item.appendTo($list);
+                }
+
+            }
+        }
+    });
+});
+</script>
+
 </html>

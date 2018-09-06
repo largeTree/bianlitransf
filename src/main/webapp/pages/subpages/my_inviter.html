@@ -1,37 +1,75 @@
 <!DOCTYPE html>
 <html>
+
 <head>
-<meta charset="UTF-8">
-<meta
-	content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no"
-	name="viewport">
-<meta content="yes" name="apple-mobile-web-app-capable">
-<meta content="black" name="apple-mobile-web-app-status-bar-style">
-<meta content="telephone=no" name="format-detection">
-<meta content="email=no" name="format-detection">
-<meta http-equiv="Cache-Control" content="no-cache, must-revalidate" />
-<link href="https://cdn.bootcss.com/amazeui/2.7.2/css/amazeui.css"
-	rel="stylesheet">
-<script src="https://cdn.bootcss.com/jquery/2.0.0/jquery.min.js"></script>
-<link href="../../css/common.css?ver=1" rel="stylesheet">
-<script type="text/javascript" src="../../javascripts/common.js?ver=1"></script>
-<meta charset="UTF-8">
-<title>我要邀请人</title>
+    <meta charset="UTF-8">
+    <meta content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no" name="viewport">
+    <meta content="yes" name="apple-mobile-web-app-capable">
+    <meta content="black" name="apple-mobile-web-app-status-bar-style">
+    <meta content="telephone=no" name="format-detection">
+    <meta content="email=no" name="format-detection">
+    <meta http-equiv="Cache-Control" content="no-cache, must-revalidate" />
+    <link href="https://cdn.bootcss.com/amazeui/2.7.2/css/amazeui.css" rel="stylesheet">
+    <script src="https://cdn.bootcss.com/jquery/2.0.0/jquery.min.js"></script>
+    <link href="../../css/common.css?ver=1" rel="stylesheet">
+    <script type="text/javascript" src="../../javascripts/common.js?ver=1"></script>
+    <meta charset="UTF-8">
+    <title>我要邀请人</title>
+    <style type="text/css">
+    .suspend-back-btn {
+        right: 2rem;
+        bottom: 2rem;
+        height: 2.6rem;
+        width: 2.6rem;
+        position: fixed;
+        z-index: 999;
+        margin: 1rem;
+    }
+    .i-title {
+    	background-color: #F8F8FF;
+    	text-align: center;
+        padding: 1rem;
+    }
+    .inviter {
+    	background-color: #FFFFFF;
+    	display: none;
+    	padding: 0.5rem 1rem;
+    	margin-top: 1rem;
+    }
+
+    #phone {
+    	color: #FF8247;
+    }
+    </style>
 </head>
+
 <body>
-
-	<img src="../../imgs/fanhuianniu.png" style="height: 2.6rem;width: 2.6rem;position: fixed;z-index:999;margin: 1rem;" onclick="window.history.go(-1)">
-
-	<article class="my-fixed-content">
-		<div class="am-g" style="padding: 3rem 0; background: #fff;">
-			<div class="am-u-sm-3">
-				<img src="../../imgs/fanhuianniu.png">
-			</div>
-			<div class="am-u-sm-9">
-				<span class="am-text-xl">133*2131</span><br>
-				<span class="am-text-xs my-gray">聯係電話</span>
-			</div>
-		</div>
-	</article>
+    <img src="../../imgs/fanhuianniu.png" class="suspend-back-btn" onclick="window.history.go(-1)">
+    <article class="my-fixed-content">
+    	<div class="i-title">
+    		邀请人
+    	</div>
+        <div class="inviter">
+        	<div>名称：<span id="name"></span></div>
+        	<div>联系电话：<span id="phone"></span></div>
+        </div>
+    </article>
 </body>
+<script type="text/javascript">
+var params = getQueryParmas();
+var sessionId = params.sessionId;
+$(() => {
+    HttpService.post('/blh/api/user/myInviter', { sessionId: sessionId }, function(data, status) {
+        if (data) {
+            if (data.code == 0 && data.data.phone) {
+            	$('.inviter').show();
+            	data = data.data;
+                $('#name').html(data.name);
+                $('#phone').html(data.phone);
+            }
+        }
+    });
+});
+</script>
+
 </html>

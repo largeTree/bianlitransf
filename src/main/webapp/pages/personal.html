@@ -184,6 +184,10 @@ $(() => {
         jumpPage('./subpages/my_capital.html', { sessionId: sessionId });
     });
 
+    $('.exchange-flow-container').on('click', function() {
+        jumpPage('./subpages/my_exg_bills.html', { sessionId: sessionId });
+    });
+
 });
 
 function loadData() {

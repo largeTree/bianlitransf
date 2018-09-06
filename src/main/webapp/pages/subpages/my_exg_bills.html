@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no" name="viewport">
+    <meta content="yes" name="apple-mobile-web-app-capable">
+    <meta content="black" name="apple-mobile-web-app-status-bar-style">
+    <meta content="telephone=no" name="format-detection">
+    <meta content="email=no" name="format-detection">
+    <meta http-equiv="Cache-Control" content="no-cache, must-revalidate" />
+    <link href="https://cdn.bootcss.com/amazeui/2.7.2/css/amazeui.css" rel="stylesheet">
+    <script src="https://cdn.bootcss.com/jquery/2.0.0/jquery.min.js"></script>
+    <!-- <script src="https://cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script>
+    <script src="https://cdn.bootcss.com/amazeui/2.7.2/js/amazeui.min.js"></script> -->
+    <link href="../../css/common.css?ver=1" rel="stylesheet">
+    <script type="text/javascript" src="../../javascripts/common.js?ver=1"></script>
+    <title>兑换单列表</title>
+    <style type="text/css">
+    .suspend-back-btn {
+        right: 2rem;
+        bottom: 2rem;
+        height: 2.6rem;
+        width: 2.6rem;
+        position: fixed;
+        z-index: 999;
+        margin: 1rem;
+    }
+
+    .tabs {
+        width: 100%;
+    }
+
+    .tabs thead {
+        background-color: #FAFAFA;
+    }
+
+    .tabs .tabs-item {
+        text-align: center;
+        padding: 0.5rem;
+        border-bottom: #FAFAFA 2px solid;
+    }
+
+    .tabs-item-selected {
+        border-bottom: #FF8C00 2px solid !important;
+    }
+
+    .exg-bill-list {
+        margin-top: 0.2rem;
+    }
+
+    .exg-bill-list .bill-item {
+        background-color: #FFFFFF;
+        overflow: hidden;
+        height: 6rem;
+        margin-bottom: 1px;
+        padding: 0.3rem 1rem;
+    }
+
+    .item-money-in {
+        color: #FF8C00;
+    }
+
+    .item-money-out {
+        color: #1296db;
+    }
+    </style>
+</head>
+
+<body>
+    <img src="/blh/imgs/fanhuianniu.png" class="suspend-back-btn" onclick="window.history.go(-1)">
+    <article class="my-fixed-content">
+        <!-- <img src="/blh/imgs/cashin.png" style="width: 100%;height: 8rem;" onclick="cashin()"> -->
+        <div>
+            <table class="tabs">
+                <thead>
+                    <tr>
+                        <td class="tabs-item" data-status="0">审核中</td>
+                        <td class="tabs-item" data-status="1">审核成功</td>
+                        <td class="tabs-item" data-status="-1">审核失败</td>
+                    </tr>
+                </thead>
+            </table>
+            <div class="exg-bill-list">
+            </div>
+        </div>
+    </article>
+</body>
+<script type="text/javascript">
+var params = getQueryParmas();
+var sessionId = params.sessionId;
+$(() => {
+    $('.tabs-item').on('click', function() {
+        $('.tabs-item').removeClass('tabs-item-selected');
+        var $this = $(this);
+        $this.addClass('tabs-item-selected');
+        loadFlows($this.data('status'));
+    });
+
+    // 默认选中第一个
+    $($('.tabs-item')[0]).click();
+});
+
+function loadFlows(status) {
+
+    HttpService.post('/blh/api/exchangebill/bills', { sessionId: sessionId, status: status }, function(data, status) {
+        if (data && data.code == 0) {
+
+            var $billList = $('.exg-bill-list');
+            $billList.html('');
+
+            var rows = data.data.rows;
+            for (var i = 0; i < rows.length; i++) {
+                var row = rows[i];
+                var $item = $(document.createElement('div'));
+                $item.addClass('bill-item');
+                var $row1 = $(document.createElement('div'));
+                $row1.html(row.exgDetName + '<span style="float: right;">' + row.confirmTime + '</span>')
+                $row1.appendTo($item);
+
+                var $row2 = $(document.createElement('div'));
+                var $score = $(document.createElement('span'));
+                $score.html('使用积分：' + row.score);
+                $score.appendTo($row2);
+
+                var $money = $(document.createElement('span'));
+                $money.css('margin-left', '1rem');
+                $money.html('兑换金：' + row.money);
+                $money.appendTo($row2);
+                $row2.appendTo($item);
+
+                $item.appendTo($billList);
+            }
+        }
+    });
+}
+</script>
+<!-- 
+<div class="bill-item">
+                    <div clss="row1">
+                        
+                    </div>
+                    <div clss="row2">
+                        <span>
+                            使用积分：10000
+                        </span>
+                        <span style="margin-left: 1rem;">
+                            兑换金：11
+                        </span>
+                    </div>
+                </div>
+ -->
+
+</html>

@@ -1,5 +1,6 @@
 package com.bianlitransf.biz.controller;
 
+import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
@@ -11,6 +12,9 @@ import com.bianlitransf.biz.dao.ExchangeBillDao;
 import com.bianlitransf.biz.entity.ExchangeBill;
 import com.bianlitransf.biz.service.IExchangeBillCombService;
 import com.bianlitransf.biz.service.IExchangeBillService;
+import com.qiuxs.cuteframework.core.basic.utils.MapUtils;
+import com.qiuxs.cuteframework.core.context.UserContext;
+import com.qiuxs.cuteframework.core.persistent.database.dao.page.PageInfo;
 import com.qiuxs.cuteframework.web.WebConstants;
 import com.qiuxs.cuteframework.web.annotation.Api;
 import com.qiuxs.cuteframework.web.controller.AbstractDataController;
@@ -33,6 +37,12 @@ public class ExchangeBillController
 
 	@Resource
 	private IExchangeBillCombService exchangeBillCombService;
+
+	@Api
+	public List<ExchangeBill> bills(@Param("status") Integer status, PageInfo pageInfo) {
+		List<ExchangeBill> bills = this.getService().findByMap(MapUtils.genMap("ownerId", UserContext.getUserId(), "status", status), pageInfo);
+		return bills;
+	}
 
 	@Api
 	public Map<String, Object> summaryExgBills() {
