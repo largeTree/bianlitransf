@@ -128,3 +128,5 @@ INSERT  INTO `score_exchange_detail`(`id`,`class_id`,`score`,`name`,`count`,`pri
 SELECT  MAX(id) + 1,19,25000,'50元京东E卡','不限次数',7.4,43.50,0,NOW(),0,NOW() FROM `score_exchange_detail`;
 INSERT  INTO `score_exchange_detail`(`id`,`class_id`,`score`,`name`,`count`,`price1`,`price2`,`created_by`,`created_time`,`updated_by`,`updated_time`) 
 SELECT  MAX(id) + 1,19,50000,'100元京东E卡','不限次数',7.4,87.70,0,NOW(),0,NOW() FROM `score_exchange_detail`;
+
+UPDATE score_exchange_detail SET price1 = ROUND(price2 * 0.95,2)
