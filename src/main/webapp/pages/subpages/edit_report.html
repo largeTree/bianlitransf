@@ -30,6 +30,10 @@
         background-color: #FFF0F5;
     }
 
+    .voucher-item {
+        font-size: 1rem;
+    }
+
     [class*="am-u-"]+[class*="am-u-"]:last-child {
         float: left;
     }
@@ -105,7 +109,7 @@ var params = getQueryParmas();
 var sessionId = params.sessionId;
 $(() => {
     HttpService.post('/blh/api/scoreexchangedetail/findByClassId', {
-        clzId: params.clzId,
+        clzId: params.exgClzId,
         sessionId: sessionId
     }, function(data, status) {
         if (data.code == 0) {
@@ -117,6 +121,7 @@ $(() => {
                 var data = priceDetails[i];
                 var $div = $(document.createElement('div'));
                 $div.addClass('am-u-sm-4');
+                $div.addClass('voucher-item');
                 var $div2 = $(document.createElement('div'));
                 $div2.addClass('am-text-center voucher');
                 $div2.attr('data-voucher-id', data.id);
