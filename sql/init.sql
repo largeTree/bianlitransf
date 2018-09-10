@@ -136,3 +136,11 @@ CREATE TABLE `cashin_bill`(
 	`confirm_time` DATETIME NOT NULL COMMENT'审核时间'
 );
 CREATE INDEX `idx_cashin_bill_ownerId` ON `cashin_bill`(`owner_id`);
+
+-- 信用卡推广链接
+CREATE TABLE `credit_card`(
+	`id` BIGINT(20) NOT NULL PRIMARY KEY,
+	`icon_url` VARCHAR(128) NOT NULL COMMENT'图标',
+	`name` VARCHAR(32) NOT NULL COMMENT'银行名',
+	`target_url` VARCHAR(1024) NOT NULL COMMENT'目标地址'
+);

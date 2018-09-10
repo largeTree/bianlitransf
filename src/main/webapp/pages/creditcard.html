@@ -45,10 +45,10 @@
 </head>
 
 <body>
-    <div class="title">
-        <h2>信用卡推广</h2>
+    <div class="my-fixed-top">
+        <div class="am-u-sm-8">信用卡办理</div>
     </div>
-    <div class="content-container">
+    <div class="content-container my-fixed-content my-content-exist-top">
     </div>
 </body>
 <script type="text/javascript">
@@ -56,29 +56,32 @@ var sessionId = getQueryParmas().sessionId;
 console.log('sessionId = ' + sessionId);
 $(() => {
 
-    var datas = [];
-    for (var i = 0; i < 10; i++) {
-        datas[i] = {
-            id: i + 1,
-            iconUrl: '../imgs/yinhang/zhongguo.png',
-            name: '中国银行' + i
-        };
-    }
-
     var $container = $('.content-container');
-    for (var i = 0; i < datas.length; i++) {
-        var data = datas[i];
-        $container.append('<div class="bank-item" ><img src="' + data.iconUrl + '" /><span>' + data.name + '</span></div>');
-    }
 
-    $('.bank-item').on('touchstart', function(event) {
-        $(this).css('background-color', '#F7F7F7');
+    HttpService.post('/blh/api/creditcard/list', { sessionId: sessionId }, function(data, statuc) {
+        if (data && data.code == 0) {
+            var rows = data.data.rows;
+            for (var i = 0; i < rows.length; i++) {
+                var row = rows[i];
+                $container.append('<div class="bank-item" data-bank-id="' + row.id + '"><img src="' + row.iconUrl + '" /><span>' + row.name + '</span></div>');
+            }
+            $('.bank-item').on('touchstart', function(event) {
+                $(this).css('background-color', '#F7F7F7');
+            });
+
+            $('.bank-item').on('touchend', function(event) {
+                $(this).css('background-color', '');
+            });
+
+            $('.bank-item').on('click', function(event) {
+                var bankId = $(this).data('bank-id');
+                jumpPage('./subpages/credit_card_ask.html', {
+                    sessionId: sessionId,
+                    bankId: bankId
+                });
+            });
+        }
     });
-
-    $('.bank-item').on('touchend', function(event) {
-        $(this).css('background-color', '');
-    });
-
 });
 </script>
 
