@@ -1,3 +1,90 @@
+window.ScoreExchangeDetails = {
+    editor: null,
+    $curEditWindow: null,
+    refershData: function() {
+        $('#_score_exg_details_dg').datagrid('load');
+    },
+    dataLoader: function(param, success, error) {
+        if (!param.exgId && param.exgId == null) {
+            success({
+                code: 0,
+                data: {
+                    rows: []
+                }
+            });
+            return;
+        }
+        HttpService.post($(this).datagrid('options').url, param, function(data, status) {
+            success(data);
+        }, function() {
+            error();
+        });
+    },
+    optFormat: function(value, row, index) {
+        return '<a href="javascript:void(0)" onclick="ScoreExchangeDetails.edit(\'' + value + '\')" >修改</a>';
+    },
+    edit: function(id) {
+        var div = document.createElement('div');
+        var elementId = 'exg_edit_' + new Date().getTime();
+        div.id = elementId;
+        $('#formContainer').append(div);
+        ScoreExchangeDetails.$curEditWindow = PageUtils.openWin({
+            title: '修改',
+            iconCls: 'icon-save',
+            href: './_pages/_edit_exg_class.html',
+            onLoad: function() {
+                if (id) {
+                    HttpService.post('/blh/api/scoreexchangeclass/get', { id: id }, function(data, staus) {
+                        if (data && data.code == 0) {
+                            data = data.data;
+                            var $formTable = $('#score_exg_details_edit_table');
+                            $formTable.find('input[name="id"]').val(id);
+                            var $name = $formTable.find('input[name="name"]');
+                            $name.val(data.name);
+
+                            $('#score_exg_details_edit_table_editer').height(window.innerHeight * 0.5);
+                            ScoreExchangeDetails.editor = new window.wangEditor('#score_exg_details_edit_table_editer_toolbar', '#score_exg_details_edit_table_editer');
+                            ScoreExchangeDetails.editor.customConfig.uploadImgShowBase64 = true;
+                            // ScoreExchangeDetails.editor.customConfig.debug = true;
+                            ScoreExchangeDetails.editor.create();
+                            ScoreExchangeDetails.editor.txt.html(data.target);
+                        }
+                    }, function(xhr, status, e) {
+                        console.error(e);
+                    });
+                }
+            },
+            onBeforeClose: function() {
+                var $parent = $('#' + elementId).parent();
+                $parent.next().next().remove();
+                $parent.next().remove();
+                $parent.remove();
+            }
+        }, elementId);
+    },
+    save: function() {
+        var $formTable = $('#score_exg_details_edit_table');
+        var $id = $formTable.find('input[name="id"]');
+        var $name = $formTable.find('input[name="name"]');
+        var target = ScoreExchangeDetails.editor.txt.html();
+        var jsonParam = {
+            id:$id.val(),
+            name:$name.val(),
+            target:target
+        }
+        HttpService.post('/blh/api/scoreexchangeclass/save',{
+            jsonParam: JSON.stringify(jsonParam)
+        }, function(data,status) {
+            if (data && data.code == 0) {
+                alert('保存成功');
+                ScoreExchangeDetails.$curEditWindow.window('close');
+            } else if (data) {
+                alert(data.msg);
+            }
+        });
+    }
+}
+
 window.ReportBill = {
     $curEditWindow: null,
     refershData: function() {
@@ -114,7 +201,17 @@ window.ScoreExchange = {
         return '<img src="' + value + '" width="50px" height="50px" />';
     },
     optFormat: function(value, row, index) {
-        return '<a href="javascript:void(0)" onclick="ScoreExchange.edit(\'' + value + '\')" >修改</a>  <a href="javascript:void(0)" onclick="ScoreExchange.delete(\'' + value + '\')" >删除</a>';
+        return '<a href="javascript:void(0)" onclick="ScoreExchange.detail(\'' + value + '\')" >明细</a>  <a href="javascript:void(0)" onclick="ScoreExchange.edit(\'' + value + '\')" >修改</a>  <a href="javascript:void(0)" onclick="ScoreExchange.delete(\'' + value + '\')" >删除</a>';
+    },
+    detail: function(id) {
+        PageUtils.openWin({
+            title: '明细',
+            iconCls: 'icon-search',
+            href: './_pages/_score_exg_details.html',
+            onLoad: function() {
+                $('#_score_exg_details_dg').datagrid('load', { _: new Date().getTime(), orderBy: 'scoreExid', exgId: id });
+            }
+        });
     },
     edit: function(id) {
         this.showEditWindow(id);
@@ -168,8 +265,10 @@ window.PageUtils = {
             }
         });
     },
-    openWin: function(options) {
-        var $editWindow = $(document.createElement('div'));
+    openWin: function(options, elementId) {
+        elementId = elementId ? elementId : 'commonWin';
+        var div = document.getElementById(elementId);
+        var $editWindow = $(div);
         $editWindow.window({
             width: window.innerWidth * 0.8,
             height: window.innerHeight * 0.8,

@@ -2,6 +2,16 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.bianlitransf.biz.dao.ScoreExchangeDao">
 
+	<select id="scoreExgSummary" resultType="com.bianlitransf.biz.ScoreMinScoreDto">
+		SELECT
+			exg.name AS `name`,
+			0 AS `userCount`,
+			0 AS `memberCount`,
+			(SELECT MIN(det.score) FROM score_exchange_class clz INNER JOIN score_exchange_detail det ON det.class_id = clz.id WHERE clz.score_exid = exg.`id`) AS minScore
+		FROM score_exchange exg
+		ORDER BY exg.`disorder`
+	</select>
+
 	<sql id="allFields">
 		id,
 		type,

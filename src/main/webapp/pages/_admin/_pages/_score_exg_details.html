@@ -1,0 +1,13 @@
+<body>
+    <table id="_score_exg_details_dg" class="easyui-datagrid" style="width:100%;height:100%" toolbar="#_score_exg_details_dg_toolbar" data-options="url:'/blh/api/scoreexchangeclass/findByExgId',rownumbers:true,fitColumns:true,loadFilter:dataLoadFilter,loader:ScoreExchangeDetails.dataLoader,singleSelect:true,queryParams:{'orderBy':'scoreExid'}">
+        <thead>
+            <tr>
+                <th field="name" align="center" width="50">名称</th>
+                <th field="id" align="center" data-options="formatter:ScoreExchangeDetails.optFormat" width="50">操作</th>
+            </tr>
+        </thead>
+    </table>
+    <div id="_score_exg_details_dg_toolbar">
+        <a href="#" class="easyui-linkbutton" iconCls="icon-mini-refresh" plain="true" onclick="ScoreExchangeDetails.refershData()">刷新</a>
+    </div>
+</body>

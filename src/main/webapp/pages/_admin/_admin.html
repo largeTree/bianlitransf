@@ -5,12 +5,13 @@
 <title>管理界面</title>
 <link rel="stylesheet" type="text/css" href="./jqeasyui/themes/icon.css" />
 <link rel="stylesheet" type="text/css" href="./jqeasyui/themes/color.css" />
-<link rel="stylesheet" type="text/css" href="./jqeasyui/themes/metro/easyui.css" />
+<link rel="stylesheet" type="text/css" href="./jqeasyui/themes/default/easyui.css" />
 
 <link rel="stylesheet" type="text/css" href="./css/_common.css" />
 
 <script type="text/javascript" src="./jqeasyui/jquery.min.js"></script>
 <script type="text/javascript" src="./jqeasyui/jquery.easyui.min.js"></script>
+<script src="../../wangEdit/wangEditor.min.js"></script>
 
 <script type="text/javascript" src="./javascripts/_common.js"></script>
 <script type="text/javascript" src="./javascripts/_admin.js"></script>
@@ -29,7 +30,7 @@
 </head>
 <body class="easyui-layout" class="hide">
 	<div data-options="region:'north'" style="height: 90px;padding-left: 30px;">
-		<h2 id="top-title">便利换后台管理</h2>
+		<h2 id="top-title">便利兑后台管理</h2>
 		<div id="top-toolbar">
 			<a id="btn" href="javascript:void(0)" class="easyui-linkbutton" onclick="AdminPage.logout()" data-options="iconCls:'icon-cancel'">退出登录</a>
 		</div>
@@ -41,6 +42,8 @@
 	<div id="mainTabs" data-options="region:'center',narrow:true" class="easyui-tabs">
 		<div title="我的桌面" style="padding: 10px"></div>
 	</div>
+	<div id="commonWin"></div>
+	<div id="formContainer"></div>
 </body>
 <script type="text/javascript">
 	$(()=>{

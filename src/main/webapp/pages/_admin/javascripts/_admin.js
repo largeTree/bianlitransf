@@ -5,7 +5,11 @@ window.AdminPage = {
         if (!userLite) {
             window.location.href = './_login.html';
         }
-        SessionManager.userLite = JSON.parse(userLite);
+        var userLite = JSON.parse(userLite);
+        if (new Date().getTime() - userLite._timestamp > 7 * 24 * 60 * 60 * 1000) {
+            window.location.href = './_login.html';
+        }
+        SessionManager.userLite = userLite;
         $('body').removeClass('hide');
         $('#leftMenu').tree({
             onClick: function(node) {

@@ -108,6 +108,8 @@ CREATE TABLE `score_exchange_class`(
 	`updated_time` DATETIME NOT NULL COMMENT'更新时间'
 );
 
+ALTER TABLE `score_exchange_class` MODIFY `target` LONGTEXT COMMENT'具体内容，链接或具体html内容';
+
 -- 积分兑换类目明细
 CREATE TABLE `score_exchange_detail`(
 	`id` BIGINT(20) NOT NULL PRIMARY KEY,

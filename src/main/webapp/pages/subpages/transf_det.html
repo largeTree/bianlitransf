@@ -92,25 +92,7 @@
                 兑换步骤详情
             </div>
             <div class="step-details">
-                详情
-                <br /> 详情
-                <br /> 详情
-                <br /> 详情
-                <br /> 详情
-                <br /> 详情
-                <br /> 详情
-                <br /> 详情
-                <br /> 详情
-                <br /> 详情
-                <br /> 详情
-                <br /> 详情
-                <br /> 详情
-                <br /> 详情
-                <br /> 详情
-                <br /> 详情
-                <br /> 详情
-                <br /> 详情
-                <br /> 详情
+                
             </div>
         </div>
     </div>
@@ -125,6 +107,15 @@ var params = getQueryParmas();
 var sessionId = params.sessionId;
 console.log('sessionId = ' + sessionId);
 $(() => {
+
+    HttpService.post('/blh/api/scoreexchangeclass/getDesc',{
+        sessionId:sessionId,
+        id:params.clzId
+    },function(data,status){
+        if (data && data.code == 0) {
+            $('.step-details').html(data.data.val);
+        }
+    });
 
     HttpService.post('/blh/api/scoreexchangedetail/findByClassId', {
         clzId: params.clzId,

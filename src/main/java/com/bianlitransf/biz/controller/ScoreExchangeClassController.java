@@ -33,6 +33,12 @@ public class ScoreExchangeClassController
 	private IScoreExchangeClassService scoreexchangeclassService;
 
 	@Api
+	public String getDesc(@Param("id")Long id) {
+		ScoreExchangeClass exchangeClass = this.getService().getById(id);
+		return exchangeClass.getTarget();
+	}
+	
+	@Api
 	public List<ScoreExchangeClass> findByExgId(@Param("exgId") Long exgId, PageInfo pageInfo) {
 		List<ScoreExchangeClass> classes = this.scoreexchangeclassService.findByMap(MapUtils.genMap("scoreExid", exgId),
 				pageInfo);

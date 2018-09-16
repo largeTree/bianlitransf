@@ -11,6 +11,7 @@ import com.qiuxs.cuteframework.core.persistent.database.modal.BaseField;
 import com.qiuxs.cuteframework.core.persistent.database.service.AbstractDataPropertyService;
 import com.qiuxs.cuteframework.core.persistent.database.service.filter.IServiceFilter;
 import com.qiuxs.cuteframework.core.persistent.database.service.filter.impl.IdGenerateFilter;
+import com.bianlitransf.biz.ScoreMinScoreDto;
 import com.bianlitransf.biz.dao.ScoreExchangeDao;
 import com.bianlitransf.biz.entity.ScoreExchange;
 import com.bianlitransf.biz.service.IScoreExchangeService;
@@ -37,6 +38,11 @@ public class ScoreExchangeService extends AbstractDataPropertyService<Long, Scor
 		return this.scoreExchangeDao;
 	}
 
+	@Override
+	public List<ScoreMinScoreDto> scoreExgSummary() {
+		return this.getDao().scoreExgSummary();
+	}
+	
 	@Override
 	protected void initServiceFilters(List<IServiceFilter<Long, ScoreExchange>> serviceFilters) {
 		serviceFilters.add(new IdGenerateFilter<>(TABLE_NAME));

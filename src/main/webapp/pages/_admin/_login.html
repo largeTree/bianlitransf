@@ -97,6 +97,7 @@ function login() {
         ns: 1
     }, function(data, status) {
         if (data && data.code == 0) {
+            data.data._timestamp = new Date().getTime();
             window.localStorage.userLite = JSON.stringify(data.data);
             window.location.href = './_admin.html';
         } else if (data) {
