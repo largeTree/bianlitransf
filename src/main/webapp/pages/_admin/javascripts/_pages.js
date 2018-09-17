@@ -1,3 +1,103 @@
+window.HomeSilder = {
+    editor: null,
+    $curEditWindow: null,
+    init: function() {
+        console.log('HomeSilder load success');
+    },
+    refershData: function() {
+        $('#_home_silder_dg').datagrid('load');
+    },
+    imgFormat: function(value, row, index) {
+        return '<img src="/blh/api/attachment/getImg/' + value + '" width="50" height="40" /';
+    },
+    optFormat: function(value, row, index) {
+        return '<a href="javascript:void(0)" onclick="HomeSilder.edit(\'' + value + '\')" >修改</a> <a href="javascript:void(0)" onclick="HomeSilder.delete(\'' + value + '\')" >删除</a>';
+    },
+    addNew: function() {
+        HomeSilder.showEditWindow();
+    },
+    edit: function(id) {
+        HomeSilder.showEditWindow(id);
+    },
+    delete: function(id) {
+        if (confirm('确定删除吗?')) {
+            HttpService.post('/blh/api/homeslider/delete',{id:id},function(data){
+                if (data && data.code == 0) {
+                    alert('删除成功!');
+                    HomeSilder.refershData();
+                } else if (data) {
+                    alert(data.msg);
+                }
+            });
+        }
+    },
+    showEditWindow: function(id) {
+        var div = document.createElement('div');
+        var elementId = 'home_silder_edit_' + new Date().getTime();
+        div.id = elementId;
+        $('#formContainer').append(div);
+        HomeSilder.$curEditWindow = PageUtils.openWin({
+            title: id ? '修改' : '新增',
+            iconCls: 'icon-save',
+            href: './_pages/_home_silder_edit.html',
+            onLoad: function() {
+                var promise = new FileUploader('#img-uploader', {
+                    url: '/blh/api/attachment/upload',
+                    success: function(data) {
+                        if (data && data.code == 0) {
+                            $('#home_silder_page_edit_table input[name="docId"]').val(data.data.val);
+                        }
+                    }
+                });
+
+                $('#home_silder_page_editer').height(window.innerHeight * 0.4);
+                HomeSilder.editor = new window.wangEditor('#home_silder_page_editer_toolbar', '#home_silder_page_editer');
+                HomeSilder.editor.customConfig.uploadImgShowBase64 = true;
+                HomeSilder.editor.create();
+                if (id) {
+                    $('#home_silder_page_edit_table input[name="id"]').val(id);
+                    HttpService.post('/blh/api/homeslider/get', { id: id }, function(data) {
+                        if (data && data.code == 0) {
+                            $('#home_silder_page_edit_table input[name="docId"]').val(data.data.docId);
+                            $('#home_silder_page_edit_table #img-uploader').attr('src','/blh/api/attachment/getImg/' + data.data.docId);
+                            $('#home_silder_page_edit_table input[name="rem"]').val(data.data.rem);
+                            HomeSilder.editor.txt.html(data.data.target);
+                        }
+                    });
+                }
+            },
+            onBeforeClose: function() {
+                var $parent = $('#' + elementId).parent();
+                $parent.next().next().remove();
+                $parent.next().remove();
+                $parent.remove();
+            }
+        }, elementId);
+    },
+    save: function() {
+        var $fieldItems = $('#home_silder_page_edit_table input[name]');
+        var jsonParam = {};
+        for (var i = 0; i < $fieldItems.length; i++) {
+            var $fieldItem = $($fieldItems[i]);
+            var val = $fieldItem.val();
+            if (val && val != null && val.length > 0) {
+                jsonParam[$fieldItem.attr('name')] = val;
+            }
+        }
+        jsonParam.target = HomeSilder.editor.txt.html();
+        HttpService.post('/blh/api/homeslider/save', {
+            jsonParam: JSON.stringify(jsonParam)
+        }, function(data) {
+            if (data && data.code == 0) {
+                alert('保存成功');
+                HomeSilder.$curEditWindow.window('close');
+                HomeSilder.refershData();
+            } else if (data) {
+                alert(data.msg);
+            }
+        });
+    }
+}
 window.ScoreExchangeDetails = {
     editor: null,
     $curEditWindow: null,
@@ -68,13 +168,13 @@ window.ScoreExchangeDetails = {
         var $name = $formTable.find('input[name="name"]');
         var target = ScoreExchangeDetails.editor.txt.html();
         var jsonParam = {
-            id:$id.val(),
-            name:$name.val(),
-            target:target
+            id: $id.val(),
+            name: $name.val(),
+            target: target
         }
-        HttpService.post('/blh/api/scoreexchangeclass/save',{
+        HttpService.post('/blh/api/scoreexchangeclass/save', {
             jsonParam: JSON.stringify(jsonParam)
-        }, function(data,status) {
+        }, function(data, status) {
             if (data && data.code == 0) {
                 alert('保存成功');
                 ScoreExchangeDetails.$curEditWindow.window('close');

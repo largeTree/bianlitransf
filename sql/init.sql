@@ -146,3 +146,22 @@ CREATE TABLE `credit_card`(
 	`name` VARCHAR(32) NOT NULL COMMENT'银行名',
 	`target_url` VARCHAR(1024) NOT NULL COMMENT'目标地址'
 );
+
+-- 附件表
+CREATE TABLE `attachment`(
+	`id` BIGINT(20) PRIMARY KEY,
+	`path` VARCHAR(256) NOT NULL COMMENT'存储路径',
+	`name` VARCHAR(64) NOT NULL COMMENT'文件名',
+	`created_by` BIGINT( 0) NOT NULL COMMENT'创建人',
+	`created_time` DATETIME NOT NULL COMMENT'创建时间'
+)COMMENT'附件表';
+
+-- 首页滚动图
+CREATE TABLE `home_slider` (
+	`id` BIGINT(20) PRIMARY KEY,
+	`doc_id` BIGINT(20) NOT NULL COMMENT'图片ID',
+	`target` LONGTEXT COMMENT'具体内容',
+	`rem` VARCHAR(256) NOT NULL COMMENT'备注',
+	`created_by` BIGINT( 0) NOT NULL COMMENT'创建人',
+	`created_time` DATETIME NOT NULL COMMENT'创建时间'
+)COMMENT'首页滚动图';

@@ -29,11 +29,13 @@ window.AdminPage = {
         } else if (node.children) {
             $('#leftMenu').tree('toggle', node.target);
         } else if (node.attributes) {
+            var onLoad = node.attributes.ctrl ? window[node.attributes.ctrl]['init'] : function(){};
             tabs.tabs('add', {
                 title: node.text,
                 href: node.attributes.url,
                 method: 'get',
-                closable: true
+                closable: true,
+                onLoad: onLoad
             });
         }
     }

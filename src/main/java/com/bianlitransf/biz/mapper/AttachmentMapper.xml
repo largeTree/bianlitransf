@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bianlitransf.biz.dao.AttachmentDao">
+
+	<sql id="allFields">
+		`id`,
+		`path`,
+		`name`,
+		`created_by` as createdBy,
+		`created_time` as createdTime
+	</sql>
+
+	<sql id="insertFields">
+		`id`,
+		`path`,
+		`name`,
+		`created_by`,
+		`created_time`
+	</sql>
+
+	<select id="list" resultType="com.bianlitransf.biz.entity.Attachment" >
+		select
+			<include refid="allFields" />
+		from `attachment`
+		<where>
+			<include refid="comnWhere" />
+		</where>
+		<if test="orderBy != null" >
+			order by ${orderBy}
+			<if test="orderByDesc != null">
+				desc
+			</if>
+		</if>
+	</select>
+
+	<sql id="comnWhere">
+		<if test="id != null">
+			`id` = #{id}
+		</if>
+		<if test="path != null">
+			 and `path` = #{path}
+		</if>
+		<if test="name != null">
+			and `name` = #{name}
+		</if>
+		<if test="createdBy != null">
+			 and `created_by` = #{createdBy}
+		</if>
+		<if test="createdTime != null">
+			 and `created_time` = #{createdTime}
+		</if>
+	</sql>
+
+	<select id="getByIds" resultType="com.bianlitransf.biz.entity.Attachment" >
+		select <include refid="allFields" /> from `attachment` where id in
+		<foreach collection="list" item="item" open="(" separator="," close=")" >
+			#{item}
+		</foreach>
+	</select>
+
+	<select id="get" resultType="com.bianlitransf.biz.entity.Attachment" >
+		select <include refid="allFields" /> from `attachment` where id = #{id}
+	</select>
+
+	<delete id="deleteById" parameterType="Long" >
+		delete from `attachment` where id = #{id}
+	</delete>
+
+	<insert id="insert" parameterType="com.bianlitransf.biz.entity.Attachment">
+		insert into `attachment`(<include refid="insertFields" />)
+		values(
+			#{id},
+			#{path},
+			#{name},
+			#{createdBy},
+			#{createdTime}
+		)
+	</insert>
+
+	<insert id="insertBatch" parameterType="java.util.List" >
+		insert into `attachment`(<include refid="insertFields" />)
+		values
+		<foreach collection="list" item="item" separator="," >
+			(
+				#{item.id},
+				#{item.path},
+				#{item.name},
+				#{item.createdBy},
+				#{item.createdTime}
+			)
+		</foreach>
+	</insert>
+
+	<update id="update" parameterType="com.bianlitransf.biz.entity.Attachment" >
+		update `attachment` 
+			<set>
+				<include refid="setComn" />
+			</set>
+		where id = #{id}
+	</update>
+
+	<sql id="setComn" >
+		<if test="path != null" >
+			`path` = #{path},
+		</if>
+		<if test="name != null">
+			`name` = #{name}
+		</if>
+		<if test="createdBy != null" >
+			`created_by` = #{createdBy},
+		</if>
+		<if test="createdTime != null" >
+			`created_time` = #{createdTime}
+		</if>
+	</sql>
+</mapper>

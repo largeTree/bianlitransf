@@ -3,6 +3,8 @@ env:
   server-id: blh-web1
   seq-type: db
   test: true
+  attachment: 
+    path: F:\\code_upload_temp\blh
 #  seq-db-idx: 0
 server:
   port: 8082

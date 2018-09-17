@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bianlitransf.biz.dao.HomeSliderDao">
+
+	<sql id="allFields">
+		`id`,
+		`doc_id` as docId,
+		`target`,
+		`rem`,
+		`created_by` as createdBy,
+		`created_time` as createdTime
+	</sql>
+
+	<sql id="insertFields">
+		`id`,
+		`doc_id`,
+		`target`,
+		`rem`,
+		`created_by`,
+		`created_time`
+	</sql>
+
+	<select id="list" resultType="com.bianlitransf.biz.entity.HomeSlider" >
+		select
+			<include refid="allFields" />
+		from `home_slider`
+		<where>
+			<include refid="comnWhere" />
+		</where>
+		<if test="orderBy != null" >
+			order by ${orderBy}
+			<if test="orderByDesc != null">
+				desc
+			</if>
+		</if>
+	</select>
+
+	<sql id="comnWhere">
+		<if test="id != null">
+			`id` = #{id}
+		</if>
+		<if test="docId != null">
+			 and `doc_id` = #{docId}
+		</if>
+		<if test="target != null">
+			 and `target` = #{target}
+		</if>
+		<if test="rem != null">
+			and `rem` = #{rem}
+		</if>
+		<if test="createdBy != null">
+			 and `created_by` = #{createdBy}
+		</if>
+		<if test="createdTime != null">
+			 and `created_time` = #{createdTime}
+		</if>
+	</sql>
+
+	<select id="getByIds" resultType="com.bianlitransf.biz.entity.HomeSlider" >
+		select <include refid="allFields" /> from `home_slider` where id in
+		<foreach collection="list" item="item" open="(" separator="," close=")" >
+			#{item}
+		</foreach>
+	</select>
+
+	<select id="get" resultType="com.bianlitransf.biz.entity.HomeSlider" >
+		select <include refid="allFields" /> from `home_slider` where id = #{id}
+	</select>
+
+	<delete id="deleteById" parameterType="Long" >
+		delete from `home_slider` where id = #{id}
+	</delete>
+
+	<insert id="insert" parameterType="com.bianlitransf.biz.entity.HomeSlider">
+		insert into `home_slider`(<include refid="insertFields" />)
+		values(
+			#{id},
+			#{docId},
+			#{target},
+			#{rem},
+			#{createdBy},
+			#{createdTime}
+		)
+	</insert>
+
+	<insert id="insertBatch" parameterType="java.util.List" >
+		insert into `home_slider`(<include refid="insertFields" />)
+		values
+		<foreach collection="list" item="item" separator="," >
+			(
+				#{item.id},
+				#{item.docId},
+				#{item.target},
+				#{item.rem},
+				#{item.createdBy},
+				#{item.createdTime}
+			)
+		</foreach>
+	</insert>
+
+	<update id="update" parameterType="com.bianlitransf.biz.entity.HomeSlider" >
+		update `home_slider` 
+			<set>
+				<include refid="setComn" />
+			</set>
+		where id = #{id}
+	</update>
+
+	<sql id="setComn" >
+		<if test="docId != null" >
+			`doc_id` = #{docId},
+		</if>
+		<if test="target != null" >
+			`target` = #{target},
+		</if>
+		<if test="rem != null">
+			`rem` = #{rem},
+		</if>
+		<if test="createdBy != null" >
+			`created_by` = #{createdBy},
+		</if>
+		<if test="createdTime != null" >
+			`created_time` = #{createdTime}
+		</if>
+	</sql>
+</mapper>
