@@ -81,7 +81,7 @@ public class UserController extends AbstractDataController<Long, User, UserDao, 
 		User user = this.getService().getById(UserContext.getUserId());
 		if (user.getRefereeId() > 0) {
 			User inviter = this.getService().getById(user.getRefereeId());
-			inviter.setPhone(inviter.getPhone().substring(0, 3) + "****" + inviter.getPhone().substring(7, 11));
+			inviter.setPhone(inviter.getPhone().substring(0, 3) + "^_^" + inviter.getPhone().substring(7, 11));
 			inviter.setPassword(null);
 			return inviter;
 		}
@@ -89,13 +89,13 @@ public class UserController extends AbstractDataController<Long, User, UserDao, 
 	}
 
 	@Override
-	public ListResult list(Map<String, String> params) {
+	public ListResult list(Map<String, String> params, PageInfo pageInfo) {
 		User curUser = this.userService.getById(UserContext.getUserId());
 		// 不等于超级管理员的用户查询用户列表时不能查询到超级管理员
 		if (curUser.getLevel() != BizConstants.LEVEL_SA) {
 			params.put("levelGte", String.valueOf(BizConstants.LEVEL_ADMIN));
 		}
-		ListResult list = super.list(params);
+		ListResult list = super.list(params, pageInfo);
 		List<?> userList = list.getList();
 		for (Object user : userList) {
 			((User) user).setPassword(null);

@@ -63,6 +63,9 @@ public class HomeSliderService extends AbstractDataPropertyService<Long, HomeSli
 
 		prop = new PropertyWrapper<Date>(new BaseField("createdTime", "创建时间", Date.class), null);
 		props.add(prop);
+		
+		prop = new PropertyWrapper<Date>(new BaseField("title", "创建时间", Date.class), null);
+		props.add(prop);
 
 	}
 

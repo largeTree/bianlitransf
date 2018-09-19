@@ -61,6 +61,7 @@ window.HomeSilder = {
                             $('#home_silder_page_edit_table input[name="docId"]').val(data.data.docId);
                             $('#home_silder_page_edit_table #img-uploader').attr('src','/blh/api/attachment/getImg/' + data.data.docId);
                             $('#home_silder_page_edit_table input[name="rem"]').val(data.data.rem);
+                            $('#home_silder_page_edit_table input[name="title"]').val(data.data.title);
                             HomeSilder.editor.txt.html(data.data.target);
                         }
                     });
@@ -98,6 +99,20 @@ window.HomeSilder = {
         });
     }
 }
+
+window.CreditCard = {
+    $curEditWindow: null,
+    refershData: function() {
+        $('#_credit_card_dg').datagrid('load');
+    },
+    optFormat: function(value, row, index) {
+        return '<a href="javascript:void(0)" onclick="CreditCard.edit(\'' + value + '\')" >修改</a>';
+    },
+    edit: function(id) {
+        
+    }
+}
+
 window.ScoreExchangeDetails = {
     editor: null,
     $curEditWindow: null,

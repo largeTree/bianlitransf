@@ -165,3 +165,4 @@ CREATE TABLE `home_slider` (
 	`created_by` BIGINT( 0) NOT NULL COMMENT'创建人',
 	`created_time` DATETIME NOT NULL COMMENT'创建时间'
 )COMMENT'首页滚动图';
+ALTER TABLE `home_slider` ADD COLUMN `title` VARCHAR(16) NOT NULL COMMENT'页面标题';

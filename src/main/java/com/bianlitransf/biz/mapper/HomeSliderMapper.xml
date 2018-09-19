@@ -8,7 +8,8 @@
 		`target`,
 		`rem`,
 		`created_by` as createdBy,
-		`created_time` as createdTime
+		`created_time` as createdTime,
+		`title`
 	</sql>
 
 	<sql id="insertFields">
@@ -17,7 +18,8 @@
 		`target`,
 		`rem`,
 		`created_by`,
-		`created_time`
+		`created_time`,
+		`title`
 	</sql>
 
 	<select id="list" resultType="com.bianlitransf.biz.entity.HomeSlider" >
@@ -54,6 +56,9 @@
 		<if test="createdTime != null">
 			 and `created_time` = #{createdTime}
 		</if>
+		<if test="title != null">
+			and `title` = #{title}
+		</if>
 	</sql>
 
 	<select id="getByIds" resultType="com.bianlitransf.biz.entity.HomeSlider" >
@@ -79,7 +84,8 @@
 			#{target},
 			#{rem},
 			#{createdBy},
-			#{createdTime}
+			#{createdTime},
+			#{title}
 		)
 	</insert>
 
@@ -93,7 +99,8 @@
 				#{item.target},
 				#{item.rem},
 				#{item.createdBy},
-				#{item.createdTime}
+				#{item.createdTime},
+				#{item.title}
 			)
 		</foreach>
 	</insert>
@@ -120,7 +127,10 @@
 			`created_by` = #{createdBy},
 		</if>
 		<if test="createdTime != null" >
-			`created_time` = #{createdTime}
+			`created_time` = #{createdTime},
+		</if>
+		<if test="title != null">
+			`title` = #{title}
 		</if>
 	</sql>
 </mapper>
