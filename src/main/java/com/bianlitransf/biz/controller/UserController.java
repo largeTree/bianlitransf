@@ -9,6 +9,7 @@ import javax.annotation.Resource;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.alibaba.fastjson.JSONObject;
 import com.bianlitransf.biz.BizConstants;
 import com.bianlitransf.biz.dao.UserDao;
 import com.bianlitransf.biz.entity.CapitalAcct;
@@ -98,7 +99,7 @@ public class UserController extends AbstractDataController<Long, User, UserDao, 
 		ListResult list = super.list(params, pageInfo);
 		List<?> userList = list.getList();
 		for (Object user : userList) {
-			((User) user).setPassword(null);
+			((JSONObject) user).remove("password");
 		}
 		return list;
 	}

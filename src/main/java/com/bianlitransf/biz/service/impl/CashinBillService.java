@@ -15,6 +15,7 @@ import com.qiuxs.cuteframework.core.persistent.database.modal.BaseField;
 import com.qiuxs.cuteframework.core.persistent.database.service.AbstractDataPropertyService;
 import com.qiuxs.cuteframework.core.persistent.database.service.filter.IServiceFilter;
 import com.qiuxs.cuteframework.core.persistent.database.service.filter.impl.IdGenerateFilter;
+import com.bianlitransf.biz.BizConstants;
 import com.bianlitransf.biz.dao.CashinBillDao;
 import com.bianlitransf.biz.entity.CashinBill;
 import com.bianlitransf.biz.entity.User;
@@ -89,13 +90,13 @@ public class CashinBillService extends AbstractDataPropertyService<Long, CashinB
 		prop = new PropertyWrapper<Long>(new BaseField("id", "id", Long.class), null);
 		props.add(prop);
 
-		prop = new PropertyWrapper<Long>(new BaseField("ownerId", "所有者", Long.class), null);
+		prop = new PropertyWrapper<Long>(new BaseField("ownerId", "所有者", Long.class), this.userService);
 		props.add(prop);
 
 		prop = new PropertyWrapper<BigDecimal>(new BaseField("money", "金额", BigDecimal.class), null);
 		props.add(prop);
 
-		prop = new PropertyWrapper<Integer>(new BaseField("status", "状态", Integer.class), null);
+		prop = new PropertyWrapper<Integer>(new BaseField("status", "状态", Integer.class), BizConstants.BILL_STATUS_TRANSTLATER);
 		props.add(prop);
 
 		prop = new PropertyWrapper<String>(new BaseField("desc", "备注", String.class), null);
@@ -104,7 +105,7 @@ public class CashinBillService extends AbstractDataPropertyService<Long, CashinB
 		prop = new PropertyWrapper<Date>(new BaseField("createdTime", "创建时间", Date.class), null);
 		props.add(prop);
 
-		prop = new PropertyWrapper<Long>(new BaseField("confirmerId", "审核人", Long.class), null);
+		prop = new PropertyWrapper<Long>(new BaseField("confirmerId", "审核人", Long.class), this.userService);
 		props.add(prop);
 
 		prop = new PropertyWrapper<Date>(new BaseField("confirmTime", "审核时间", Date.class), null);

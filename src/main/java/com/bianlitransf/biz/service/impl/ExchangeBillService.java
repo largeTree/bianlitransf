@@ -137,10 +137,10 @@ public class ExchangeBillService extends AbstractDataPropertyService<Long, Excha
 		prop = new PropertyWrapper<Long>(new BaseField("id", "id", Long.class), null);
 		props.add(prop);
 
-		prop = new PropertyWrapper<Long>(new BaseField("ownerId", "所有者", Long.class), null);
+		prop = new PropertyWrapper<Long>(new BaseField("ownerId", "所有者", Long.class), this.userService);
 		props.add(prop);
 
-		prop = new PropertyWrapper<Integer>(new BaseField("status", "状态", Integer.class), null);
+		prop = new PropertyWrapper<Integer>(new BaseField("status", "状态", Integer.class), BizConstants.BILL_STATUS_TRANSTLATER);
 		props.add(prop);
 
 		prop = new PropertyWrapper<Integer>(new BaseField("exgDetId", "兑换券ID", Integer.class), null);
@@ -161,7 +161,7 @@ public class ExchangeBillService extends AbstractDataPropertyService<Long, Excha
 		prop = new PropertyWrapper<Date>(new BaseField("confirmTime", "确认时间", Date.class), null);
 		props.add(prop);
 
-		prop = new PropertyWrapper<Long>(new BaseField("confirmerId", "确认操作人", Long.class), null);
+		prop = new PropertyWrapper<Long>(new BaseField("confirmerId", "确认操作人", Long.class), this.userService);
 		props.add(prop);
 
 		prop = new PropertyWrapper<String>(new BaseField("desc", "描述", String.class), null);

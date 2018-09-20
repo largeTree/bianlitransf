@@ -30,5 +30,12 @@
         "attributes": {
             "url":"./_pages/_exg_bill_list.html"
         }
+    },
+    {
+        "id": "4",
+        "text": "提现管理",
+        "attributes": {
+            "url":"./_pages/_cashin_list.html"
+        }
     }
 ]

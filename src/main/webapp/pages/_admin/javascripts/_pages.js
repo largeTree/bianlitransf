@@ -1,3 +1,31 @@
+window.CashinBill = {
+    refershData: function() {
+        $('#_cashin_bill_dg').datagrid('load');
+    },
+    optFormat: function(value, row, index) {
+        return '<a href="javascript:void(0)" onclick="CashinBill.confirmBill(\'' + value + '\')" >通过</a> <a href="javascript:void(0)" onclick="CashinBill.refuseBill(\'' + value + '\')" >拒绝</a>';
+    },
+    confirmBill: function(id) {
+        HttpService.post('/blh/api/cashinbill/confrimBill', { billId: id }, function(data) {
+            if (data && data.code == 0) {
+                alert('操作成功');
+            } else if (data) {
+                alert(data.msg);
+            }
+            CashinBill.refershData();
+        });
+    },
+    refuseBill: function(id) {
+        HttpService.post('/blh/api/cashinbill/refuseBill', { billId: id }, function(data) {
+            if (data && data.code == 0) {
+                alert('操作成功');
+            } else if (data) {
+                alert(data.msg);
+            }
+            CashinBill.refershData();
+        });
+    }
+}
 window.HomeSilder = {
     editor: null,
     $curEditWindow: null,
@@ -21,7 +49,7 @@ window.HomeSilder = {
     },
     delete: function(id) {
         if (confirm('确定删除吗?')) {
-            HttpService.post('/blh/api/homeslider/delete',{id:id},function(data){
+            HttpService.post('/blh/api/homeslider/delete', { id: id }, function(data) {
                 if (data && data.code == 0) {
                     alert('删除成功!');
                     HomeSilder.refershData();
@@ -59,7 +87,7 @@ window.HomeSilder = {
                     HttpService.post('/blh/api/homeslider/get', { id: id }, function(data) {
                         if (data && data.code == 0) {
                             $('#home_silder_page_edit_table input[name="docId"]').val(data.data.docId);
-                            $('#home_silder_page_edit_table #img-uploader').attr('src','/blh/api/attachment/getImg/' + data.data.docId);
+                            $('#home_silder_page_edit_table #img-uploader').attr('src', '/blh/api/attachment/getImg/' + data.data.docId);
                             $('#home_silder_page_edit_table input[name="rem"]').val(data.data.rem);
                             $('#home_silder_page_edit_table input[name="title"]').val(data.data.title);
                             HomeSilder.editor.txt.html(data.data.target);
@@ -109,7 +137,7 @@ window.CreditCard = {
         return '<a href="javascript:void(0)" onclick="CreditCard.edit(\'' + value + '\')" >修改</a>';
     },
     edit: function(id) {
-        
+
     }
 }
 
@@ -203,7 +231,7 @@ window.ScoreExchangeDetails = {
 window.ReportBill = {
     $curEditWindow: null,
     refershData: function() {
-        $('#_exg_bill_dg').datagrid('load', { _: new Date().getTime(), orderBy: 'createdTime desc' });
+        $('#_exg_bill_dg').datagrid('load');
     },
     optFormat: function(value, row, index) {
         return '<a href="javascript:void(0)" onclick="ReportBill.detail(\'' + value + '\')" >详情</a>  <a href="javascript:void(0)" onclick="ReportBill.confirmBill(\'' + value + '\')" >通过</a>  <a href="javascript:void(0)" onclick="ReportBill.refuseBill(\'' + value + '\')" >拒绝</a>';;
@@ -262,7 +290,7 @@ window.UsersPage = {
         this.showEditWindow();
     },
     refershData: function() {
-        $('#_user_dg').datagrid('load', { _: new Date().getTime(), orderBy: 'createdTime desc' });
+        $('#_user_dg').datagrid('load');
     },
     edit: function(id) {
         this.showEditWindow(id);
@@ -310,7 +338,7 @@ window.ScoreExchange = {
         this.showEditWindow();
     },
     refershData: function() {
-        $('#_score_exg_dg').datagrid('load', { _: new Date().getTime(), orderBy: 'disorder' });
+        $('#_score_exg_dg').datagrid('load');
     },
     iconFormat: function(value, row, index) {
         return '<img src="' + value + '" width="50px" height="50px" />';

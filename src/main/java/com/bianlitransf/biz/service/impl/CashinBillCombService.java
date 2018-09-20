@@ -63,7 +63,7 @@ public class CashinBillCombService implements ICashinBillCombService {
 		// 设置为已通过
 		cashinBill.setConfirmerId(UserContext.getUserId());
 		cashinBill.setConfirmTime(new Date());
-		cashinBill.setStatus(BizConstants.BIZ_TYPE_CASHIN_CONFIRM);
+		cashinBill.setStatus(BizConstants.BILL_STATUS_CONFRIMED);
 		cashinBill.setDesc(StringUtils.isBlank(desc) ? "审核通过" : desc);
 
 		this.cashinBillService.save(cashinBill);

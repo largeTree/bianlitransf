@@ -6,6 +6,11 @@ function dataLoader(param, success, error) {
     });
 }
 
+function captionFormatter(value, row, index) {
+    var caption = row._caption;
+    return caption ? caption[this.field] : value;
+}
+
 function dataLoadFilter(data, parentId) {
     if (data.code != 0) {
         alert(data.msg);

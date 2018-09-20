@@ -1,8 +1,8 @@
 <body>
-    <table id="_score_exg_dg" class="easyui-datagrid" style="width:100%;height:100%" toolbar="#_score_exg_dg_toolbar" data-options="url:'/blh/api/scoreexchange/list',rownumbers:true,fitColumns:true,loadFilter:dataLoadFilter,loader:dataLoader,singleSelect:true,queryParams:{'orderBy':'disorder'}">
+    <table id="_score_exg_dg" class="easyui-datagrid" style="width:100%;height:100%" toolbar="#_score_exg_dg_toolbar" data-options="url:'/blh/api/scoreexchange/list',rownumbers:true,fitColumns:true,loadFilter:dataLoadFilter,loader:dataLoader,singleSelect:true,queryParams:{'orderBy':'disorder', 'wrapper': 'true'}">
         <thead>
             <tr>
-                <th field="type" align="center" width="50">类型</th>
+                <th field="type" data-options="formatter:captionFormatter" align="center" width="50">类型</th>
                 <th field="iconUrl" data-options="formatter:ScoreExchange.iconFormat" align="center" width="50">图标</th>
                 <th field="name" align="center" width="50">名称</th>
                 <th field="disorder" align="center" width="50">顺序号</th>

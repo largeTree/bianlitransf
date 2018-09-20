@@ -2,9 +2,10 @@ package com.bianlitransf.biz.service;
 
 import com.bianlitransf.biz.dao.UserDao;
 import com.bianlitransf.biz.entity.User;
+import com.qiuxs.cuteframework.core.basic.code.provider.ICodeTranslatable;
 import com.qiuxs.cuteframework.core.persistent.database.service.ifc.IDataPropertyService;
 
-public interface IUserService extends IDataPropertyService<Long, User, UserDao> {
+public interface IUserService extends IDataPropertyService<Long, User, UserDao>, ICodeTranslatable<Long> {
 
 	public User getByPhone(String phone, boolean must);
 

@@ -1,5 +1,7 @@
 package com.bianlitransf.biz;
 
+import com.qiuxs.cuteframework.core.basic.code.provider.ICodeTranslatable;
+
 public class BizConstants {
 
 	public static final int TRUE = 1;
@@ -43,9 +45,113 @@ public class BizConstants {
 	public static final int RES_TYPE_CAT_CREDIT_CARD_SPR = 2;
 
 	/** 银行积分 */
-	public static final int RES_TYPE_BANK_SCORE = 101;
+	public static final int RES_TYPE_BANK_SCORE = 1;
 	/** 电信积分兑换 */
-	public static final int RES_TYPE_TEL_SCORE = 102;
+	public static final int RES_TYPE_TEL_SCORE = 2;
 	/** 信用卡推广链接 */
-	public static final int RES_TYPE_CREDIT_CARD_SPR = 201;
+	public static final int RES_TYPE_CREDIT_CARD_SPR = 3;
+	
+	public static final ICodeTranslatable<Integer> RES_TYPE_TRANSTALER = new ICodeTranslatable<Integer>() {
+		@Override
+		public String getCaption(Integer code) {
+			if (code == null) {
+				return "";
+			}
+			int val = code.intValue();
+			String caption = null;
+			switch (val) {
+			case BizConstants.RES_TYPE_BANK_SCORE:
+				caption = "银行积分";
+				break;
+			case BizConstants.RES_TYPE_TEL_SCORE:
+				caption = "电信积分";
+				break;
+			case BizConstants.RES_TYPE_CREDIT_CARD_SPR:
+				caption = "信用卡推广链接";
+				break;
+			default:
+				caption = "";
+				break;
+			}
+			return caption;
+		}
+	};
+	
+	public static final ICodeTranslatable<Integer> LEVEL_TRANSTALER = new ICodeTranslatable<Integer>() {
+		@Override
+		public String getCaption(Integer code) {
+			if (code == null) {
+				return "";
+			}
+			int val = code.intValue();
+			String caption = null;
+			switch (val) {
+			case BizConstants.LEVEL_SA:
+				caption = "超管";
+				break;
+			case BizConstants.LEVEL_ADMIN:
+				caption = "管理员";
+				break;
+			case BizConstants.LEVEL_USER:
+				caption = "用户";
+				break;
+			case BizConstants.LEVEL_MEMBER:
+				caption = "会员";
+				break;
+			default:
+				caption = "";
+				break;
+			}
+			return caption;
+		}
+	};
+	
+	public static final ICodeTranslatable<Integer> STATUS_TRANSTLATER = new ICodeTranslatable<Integer>() {
+		@Override
+		public String getCaption(Integer code) {
+			if (code == null) {
+				return "";
+			}
+			int val = code.intValue();
+			String caption = null;
+			switch (val) {
+			case BizConstants.STATUS_INVALID:
+				caption = "无效";
+				break;
+			case BizConstants.STATUS_VALID:
+				caption = "有效";
+				break;
+			default:
+				caption = "";
+				break;
+			}
+			return caption;
+		}
+	};
+	
+	public static final ICodeTranslatable<Integer> BILL_STATUS_TRANSTLATER = new ICodeTranslatable<Integer>() {
+		@Override
+		public String getCaption(Integer code) {
+			if (code == null) {
+				return "";
+			}
+			int val = code.intValue();
+			String caption = null;
+			switch (val) {
+			case BizConstants.BILL_STATUS_CREATED:
+				caption = "已创建";
+				break;
+			case BizConstants.BILL_STATUS_CONFRIMED:
+				caption = "已通过";
+				break;
+			case BizConstants.BILL_STATUS_REFUSED:
+				caption = "已拒绝";
+				break;
+			default:
+				caption = "";
+				break;
+			}
+			return caption;
+		}
+	};
 }

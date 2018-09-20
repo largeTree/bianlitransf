@@ -1,10 +1,10 @@
 <body>
-    <table id="_user_dg" class="easyui-datagrid" style="width:100%;height:100%" toolbar="#_user_dg_toolbar" data-options="url:'/blh/api/user/list',rownumbers:true,fitColumns:true,loadFilter:dataLoadFilter,loader:dataLoader,singleSelect:true,queryParams:{'orderBy':'createdTime desc'}">
+    <table id="_user_dg" class="easyui-datagrid" style="width:100%;height:100%" toolbar="#_user_dg_toolbar" data-options="url:'/blh/api/user/list',rownumbers:true,fitColumns:true,loadFilter:dataLoadFilter,loader:dataLoader,singleSelect:true,queryParams:{'orderBy':'createdTime desc', 'wrapper': 'true'}">
         <thead>
             <tr>
                 <th field="name" align="center" width="50">名称</th>
                 <th field="phone" align="center" width="50">手机号</th>
-                <th field="refereeId" align="center" width="50">推荐人ID</th>
+                <th field="refereeId" data-options="formatter:captionFormatter" align="center" width="50">推荐人</th>
                 <th field="level" align="center" width="50">等级</th>
                 <th field="status" align="center" width="50">状态</th>
                 <th field="alipayNo" align="center" width="50">支付宝账号</th>

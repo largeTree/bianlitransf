@@ -1,13 +1,17 @@
 package com.bianlitransf.biz.service.impl;
 
-import java.util.List;
-import javax.annotation.Resource;
 import java.util.Date;
+import java.util.List;
+
+import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.qiuxs.cuteframework.core.persistent.database.modal.PropertyWrapper;
+import com.bianlitransf.biz.BizConstants;
+import com.bianlitransf.biz.dao.UserDao;
+import com.bianlitransf.biz.entity.User;
+import com.bianlitransf.biz.service.IUserService;
 import com.qiuxs.cuteframework.core.basic.Constants;
 import com.qiuxs.cuteframework.core.basic.bean.UserLite;
 import com.qiuxs.cuteframework.core.basic.utils.ExceptionUtils;
@@ -16,13 +20,10 @@ import com.qiuxs.cuteframework.core.basic.utils.StringUtils;
 import com.qiuxs.cuteframework.core.basic.utils.security.MD5Util;
 import com.qiuxs.cuteframework.core.context.UserContext;
 import com.qiuxs.cuteframework.core.persistent.database.modal.BaseField;
+import com.qiuxs.cuteframework.core.persistent.database.modal.PropertyWrapper;
 import com.qiuxs.cuteframework.core.persistent.database.service.AbstractDataPropertyService;
 import com.qiuxs.cuteframework.core.persistent.database.service.filter.IServiceFilter;
 import com.qiuxs.cuteframework.core.persistent.database.service.filter.impl.IdGenerateFilter;
-import com.bianlitransf.biz.BizConstants;
-import com.bianlitransf.biz.dao.UserDao;
-import com.bianlitransf.biz.entity.User;
-import com.bianlitransf.biz.service.IUserService;
 
 /**
  * 服务类
@@ -116,6 +117,15 @@ public class UserService extends AbstractDataPropertyService<Long, User, UserDao
 	}
 
 	@Override
+	public String getCaption(Long code) {
+		User user = this.getById(code);
+		if (user != null) {
+			return user.getName();
+		}
+		return null;
+	}
+
+	@Override
 	protected void initProps(List<PropertyWrapper<?>> props) {
 		PropertyWrapper<?> prop = null;
 
@@ -128,16 +138,16 @@ public class UserService extends AbstractDataPropertyService<Long, User, UserDao
 		prop = new PropertyWrapper<String>(new BaseField("password", "密码", String.class), null);
 		props.add(prop);
 
-		prop = new PropertyWrapper<Long>(new BaseField("refereeId", "推荐人ID", Long.class), null);
+		prop = new PropertyWrapper<Long>(new BaseField("refereeId", "推荐人ID", Long.class), this);
 		props.add(prop);
 
-		prop = new PropertyWrapper<Integer>(new BaseField("level", "等级", Integer.class), null);
+		prop = new PropertyWrapper<Integer>(new BaseField("level", "等级", Integer.class), BizConstants.LEVEL_TRANSTALER);
 		props.add(prop);
 
 		prop = new PropertyWrapper<String>(new BaseField("levelCode", "等级编码", String.class), null);
 		props.add(prop);
 
-		prop = new PropertyWrapper<Integer>(new BaseField("status", "状态", Integer.class), null);
+		prop = new PropertyWrapper<Integer>(new BaseField("status", "状态", Integer.class), BizConstants.STATUS_TRANSTLATER);
 		props.add(prop);
 
 		prop = new PropertyWrapper<String>(new BaseField("name", "用户姓名", String.class), null);

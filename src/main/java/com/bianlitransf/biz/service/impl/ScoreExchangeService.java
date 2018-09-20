@@ -11,6 +11,7 @@ import com.qiuxs.cuteframework.core.persistent.database.modal.BaseField;
 import com.qiuxs.cuteframework.core.persistent.database.service.AbstractDataPropertyService;
 import com.qiuxs.cuteframework.core.persistent.database.service.filter.IServiceFilter;
 import com.qiuxs.cuteframework.core.persistent.database.service.filter.impl.IdGenerateFilter;
+import com.bianlitransf.biz.BizConstants;
 import com.bianlitransf.biz.ScoreMinScoreDto;
 import com.bianlitransf.biz.dao.ScoreExchangeDao;
 import com.bianlitransf.biz.entity.ScoreExchange;
@@ -55,7 +56,7 @@ public class ScoreExchangeService extends AbstractDataPropertyService<Long, Scor
 		prop = new PropertyWrapper<Long>(new BaseField("id", "id", Long.class), null);
 		props.add(prop);
 
-		prop = new PropertyWrapper<Integer>(new BaseField("type", "积分兑换类型", Integer.class), null);
+		prop = new PropertyWrapper<Integer>(new BaseField("type", "积分兑换类型", Integer.class), BizConstants.RES_TYPE_TRANSTALER);
 		props.add(prop);
 
 		prop = new PropertyWrapper<String>(new BaseField("iconUrl", "图标地址", String.class), null);
